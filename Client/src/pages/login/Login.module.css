@@ -1,0 +1,6 @@
+.background {
+	background: url("../../assets/background/Login.png") no-repeat fixed center;
+	position: absolute;
+	width: 100%;
+	height: 100vh;
+}
