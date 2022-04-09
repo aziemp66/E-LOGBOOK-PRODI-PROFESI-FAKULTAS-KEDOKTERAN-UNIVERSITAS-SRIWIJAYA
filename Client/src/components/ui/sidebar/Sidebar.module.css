@@ -1,0 +1,40 @@
+.sidebar {
+	width: 20%;
+	height: 100vh;
+	background-color: #595757;
+	position: block;
+	top: 0;
+	left: 0;
+	z-index: 1;
+	overflow-x: hidden;
+	transition: 0.5s;
+	padding: 60px 20px;
+}
+.sidebar-header {
+	padding: 0;
+	text-align: center;
+}
+.sidebar-header h3 {
+	display: flex;
+	align-items: center;
+	margin: 0;
+	padding: 0;
+	font-size: 30px;
+	font-weight: bold;
+	color: #c5e1a7;
+	text-align: left;
+}
+.sidebar-header img {
+	width: 125px;
+	height: auto;
+}
+.sidebar-body {
+	padding: 0;
+	margin: 0;
+	text-align: left;
+}
+.nav-list {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}

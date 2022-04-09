@@ -14,16 +14,11 @@ export const AuthProvider = (props) => {
 		setIsAuth(true);
 	};
 
-	const login = (username, password) => {
-		localStorage.setItem("user", {
-			username: username,
-			password: password,
-		});
+	const login = () => {
 		setIsAuth(true);
 	};
 
 	const logout = () => {
-		localStorage.removeItem("user");
 		setIsAuth(false);
 	};
 
