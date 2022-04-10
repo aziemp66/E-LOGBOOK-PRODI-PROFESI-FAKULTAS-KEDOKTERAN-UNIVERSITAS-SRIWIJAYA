@@ -1,13 +1,9 @@
-import React, { useContext, useEffect } from "react";
-import AuthContext from "../../contexts/AuthContexts";
+import React from "react";
+
+import styles from "./DashBoard.module.css";
 
 const DashBoard = () => {
-	const authCtx = useContext(AuthContext);
-	return (
-		<div>
-			<h1>DashBoard</h1>
-		</div>
-	);
+	return <h1>DashBoard</h1>;
 };
 
 export default DashBoard;
