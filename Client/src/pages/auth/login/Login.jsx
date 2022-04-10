@@ -1,10 +1,23 @@
 import React, { useContext, useEffect } from "react";
+
+import { useNavigate } from "react-router-dom";
 import styles from "./Login.module.css";
 import Button from "../../../components/ui/button/Button";
 
+import AuthContext from "../../../contexts/AuthContexts";
+
 const Login = (props) => {
+	const authCtx = useContext(AuthContext);
+	const navigate = useNavigate();
+	const loginHandler = (e) => {
+		e.preventDefault();
+		authCtx.login();
+		console.log(authCtx.isAuth);
+		navigate("/dashboard");
+	};
+
 	return (
-		<form className={styles.form}>
+		<form className={styles.form} onSubmit={loginHandler}>
 			<div>
 				<h3>Log in</h3>
 			</div>
@@ -19,7 +32,7 @@ const Login = (props) => {
 			<p className={styles.forgotPassword}>
 				Forgotten your username or password?
 			</p>
-			<Button>Log in</Button>
+			<Button type={"submit"}>Log in</Button>
 			<div>
 				<p className={styles.switch}>
 					Don't have an account?{" "}

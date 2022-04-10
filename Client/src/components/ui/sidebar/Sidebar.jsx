@@ -1,9 +1,19 @@
-import React from "react";
+import React, { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import styles from "./Sidebar.module.css";
 
 import unsriLogo from "../../../assets/logo/logo unsri.svg";
+import AuthContext from "../../../contexts/AuthContexts";
 
 const Sidebar = () => {
+	const authCtx = useContext(AuthContext);
+	const navigate = useNavigate();
+
+	const onLogoutHandler = () => {
+		authCtx.logout();
+		navigate("/");
+	};
+
 	return (
 		<div className={styles.sidebar}>
 			<div className={styles["sidebar-header"]}>
@@ -20,9 +30,9 @@ const Sidebar = () => {
 						</a>
 					</li>
 					<li>
-						<a href="#">
+						<button onClick={onLogoutHandler}>
 							<span>Logout</span>
-						</a>
+						</button>
 					</li>
 				</ul>
 			</div>
