@@ -26,15 +26,33 @@ const Sidebar = () => {
 				<ul className={styles["nav-list"]}>
 					<li>
 						<a href="#">
-							<span>Profile</span>
+							<span>Dashboard</span>
 						</a>
 					</li>
 					<li>
-						<button onClick={onLogoutHandler}>
-							<span>Logout</span>
-						</button>
+						<a href="">Profile</a>
+					</li>
+					<li>
+						<a href="">Capaian Kompetensi</a>
+					</li>
+					<li>
+						<a href="">Keterangan Level Kompetensi</a>
+					</li>
+					<li>
+						<a href="">Kegiatan Ilmiah</a>
+					</li>
+					<li>
+						<a href="">Rekapitulasi Penilaian</a>
+					</li>
+					<li>
+						<a href="">Dokumen Terkait</a>
 					</li>
 				</ul>
+				<div className={styles.button}>
+					<a onClick={onLogoutHandler}>
+						<span>Logout</span>
+					</a>
+				</div>
 			</div>
 		</div>
 	);
