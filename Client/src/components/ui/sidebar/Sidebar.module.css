@@ -81,3 +81,10 @@
 	font-size: 1.2rem;
 	margin-left: 0.75rem;
 }
+.hamburger {
+	position: absolute;
+	top: 0;
+	left: 0;
+	padding: 1rem;
+	cursor: pointer;
+}

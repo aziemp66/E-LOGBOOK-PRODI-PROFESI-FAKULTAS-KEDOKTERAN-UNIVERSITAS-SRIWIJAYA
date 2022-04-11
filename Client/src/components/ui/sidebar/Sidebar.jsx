@@ -104,6 +104,7 @@ const Sidebar = () => {
 				</header>
 			) : (
 				<img
+					className={styles.hamburger}
 					onClick={showNavHandler}
 					src={hamburgerIcon}
 					alt="Hamburger"
