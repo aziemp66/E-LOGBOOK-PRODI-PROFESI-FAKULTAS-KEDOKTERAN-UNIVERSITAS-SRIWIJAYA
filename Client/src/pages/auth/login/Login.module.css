@@ -26,6 +26,8 @@
 	border-radius: 2rem;
 	width: 100%;
 	height: 1.5rem;
+	padding: 1rem;
+	font: inherit;
 }
 .forgotPassword {
 	text-align: center;

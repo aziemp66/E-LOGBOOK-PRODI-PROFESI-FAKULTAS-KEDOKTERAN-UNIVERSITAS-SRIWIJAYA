@@ -28,10 +28,10 @@
 }
 .sidebar-header h3 img {
 	width: 125px;
-	height: 115px;
+	height: auto;
 }
 .sidebar-header img {
-	width: 25px;
+	width: 45px;
 	height: auto;
 }
 .sidebar-body {
