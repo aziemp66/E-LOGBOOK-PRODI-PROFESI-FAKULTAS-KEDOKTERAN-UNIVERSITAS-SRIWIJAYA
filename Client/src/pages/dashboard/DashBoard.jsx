@@ -5,6 +5,7 @@ import styles from "./DashBoard.module.css";
 import SearchBar from "../../components/searchbar/SearchBar";
 
 import welcomeHero from "../../assets/hero/welcome-hero.svg";
+import ProgressBar from "../../components/ui/progressbar/ProgressBar";
 
 const DashBoard = () => {
 	return (
@@ -23,7 +24,7 @@ const DashBoard = () => {
 						<img src={welcomeHero} alt="welcome-card-hero" />
 					</div>
 				</div>
-				<div className={styles.presentCard}>hemlo</div>
+				<ProgressBar percentage={77} />
 			</section>
 		</div>
 	);
