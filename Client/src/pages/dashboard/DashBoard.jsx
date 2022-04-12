@@ -8,23 +8,10 @@ const DashBoard = () => {
 	return (
 		<div className={styles.container}>
 			<div className={styles.searchBar}>
-				<table>
-					<tr>
-						<td>
-							<input
-								type="text"
-								placeholder="Search"
-								className={styles.search}
-							/>
-						</td>
-						<td>
-							<button className={styles.searchButton}>
-								<img src={searchIcon}></img>
-							</button>
-						</td>
-					</tr>
-				</table>
+				<input type="text" placeholder="Search" />
+				<img src={searchIcon}></img>
 			</div>
+			<section></section>
 		</div>
 	);
 };

@@ -29,6 +29,9 @@
 	padding: 1rem;
 	font: inherit;
 }
+.switch {
+	margin-top: 1rem;
+}
 .switch span {
 	font-size: 1rem;
 	font-weight: bold;

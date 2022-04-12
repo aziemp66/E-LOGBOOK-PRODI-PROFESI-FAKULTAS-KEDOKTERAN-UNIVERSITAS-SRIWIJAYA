@@ -29,9 +29,11 @@ const Login = (props) => {
 				<label htmlFor="password">Password</label>
 				<input type="password" id="password" />
 			</div>
-			<p className={styles.forgotPassword}>
-				Forgotten your username or password?
-			</p>
+			<div>
+				<p className={styles.forgotPassword}>
+					Forgotten your username or password?
+				</p>
+			</div>
 			<Button type={"submit"}>Log in</Button>
 			<div>
 				<p className={styles.switch}>

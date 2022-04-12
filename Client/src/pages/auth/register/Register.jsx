@@ -26,8 +26,8 @@ const Register = (props) => {
 				<input type="password" id="confirmPassword" />
 			</div>
 			<Button>Sign Up</Button>
-			<div>
-				<p className={styles.switch}>
+			<div className={styles.switch}>
+				<p>
 					Already have an account?{" "}
 					<span onClick={props.onSwitch}>Log in</span>
 				</p>
