@@ -1,3 +1,38 @@
 .container {
 	margin: 5rem 0 0 6rem;
 }
+.content {
+	margin-top: 2.5rem;
+	display: grid;
+	grid-template-columns: 3fr 1fr;
+	gap: 2.5rem;
+}
+.welcomeCard {
+	background-color: #c5e1a7;
+	border-radius: 0.5rem;
+	padding: 1rem;
+	margin-bottom: 1rem;
+	display: flex;
+	width: 100%;
+	height: 250px;
+	justify-content: center;
+	align-items: center;
+}
+.welcomeCard .texts {
+	margin: 1rem;
+	display: flex;
+	flex-direction: column;
+}
+.welcomeCard .texts h3 {
+	font-size: 1.5rem;
+	font-weight: bold;
+	margin-bottom: 1rem;
+}
+.welcomeCard .texts p {
+	font-size: 22px;
+	margin-bottom: 1rem;
+}
+.welcomeCard .hero img {
+	width: 300px;
+	height: auto;
+}

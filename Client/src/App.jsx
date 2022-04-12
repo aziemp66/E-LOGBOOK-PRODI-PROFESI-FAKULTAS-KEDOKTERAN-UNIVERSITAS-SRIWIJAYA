@@ -4,7 +4,7 @@ import styles from "./App.module.css";
 
 import Auth from "./pages/auth/Auth";
 import DashBoard from "./pages/dashboard/DashBoard";
-import Sidebar from "./components/ui/sidebar/Sidebar";
+import Sidebar from "./components/sidebar/Sidebar";
 import AuthContext from "./contexts/AuthContexts";
 
 import RequireAuth from "./helpers/RequireAuth";
