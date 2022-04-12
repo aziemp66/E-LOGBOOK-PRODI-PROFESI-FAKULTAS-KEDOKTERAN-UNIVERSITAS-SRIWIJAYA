@@ -1,0 +1,29 @@
+.searchBar {
+	width: 512px;
+	display: flex;
+	box-shadow: 1px 1px 4px black;
+	border-radius: 20px;
+	width: 300px;
+	padding: 0 20px;
+}
+.searchBar input {
+	background: linear-gradient(
+		152.76deg,
+		rgba(255, 255, 255, 0.4) -4.16%,
+		rgba(255, 255, 255, 0.61) -4.15%,
+		rgba(255, 255, 255, 0.12) 113.42%
+	);
+	border-color: transparent;
+	border-radius: 2rem;
+	width: 100%;
+	height: 1.5rem;
+	padding: 1.2rem 0.5rem;
+	font: inherit;
+}
+.searchBar input:focus {
+	outline: none;
+}
+.searchBar img {
+	width: 25px;
+	height: auto;
+}

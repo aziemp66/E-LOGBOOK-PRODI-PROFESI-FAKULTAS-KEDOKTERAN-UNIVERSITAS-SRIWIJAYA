@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Routes, Route } from "react-router-dom";
-import styles from "./App.css";
+import styles from "./App.module.css";
 
 import Auth from "./pages/auth/Auth";
 import DashBoard from "./pages/dashboard/DashBoard";
