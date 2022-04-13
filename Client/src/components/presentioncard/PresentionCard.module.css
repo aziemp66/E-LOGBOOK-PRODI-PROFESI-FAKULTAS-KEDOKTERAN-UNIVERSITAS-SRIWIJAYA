@@ -1,0 +1,26 @@
+.card {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: 1rem;
+	background: rgba(246, 250, 239, 1);
+	width: 80%;
+	padding: 1.5rem;
+}
+.title h3 {
+	text-align: center;
+	font-size: 1.5rem;
+	font-weight: 500;
+	color: black;
+}
+.absention {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+}
+.absention li {
+	font-size: 20px;
+	border-left: 0.5rem solid #c5e1a7;
+	padding-left: 0.5rem;
+}

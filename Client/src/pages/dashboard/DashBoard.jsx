@@ -5,9 +5,14 @@ import styles from "./DashBoard.module.css";
 import SearchBar from "../../components/searchbar/SearchBar";
 
 import welcomeHero from "../../assets/hero/welcome-hero.svg";
-import ProgressBar from "../../components/ui/progressbar/ProgressBar";
+import PresentionCard from "../../components/presentioncard/PresentionCard";
 
 const DashBoard = () => {
+	const present = 26;
+	const sick = 2;
+	const excused = 1;
+	const absent = 1;
+	const holiday = 1;
 	return (
 		<div className={styles.container}>
 			<SearchBar />
@@ -24,7 +29,13 @@ const DashBoard = () => {
 						<img src={welcomeHero} alt="welcome-card-hero" />
 					</div>
 				</div>
-				<ProgressBar percentage={77} />
+				<PresentionCard
+					present={present}
+					sick={sick}
+					excused={excused}
+					absent={absent}
+					holiday={holiday}
+				/>
 			</section>
 		</div>
 	);
