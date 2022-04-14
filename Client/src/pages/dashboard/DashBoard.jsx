@@ -34,14 +34,28 @@ const DashBoard = () => {
 					</div>
 					<ul className={styles.progressList}>
 						<ProgressCard
+							title={"Capaian Penyakit"}
+							circleProgressBar={true}
+							percentage={75}
 							className={styles.progressCard}
+						/>
+						<ProgressCard
+							title={"Capaian Penyakit"}
+							circleProgressBar={true}
+							percentage={75}
+							className={styles.progressCard}
+						/>
+					</ul>
+					<div className={styles.totalProgress}>
+						<ProgressCard
+							title={"Total Capaian Penyakit"}
 							percentage={75}
 						/>
 						<ProgressCard
-							className={styles.progressCard}
-							percentage={50}
+							title={"Capaian Ketrampilan Klinik"}
+							percentage={40}
 						/>
-					</ul>
+					</div>
 				</div>
 				<PresentionCard
 					present={present}
