@@ -75,11 +75,15 @@
 	height: auto;
 	margin-right: 10px;
 }
+.nav-list a {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
 .nav-list li a {
 	color: #ffffff;
 	text-decoration: none;
 	font-size: 1.2rem;
-	margin-left: 0.75rem;
 }
 .hamburger {
 	position: sticky;

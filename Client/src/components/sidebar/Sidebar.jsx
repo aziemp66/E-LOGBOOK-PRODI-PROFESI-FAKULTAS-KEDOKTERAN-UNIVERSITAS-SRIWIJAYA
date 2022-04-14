@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 import styles from "./Sidebar.module.css";
 import AuthContext from "../../contexts/AuthContexts";
@@ -46,53 +46,69 @@ const Sidebar = () => {
 					<div className={styles["sidebar-body"]}>
 						<ul className={styles["nav-list"]}>
 							<li>
-								<img src={dashBoard} alt="dashboard icon" />
-								<a href="#">
-									<span>Dashboard</span>
-								</a>
+								<Link to={"/dashboard"}>
+									<img src={dashBoard} alt="dashboard icon" />
+									<a href="#">
+										<span>Dashboard</span>
+									</a>
+								</Link>
 							</li>
 							<li>
-								<img src={profile} alt="profile icon" />
-								<a href="">Profile</a>
+								<Link to={"/profile"}>
+									<img src={profile} alt="profile icon" />
+									<a href="">Profile</a>
+								</Link>
 							</li>
 							<li>
-								<img
-									src={capaianKompetensi}
-									alt="capaian-kompetensi icon"
-								/>
-								<a href="">Capaian Kompetensi</a>
+								<Link to={"/capaiankompetensi"}>
+									<img
+										src={capaianKompetensi}
+										alt="capaian-kompetensi icon"
+									/>
+									<a href="">Capaian Kompetensi</a>
+								</Link>
 							</li>
 							<li>
-								<img
-									src={keteranganLevelKompetensi}
-									alt="keterangan-level-kompetensi icon"
-								/>
-								<a href="">Keterangan Level Kompetensi</a>
+								<Link to={"/keterangankompetensi"}>
+									<img
+										src={keteranganLevelKompetensi}
+										alt="keterangan-level-kompetensi icon"
+									/>
+									<a href="">Keterangan Level Kompetensi</a>
+								</Link>
 							</li>
 							<li>
-								<img
-									src={kegiatanIlmiah}
-									alt="kegiatan-ilmiah icon"
-								/>
-								<a href="">Kegiatan Ilmiah</a>
+								<Link to={"/kegiatanilmiah"}>
+									<img
+										src={kegiatanIlmiah}
+										alt="kegiatan-ilmiah icon"
+									/>
+									<a href="">Kegiatan Ilmiah</a>
+								</Link>
 							</li>
 							<li>
-								<img
-									src={rekapitulasiPenilaian}
-									alt="rekapitulasi-penilaian icon"
-								/>
-								<a href="">Rekapitulasi Penilaian</a>
+								<Link to={"/rekapnilai"}>
+									<img
+										src={rekapitulasiPenilaian}
+										alt="rekapitulasi-penilaian icon"
+									/>
+									<a href="">Rekapitulasi Penilaian</a>
+								</Link>
 							</li>
 							<li>
-								<img
-									src={dokumenTerkait}
-									alt="dokumen-terkait icon"
-								/>
-								<a href="">Dokumen Terkait</a>
+								<Link to={"/dokumen"}>
+									<img
+										src={dokumenTerkait}
+										alt="dokumen-terkait icon"
+									/>
+									<a href="">Dokumen Terkait</a>
+								</Link>
 							</li>
 							<li>
-								<img src={helpDesk} alt="help-desk icon" />
-								<a href="">Help Desk</a>
+								<Link to={"/help"}>
+									<img src={helpDesk} alt="help-desk icon" />
+									<a href="">Help Desk</a>
+								</Link>
 							</li>
 						</ul>
 						<div className={styles.logout}>

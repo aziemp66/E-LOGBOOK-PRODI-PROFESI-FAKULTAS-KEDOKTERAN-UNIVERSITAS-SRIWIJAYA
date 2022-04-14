@@ -39,12 +39,12 @@
 .progressList {
 	display: grid;
 	grid-template-columns: 1fr 1fr;
-	gap: 1rem;
+	gap: 2rem;
 }
 .totalProgress {
-	margin-top: 10rem;
+	margin-top: 5rem;
 	display: grid;
 	grid-template-columns: 1fr 1fr;
-	gap: 1rem;
+	gap: 2rem;
 	height: 330px;
 }

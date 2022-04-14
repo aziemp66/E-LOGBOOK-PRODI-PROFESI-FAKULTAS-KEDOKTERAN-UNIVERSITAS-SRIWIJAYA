@@ -52,7 +52,7 @@ const DashBoard = () => {
 							percentage={75}
 						/>
 						<ProgressCard
-							title={"Capaian Ketrampilan Klinik"}
+							title={"Capaian Keterampilan Klinik"}
 							percentage={40}
 						/>
 					</div>
