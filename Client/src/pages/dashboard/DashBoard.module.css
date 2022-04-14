@@ -1,10 +1,10 @@
 .container {
-	margin: 5rem 6rem 0 6rem;
+	margin: 5rem 1rem 5rem 6rem;
 }
 .content {
 	margin-top: 2.5rem;
 	display: grid;
-	grid-template-columns: 3fr 1fr;
+	grid-template-columns: 3fr 1.2fr;
 	gap: 2.5rem;
 }
 .welcomeCard {
@@ -35,4 +35,9 @@
 .welcomeCard .hero img {
 	width: 300px;
 	height: auto;
+}
+.progressList {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 1rem;
 }

@@ -1,7 +1,7 @@
 import { useState, useCallback, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Register from "./register/Register";
-import Login from "./login/Login";
+import Register from "../../components/form/register/Register";
+import Login from "../../components/form/login/Login";
 import styles from "./Auth.module.css";
 
 import AuthContext from "../../contexts/AuthContexts";

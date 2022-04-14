@@ -6,6 +6,7 @@
 	gap: 1rem;
 	background: rgba(246, 250, 239, 1);
 	width: 80%;
+	max-height: 550px;
 	padding: 1.5rem;
 }
 .title h3 {
@@ -22,5 +23,5 @@
 .absention li {
 	font-size: 20px;
 	border-left: 0.5rem solid #c5e1a7;
-	padding-left: 0.5rem;
+	padding-left: 1rem;
 }

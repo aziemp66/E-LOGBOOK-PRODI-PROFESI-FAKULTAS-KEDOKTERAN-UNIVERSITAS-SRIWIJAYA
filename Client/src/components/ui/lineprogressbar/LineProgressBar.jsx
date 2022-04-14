@@ -1,15 +1,26 @@
 import React from "react";
 
-import ProgressBar from "@ramonak/react-progress-bar";
-
 const LineProgressBar = (props) => {
 	const { percentage } = props;
+	const containerStyles = {
+		height: "10px",
+		width: "100%",
+		backgroundColor: "#e0e0de",
+		borderRadius: 50,
+	};
+
+	const fillerStyles = {
+		height: "100%",
+		width: `${percentage}%`,
+		backgroundColor: "#356700",
+		borderRadius: "inherit",
+		textAlign: "right",
+	};
+
 	return (
-		<ProgressBar
-			completed={percentage}
-			bgColor={"#356700"}
-			labelAlignment={"center"}
-		/>
+		<div style={containerStyles}>
+			<div style={fillerStyles}></div>
+		</div>
 	);
 };
 

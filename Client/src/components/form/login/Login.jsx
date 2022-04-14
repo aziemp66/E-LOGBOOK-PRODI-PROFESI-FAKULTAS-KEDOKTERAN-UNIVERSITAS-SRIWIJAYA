@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from "react";
 
 import { useNavigate } from "react-router-dom";
 import styles from "./Login.module.css";
-import Button from "../../../components/ui/button/Button";
+import Button from "../../ui/button/Button";
 
 import AuthContext from "../../../contexts/AuthContexts";
 

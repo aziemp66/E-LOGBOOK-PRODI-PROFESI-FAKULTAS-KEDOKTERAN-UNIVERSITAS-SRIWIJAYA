@@ -82,7 +82,7 @@
 	margin-left: 0.75rem;
 }
 .hamburger {
-	position: absolute;
+	position: sticky;
 	top: 0;
 	left: 0;
 	padding: 1rem;

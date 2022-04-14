@@ -1,7 +1,7 @@
 import React from "react";
 
 import styles from "./Register.module.css";
-import Button from "../../../components/ui/button/Button";
+import Button from "../../ui/button/Button";
 
 const Register = (props) => {
 	return (

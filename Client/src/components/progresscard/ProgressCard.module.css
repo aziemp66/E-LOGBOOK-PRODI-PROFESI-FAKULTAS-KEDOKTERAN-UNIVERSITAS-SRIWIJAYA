@@ -1,0 +1,33 @@
+.card {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: 1rem;
+	background-color: #f6faef;
+	box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2);
+	padding: 2rem;
+}
+.title h3 {
+	font-size: 1.25rem;
+	text-align: center;
+}
+.progressList {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	justify-content: center;
+	align-items: center;
+	gap: 1rem;
+}
+.progress {
+	display: flex;
+	flex-direction: column;
+	width: 90%;
+	gap: 0.5rem;
+}
+.progress h4 {
+	font-size: 1.25rem;
+	text-align: left;
+	font-weight: 400;
+}
