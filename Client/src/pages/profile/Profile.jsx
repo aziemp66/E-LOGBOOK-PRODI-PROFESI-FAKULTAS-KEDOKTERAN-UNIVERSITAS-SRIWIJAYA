@@ -84,6 +84,7 @@ const Profile = () => {
 							</select>
 						</div>
 					</div>
+					<Button className="primary">Save</Button>
 				</form>
 			</section>
 		</div>
