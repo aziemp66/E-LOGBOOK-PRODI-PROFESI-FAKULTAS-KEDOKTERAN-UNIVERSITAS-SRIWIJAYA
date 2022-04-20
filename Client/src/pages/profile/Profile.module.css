@@ -33,6 +33,17 @@
 .formSection form > div > div {
 	display: flex;
 	flex-direction: column;
+	gap: 0.5rem;
+}
+.formSection form > div > div label {
+	padding-left: 1rem;
+	font-size: 1.2rem;
+}
+.formSection form > div > div input {
+	font: inherit;
+	padding: 0.5rem 1rem;
+	border-radius: 50px;
+	border: 1px solid rgb(143, 186, 95);
 }
 .formSection form > div h2 {
 	display: inline-block;
@@ -46,4 +57,24 @@
 	display: flex;
 	flex-direction: column;
 	width: 100%;
+	gap: 0.5rem;
+}
+.dropdown {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+}
+.dropdown label {
+	padding-left: 1rem;
+	font-size: 1.2rem;
+}
+.dropdown select {
+	font: inherit;
+	padding: 1rem;
+	border-radius: 25px;
+	border: 1px solid rgb(143, 186, 95);
+}
+.dropdown select option {
+	font: inherit;
+	padding: 1rem;
 }

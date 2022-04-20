@@ -51,7 +51,7 @@ const Profile = () => {
 							<label htmlFor="phoneNumber">Nomor Telepon</label>
 							<input type="number" id="phoneNumber" />
 						</div>
-						<div>
+						<div className={styles.dropdown}>
 							<label htmlFor="period">Periode Masuk</label>
 							<select name="period" id="period">
 								<option value="20222">
@@ -75,21 +75,13 @@ const Profile = () => {
 					</div>
 					<div className={styles.counselors}>
 						<h2>Pembimbing Akademik</h2>
-						<div>
-							<div className={styles.names}>
-								<div>
-									<label htmlFor="firstName">
-										Nama Depan
-									</label>
-									<input type="text" id="firstName" />
-								</div>
-								<div>
-									<label htmlFor="lastName">
-										Nama Belakang
-									</label>
-									<input type="text" id="lastName" />
-								</div>
-							</div>
+						<div className={styles.dropdown}>
+							<label htmlFor="counselors">Nama</label>
+							<select name="counselors" id="counselors">
+								<option value="Dr. Budi">Dr. Budi</option>
+								<option value="Dr Nisa">Dr. Nisa</option>
+								<option value="Dr. Asep">Dr. Asep</option>
+							</select>
 						</div>
 					</div>
 				</form>
