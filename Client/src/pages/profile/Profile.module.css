@@ -36,7 +36,6 @@
 	gap: 0.5rem;
 }
 .formSection form > div > div label {
-	padding-left: 1rem;
 	font-size: 1.2rem;
 }
 .formSection form > div > div input {
@@ -51,7 +50,7 @@
 .formSection form > div .names {
 	display: flex;
 	flex-direction: row;
-	gap: 1rem;
+	gap: 4rem;
 }
 .formSection form > div .names > div {
 	display: flex;
@@ -65,16 +64,14 @@
 	gap: 1rem;
 }
 .dropdown label {
-	padding-left: 1rem;
 	font-size: 1.2rem;
 }
 .dropdown select {
 	font: inherit;
 	padding: 1rem;
-	border-radius: 25px;
+	border-radius: 50px;
 	border: 1px solid rgb(143, 186, 95);
 }
 .dropdown select option {
 	font: inherit;
-	padding: 1rem;
 }
