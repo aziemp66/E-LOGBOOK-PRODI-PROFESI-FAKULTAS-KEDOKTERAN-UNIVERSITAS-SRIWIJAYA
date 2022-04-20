@@ -19,3 +19,12 @@
 	color: #ffffff;
 	width: 100%;
 }
+.primary {
+	background: rgb(17, 152, 28);
+	color: white;
+}
+.secondary {
+	color: rgb(17, 152, 28);
+	border: 4px solid rgb(17, 152, 28);
+	background-color: white;
+}

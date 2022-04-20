@@ -7,7 +7,7 @@ import styles from "./Profile.module.css";
 
 const Profile = () => {
 	return (
-		<div className={styles.container}>
+		<div className={styles.page}>
 			<section className={styles.profileSection}>
 				<div className={styles.profilePhoto}>
 					<img src={dummyProfile} alt="profile" />
@@ -16,7 +16,7 @@ const Profile = () => {
 					<Button type="submit" className="primary">
 						Change
 					</Button>
-					<Button type="submit" className="secondary">
+					<Button type="reset" className="secondary">
 						Remove
 					</Button>
 				</div>

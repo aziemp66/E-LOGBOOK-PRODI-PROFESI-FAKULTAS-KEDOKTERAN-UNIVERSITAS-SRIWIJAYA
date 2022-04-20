@@ -42,6 +42,7 @@ const Sidebar = () => {
 							src={closeIcon}
 							alt="close icon"
 							onClick={showNavHandler}
+							className={styles["close-icon"]}
 						/>
 					</div>
 					<div className={styles["sidebar-body"]}>

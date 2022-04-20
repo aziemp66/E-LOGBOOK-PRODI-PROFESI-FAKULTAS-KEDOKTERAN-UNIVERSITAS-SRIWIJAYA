@@ -17,6 +17,9 @@
 	padding-bottom: 2rem;
 	display: flex;
 }
+.sidebar-header .close-icon {
+	cursor: pointer;
+}
 .sidebar-header h3 {
 	display: flex;
 	align-items: center;

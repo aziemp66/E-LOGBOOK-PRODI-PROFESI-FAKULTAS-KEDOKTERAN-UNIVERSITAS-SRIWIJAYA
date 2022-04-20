@@ -1,0 +1,15 @@
+.page {
+	margin: 0 auto;
+	padding: 3rem 1rem 1rem 1rem;
+}
+.profileSection {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+.profileSection .profilePhoto img {
+	width: 200px;
+	height: auto;
+	border-radius: 100px;
+}

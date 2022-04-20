@@ -15,7 +15,7 @@ const DashBoard = () => {
 	const absent = 1;
 	const holiday = 1;
 	return (
-		<div className={styles.container}>
+		<div className={styles.page}>
 			<SearchBar />
 			<section className={styles.content}>
 				<div>
