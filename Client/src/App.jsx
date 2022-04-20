@@ -4,6 +4,8 @@ import styles from "./App.module.css";
 
 import Auth from "./pages/auth/Auth";
 import DashBoard from "./pages/dashboard/DashBoard";
+import Profile from "./pages/profile/Profile";
+
 import Sidebar from "./components/sidebar/Sidebar";
 import AuthContext from "./contexts/AuthContexts";
 
@@ -25,6 +27,7 @@ const App = () => {
 						</RequireAuth>
 					}
 				/>
+				<Route path="/profile" element={<Profile />} />
 			</Routes>
 		</div>
 	);

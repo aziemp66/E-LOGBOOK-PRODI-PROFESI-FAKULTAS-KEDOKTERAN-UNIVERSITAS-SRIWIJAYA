@@ -15,6 +15,7 @@ import rekapitulasiPenilaian from "../../assets/icons/rekapitulasiPenilaian.svg"
 import dokumenTerkait from "../../assets/icons/dokumenTerkait.svg";
 import helpDesk from "../../assets/icons/helpDesk.svg";
 import hamburgerIcon from "../../assets/icons/hamburger.svg";
+import logout from "../../assets/icons/logout.svg";
 
 const Sidebar = () => {
 	const [showNav, setShowNav] = useState(false);
@@ -110,12 +111,13 @@ const Sidebar = () => {
 									<a href="">Help Desk</a>
 								</Link>
 							</li>
+							<li>
+								<a onClick={onLogoutHandler}>
+									<img src={logout} alt="logout icon" />
+									<a>Logout</a>
+								</a>
+							</li>
 						</ul>
-						<div className={styles.logout}>
-							<a onClick={onLogoutHandler}>
-								<span>Logout</span>
-							</a>
-						</div>
 					</div>
 				</header>
 			) : (

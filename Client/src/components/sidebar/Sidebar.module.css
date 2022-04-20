@@ -44,43 +44,30 @@
 	align-items: left;
 	justify-content: space-between;
 }
-.logout {
-	position: absolute;
-	transform: translateX(-50%);
-	bottom: 20px;
-	cursor: pointer;
-	padding-left: 4rem;
-}
-.logout span {
-	color: #ffffff;
-	text-decoration: none;
-	font-size: 1.2rem;
-	cursor: pointer;
-}
 .nav-list {
 	display: flex;
 	flex-direction: column;
 	list-style: none;
 	padding: 0;
 	margin: 0;
-	width: 90%;
+	align-items: left;
+	justify-content: center;
 }
 .nav-list li {
 	padding: 1rem 0;
 	display: flex;
 	align-items: center;
+	cursor: pointer;
 }
 .nav-list li img {
 	width: 25px;
-	height: auto;
+	height: 25px;
 	margin-right: 10px;
 }
-.nav-list a {
+.nav-list li a {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-}
-.nav-list li a {
 	color: #ffffff;
 	text-decoration: none;
 	font-size: 1.2rem;

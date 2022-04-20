@@ -34,7 +34,9 @@ const Login = (props) => {
 					Forgotten your username or password?
 				</p>
 			</div>
-			<Button type={"submit"}>Log in</Button>
+			<Button type="submit" className="auth">
+				Log in
+			</Button>
 			<div>
 				<p className={styles.switch}>
 					Don't have an account?{" "}

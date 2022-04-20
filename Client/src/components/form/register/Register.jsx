@@ -25,7 +25,9 @@ const Register = (props) => {
 				<label htmlFor="confirmPassword">Confirm Password</label>
 				<input type="password" id="confirmPassword" />
 			</div>
-			<Button>Sign Up</Button>
+			<Button type="submit" className="auth">
+				Sign Up
+			</Button>
 			<div className={styles.switch}>
 				<p>
 					Already have an account?{" "}
