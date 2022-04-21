@@ -42,7 +42,7 @@
 	font: inherit;
 	padding: 0.5rem 1rem;
 	border-radius: 50px;
-	border: 1px solid rgb(143, 186, 95);
+	border: 2px solid rgb(143, 186, 95);
 }
 .formSection form > div h2 {
 	display: inline-block;
@@ -70,7 +70,7 @@
 	font: inherit;
 	padding: 1rem;
 	border-radius: 50px;
-	border: 1px solid rgb(143, 186, 95);
+	border: 2px solid rgb(143, 186, 95);
 }
 .dropdown select option {
 	font: inherit;
