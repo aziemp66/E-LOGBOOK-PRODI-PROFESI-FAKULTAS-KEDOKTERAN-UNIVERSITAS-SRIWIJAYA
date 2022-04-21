@@ -62,7 +62,7 @@ const Sidebar = () => {
 								</Link>
 							</li>
 							<li>
-								<Link to={"/capaiankompetensi"}>
+								<Link to={"/competences-achievement"}>
 									<img
 										src={capaianKompetensi}
 										alt="capaian-kompetensi icon"

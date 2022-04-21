@@ -5,6 +5,7 @@ import styles from "./App.module.css";
 import Auth from "./pages/auth/Auth";
 import DashBoard from "./pages/dashboard/DashBoard";
 import Profile from "./pages/profile/Profile";
+import Competences from "./pages/competences/Competences";
 
 import Sidebar from "./components/sidebar/Sidebar";
 import AuthContext from "./contexts/AuthContexts";
@@ -34,6 +35,10 @@ const App = () => {
 							<Profile />
 						</RequireAuth>
 					}
+				/>
+				<Route
+					path="/competences-achievement"
+					element={<Competences />}
 				/>
 			</Routes>
 		</div>
