@@ -8,7 +8,7 @@ const Competences = () => {
 			<div className={styles.title}>
 				<h1>Capaian Kompetensi</h1>
 			</div>
-			<form action="" method="post">
+			<form className={styles.form} action="" method="post">
 				<div>
 					<label htmlFor="stase">Stase</label>
 					<select name="stase" id="stase">
