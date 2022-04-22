@@ -94,52 +94,118 @@ const Competences = () => {
 					/>
 				</div>
 				<div>
-					<label htmlFor="competences">
+					<label htmlFor="diseases">Nama Penyakit</label>
+					<select name="diseases" id="diseases">
+						<option value="Leukimia">Leukimia</option>
+						<option value="Osteoporosis">Osteoporosis</option>
+						<option value="Pnuemonia">Pneumonia</option>
+					</select>
+				</div>
+				<div>
+					<label htmlFor="disease-competences">
 						Level Kompetensi Penyakit
 					</label>
-					<div className={styles.radio} id="competences">
+					<div className={styles.radio} id="disease-competences">
 						<div>
 							<input
 								type="radio"
-								name="competences"
+								name="disease-competences"
 								id="level1"
-								value={1}
+								value={`1`}
 							/>
 							<label htmlFor="level1">Level 1</label>
 						</div>
 						<div>
 							<input
 								type="radio"
-								name="competences"
+								name="disease-competences"
 								id="level2"
-								value={2}
+								value={`2`}
 							/>
 							<label htmlFor="level2">Level 2</label>
 						</div>
 						<div>
 							<input
 								type="radio"
-								name="competences"
+								name="disease-competences"
 								id="level3a"
-								value={3}
+								value={`3A`}
 							/>
 							<label htmlFor="level3a">Level 3A</label>
 						</div>
 						<div>
 							<input
 								type="radio"
-								name="competences"
+								name="disease-competences"
 								id="level3b"
-								value={4}
+								value={`3B`}
 							/>
 							<label htmlFor="level3b">Level 3B</label>
 						</div>
 						<div>
 							<input
 								type="radio"
-								name="competences"
+								name="disease-competences"
 								id="level4"
-								value={5}
+								value={`4`}
+							/>
+							<label htmlFor="level4">Level 4</label>
+						</div>
+					</div>
+				</div>
+				<div>
+					<label htmlFor="skill-competences">Keterampilan</label>
+					<select name="skill-competences" id="skill-competences">
+						<option value="Universal Precaution">
+							Universal Precaution
+						</option>
+						<option value="Permintaan & interpretasi pemeriksaan X-ray: foto polos">
+							Permintaan & interpretasi pemeriksaan X-ray: foto
+							polos
+						</option>
+						<option value="Ultrasound FAST abdomen">
+							Ultrasound FAST abdomen
+						</option>
+					</select>
+				</div>
+				<div>
+					<label htmlFor="skill-competences">
+						Level Kompetensi Keterampilan
+					</label>
+					<div className={styles.radio} id="skill-competences">
+						<div>
+							<input
+								type="radio"
+								name="skill-competences"
+								id="level1"
+								value={`1`}
+							/>
+							<label htmlFor="level1">Level 1</label>
+						</div>
+						<div>
+							<input
+								type="radio"
+								name="skill-competences"
+								id="level2"
+								value={`2`}
+							/>
+							<label htmlFor="level2">Level 2</label>
+						</div>
+						<div>
+							<input
+								type="radio"
+								name="skill-competences"
+								id="level3"
+								value={`3`}
+							/>
+							<label htmlFor="level3">Level 3</label>
+						</div>
+						<div>
+							<input
+								type="radio"
+								name="skill-competences"
+								id="level4"
+								value={`4`}
 							/>
 							<label htmlFor="level4">Level 4</label>
 						</div>
@@ -148,9 +214,9 @@ const Competences = () => {
 				<div>
 					<label htmlFor="dosen">Nama Dosen</label>
 					<select name="dosen" id="dosen">
-						<option value="Dr. Budi">Dr. Budi</option>
-						<option value="Dr. Agus">Dr. Agus</option>
-						<option value="Dr. Yuli">Dr. Yuli</option>
+						<option value="dr. Budi">dr. Budi</option>
+						<option value="dr. Agus">dr. Agus</option>
+						<option value="dr. Yuli">dr. Yuli</option>
 					</select>
 				</div>
 				<div>

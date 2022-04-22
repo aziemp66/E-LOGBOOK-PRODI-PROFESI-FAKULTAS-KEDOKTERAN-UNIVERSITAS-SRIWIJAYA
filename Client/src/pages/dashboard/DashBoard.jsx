@@ -2,11 +2,13 @@ import React from "react";
 
 import styles from "./DashBoard.module.css";
 
+import welcomeHero from "../../assets/hero/welcome-hero.svg";
+
 import SearchBar from "../../components/searchbar/SearchBar";
 
-import welcomeHero from "../../assets/hero/welcome-hero.svg";
 import PresentionCard from "../../components/presentioncard/PresentionCard";
 import ProgressCard from "../../components/progresscard/ProgressCard";
+import TotalProgressCard from "../../components/totalprogresscard/TotalProgressCard";
 
 const DashBoard = () => {
 	const present = 26;
@@ -47,11 +49,11 @@ const DashBoard = () => {
 						/>
 					</ul>
 					<div className={styles.totalProgress}>
-						<ProgressCard
+						<TotalProgressCard
 							title={"Total Capaian Penyakit"}
 							percentage={75}
 						/>
-						<ProgressCard
+						<TotalProgressCard
 							title={"Capaian Keterampilan Klinik"}
 							percentage={40}
 						/>

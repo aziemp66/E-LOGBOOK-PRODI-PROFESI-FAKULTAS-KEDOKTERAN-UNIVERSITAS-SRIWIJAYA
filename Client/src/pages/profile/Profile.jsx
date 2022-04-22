@@ -138,15 +138,20 @@ const Profile = () => {
 					</div>
 					<div className={styles.counselors}>
 						<h2>Pembimbing Akademik</h2>
-						<div className={styles.names}>
-							<div>
-								<label htmlFor="firstName">Nama Depan</label>
-								<input type="text" id="firstName" />
-							</div>
-							<div>
-								<label htmlFor="lastName">Nama Belakang</label>
-								<input type="text" id="lastName" />
-							</div>
+						<div>
+							<label htmlFor="counselor">Nama</label>
+							<input
+								type="text"
+								name="counselor"
+								id="counselor"
+							/>
+						</div>
+					</div>
+					<div>
+						<h2>Konfirmasi Pemilik</h2>
+						<div>
+							<label htmlFor="password">Password</label>
+							<input type="password" id="password" />
 						</div>
 					</div>
 					<Button className="primary">Save</Button>
