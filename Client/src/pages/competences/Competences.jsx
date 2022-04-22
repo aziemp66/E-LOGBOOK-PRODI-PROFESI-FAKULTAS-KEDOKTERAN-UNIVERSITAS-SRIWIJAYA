@@ -97,7 +97,7 @@ const Competences = () => {
 					<label htmlFor="competences">
 						Level Kompetensi Penyakit
 					</label>
-					<div className={styles.radio}>
+					<div className={styles.radio} id="competences">
 						<div>
 							<input
 								type="radio"
@@ -155,7 +155,7 @@ const Competences = () => {
 				</div>
 				<div>
 					<label htmlFor="guidances">Jenis Bimbingan</label>
-					<div className={styles.radio}>
+					<div className={styles.radio} id="guidances">
 						<div>
 							<input
 								type="radio"
@@ -202,10 +202,10 @@ const Competences = () => {
 							<input
 								type="radio"
 								name="guidances"
-								id="Dan Lain-lain"
-								value={"Dan Lain-lain"}
+								id="Lain-lain"
+								value={"Lain-lain"}
 							/>
-							<label htmlFor="Dan Lain-lain">Dan Lain-lain</label>
+							<label htmlFor="Lain-lain">Lain-lain</label>
 						</div>
 					</div>
 				</div>
