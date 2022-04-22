@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Button from "../../components/ui/button/Button";
 
 import styles from "./ScientificActivities.module.css";
@@ -24,6 +24,36 @@ const year = date.getFullYear();
 const years = Array.from(Array(150), (x, i) => year - i);
 
 const ScientificActivities = () => {
+	const [legalizationPageName, setLegalizationPageName] = useState(
+		"Tidak Ada File Yang Dipilih"
+	);
+	const [activityPhotoName, setActivityPhotoName] = useState(
+		"Tidak Ada File Yang Dipilih"
+	);
+	const legalizationPageUploadHandler = (e) => {
+		e.preventDefault();
+		document.getElementById("legalizationPage").click();
+	};
+	const legalizationPageNameHandler = (e) => {
+		const fileName = e.target.files[0].name;
+		if (fileName) {
+			setLegalizationPageName(fileName);
+		} else {
+			setLegalizationPageName("Tidak Ada File Yang Dipilih");
+		}
+	};
+	const activityPhotoUploadHandler = (e) => {
+		e.preventDefault();
+		document.getElementById("activityPhoto").click();
+	};
+	const activityPhotoNameHandler = (e) => {
+		const fileName = e.target.files[0].name;
+		if (fileName) {
+			setActivityPhotoName(fileName);
+		} else {
+			setActivityPhotoName("Tidak Ada File Yang Dipilih");
+		}
+	};
 	return (
 		<div className={styles.page}>
 			<div className={styles.title}>
@@ -36,21 +66,21 @@ const ScientificActivities = () => {
 						id="dateOfBirth"
 						className={`${styles.dropdown} ${styles.dates}`}
 					>
-						<select name="days" id="days">
+						<select name="Tanggal" id="days">
 							{days.map((day) => (
 								<option key={day} value={day}>
 									{day}
 								</option>
 							))}
 						</select>
-						<select name="months" id="months">
+						<select name="Bulan" id="months">
 							{months.map((month) => (
 								<option key={month} value={month}>
 									{month}
 								</option>
 							))}
 						</select>
-						<select name="years" id="years">
+						<select name="Tahun" id="years">
 							{years.map((year) => (
 								<option key={year} value={year}>
 									{year}
@@ -125,6 +155,58 @@ const ScientificActivities = () => {
 						</div>
 					</div>
 				</div>
+				<div>
+					<label>Upload Halaman Pengesahan</label>
+					<div className={styles.fileUpload}>
+						<div className={styles.fileName}>
+							<span>{legalizationPageName}</span>
+						</div>
+						<Button
+							onClick={legalizationPageUploadHandler}
+							className="primary"
+						>
+							Pilih File
+						</Button>
+					</div>
+				</div>
+				<div>
+					<label>Upload Foto Kegiatan Ilmiah</label>
+					<div className={styles.fileUpload}>
+						<div className={styles.fileName}>
+							<span>{activityPhotoName}</span>
+						</div>
+						<Button
+							onClick={activityPhotoUploadHandler}
+							className="primary"
+						>
+							Pilih File
+						</Button>
+					</div>
+				</div>
+				<div>
+					<label htmlFor="dosen">Nama Dosen</label>
+					<select name="dosen" id="dosen">
+						<option value="Dr. Budi">Dr. Budi</option>
+						<option value="Dr. Agus">Dr. Agus</option>
+						<option value="Dr. Yuli">Dr. Yuli</option>
+					</select>
+				</div>
+				<input
+					type="file"
+					id="legalizationPage"
+					name="Halaman Pengesahan"
+					accept="application/pdf"
+					onChange={legalizationPageNameHandler}
+					hidden
+				/>
+				<input
+					type="file"
+					id="activityPhoto"
+					name="Foto Kegiatan Ilmiah"
+					onChange={activityPhotoNameHandler}
+					accept="image/*"
+					hidden
+				/>
 				<Button className="primary">Save</Button>
 			</form>
 		</div>

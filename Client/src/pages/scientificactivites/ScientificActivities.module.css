@@ -25,6 +25,25 @@
 	width: 100%;
 	gap: 1rem;
 }
+.fileUpload {
+	display: grid;
+	grid-template-columns: 3fr 1fr;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	gap: 1rem;
+}
+.fileUpload > * {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.fileUpload > .fileName {
+	border: 2px solid rgb(143, 186, 95);
+	padding: 0.5rem 1rem;
+	border-radius: 50px;
+}
 .form > div label {
 	font-size: 1.2rem;
 }

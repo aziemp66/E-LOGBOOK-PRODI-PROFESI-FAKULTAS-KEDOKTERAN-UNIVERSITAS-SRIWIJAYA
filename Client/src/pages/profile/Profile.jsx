@@ -50,20 +50,36 @@ const Profile = () => {
 						<div className={styles.names}>
 							<div>
 								<label htmlFor="firstName">Nama Depan</label>
-								<input type="text" id="firstName" />
+								<input
+									type="text"
+									id="firstName"
+									placeholder="Azie"
+								/>
 							</div>
 							<div>
 								<label htmlFor="lastName">Nama Belakang</label>
-								<input type="text" id="lastName" />
+								<input
+									type="text"
+									id="lastName"
+									placeholder="Melza Pratama"
+								/>
 							</div>
 						</div>
 						<div>
 							<label htmlFor="nim">NIM</label>
-							<input type="text" id="nim" />
+							<input
+								type="text"
+								id="nim"
+								placeholder="09XXXXXXXXXXXX"
+							/>
 						</div>
 						<div>
 							<label htmlFor="address">Alamat</label>
-							<input type="text" id="address" />
+							<input
+								type="text"
+								id="address"
+								placeholder="Desa Seriguna, Kecamatan Teluk Gelam"
+							/>
 						</div>
 						<div>
 							<label htmlFor="dateOfBirth">Tanggal</label>

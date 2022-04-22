@@ -35,13 +35,13 @@ const DashBoard = () => {
 					<ul className={styles.progressList}>
 						<ProgressCard
 							title={"Capaian Penyakit"}
-							circleProgressBar={true}
+							circleProgressBar
 							percentage={75}
 							className={styles.progressCard}
 						/>
 						<ProgressCard
 							title={"Capaian Penyakit"}
-							circleProgressBar={true}
+							circleProgressBar
 							percentage={75}
 							className={styles.progressCard}
 						/>

@@ -12,7 +12,6 @@ const Login = (props) => {
 	const loginHandler = (e) => {
 		e.preventDefault();
 		authCtx.login();
-		console.log(authCtx.isAuth);
 		navigate("/dashboard");
 	};
 
