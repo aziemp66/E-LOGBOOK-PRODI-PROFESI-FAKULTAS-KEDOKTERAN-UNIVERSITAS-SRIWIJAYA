@@ -38,7 +38,11 @@ const App = () => {
 				/>
 				<Route
 					path="/competences-achievement"
-					element={<Competences />}
+					element={
+						<RequireAuth>
+							<Competences />
+						</RequireAuth>
+					}
 				/>
 			</Routes>
 		</div>

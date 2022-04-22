@@ -5,6 +5,26 @@ import dummyProfile from "../../assets/dummy/profile.png";
 
 import styles from "./Profile.module.css";
 
+const days = Array.from(Array(31), (x, i) => i + 1);
+const months = [
+	"Januari",
+	"Februari",
+	"Maret",
+	"April",
+	"Mei",
+	"Juni",
+	"Juli",
+	"Agustus",
+	"September",
+	"Oktober",
+	"November",
+	"Desember",
+];
+const date = new Date();
+const year = date.getFullYear();
+//create an array of year from date.getFullYear() to date.getFullYear() - 150
+const years = Array.from(Array(150), (x, i) => year - i);
+
 const Profile = () => {
 	return (
 		<div className={styles.page}>
@@ -43,9 +63,34 @@ const Profile = () => {
 							<label htmlFor="address">Alamat</label>
 							<input type="text" id="address" />
 						</div>
-						<div>
+						<div className={styles.date}>
 							<label htmlFor="dateOfBirth">Tanggal Lahir</label>
-							<input type="date" id="dateOfBirth" />
+							<div
+								id="dateOfBirth"
+								className={`${styles.dropdown} ${styles.dates}`}
+							>
+								<select name="days" id="days">
+									{days.map((day) => (
+										<option key={day} value={day}>
+											{day}
+										</option>
+									))}
+								</select>
+								<select name="months" id="months">
+									{months.map((month) => (
+										<option key={month} value={month}>
+											{month}
+										</option>
+									))}
+								</select>
+								<select name="years" id="years">
+									{years.map((year) => (
+										<option key={year} value={year}>
+											{year}
+										</option>
+									))}
+								</select>
+							</div>
 						</div>
 						<div>
 							<label htmlFor="phoneNumber">Nomor Telepon</label>
@@ -75,13 +120,15 @@ const Profile = () => {
 					</div>
 					<div className={styles.counselors}>
 						<h2>Pembimbing Akademik</h2>
-						<div className={styles.dropdown}>
-							<label htmlFor="counselors">Nama</label>
-							<select name="counselors" id="counselors">
-								<option value="Dr. Budi">Dr. Budi</option>
-								<option value="Dr Nisa">Dr. Nisa</option>
-								<option value="Dr. Asep">Dr. Asep</option>
-							</select>
+						<div className={styles.names}>
+							<div>
+								<label htmlFor="firstName">Nama Depan</label>
+								<input type="text" id="firstName" />
+							</div>
+							<div>
+								<label htmlFor="lastName">Nama Belakang</label>
+								<input type="text" id="lastName" />
+							</div>
 						</div>
 					</div>
 					<Button className="primary">Save</Button>

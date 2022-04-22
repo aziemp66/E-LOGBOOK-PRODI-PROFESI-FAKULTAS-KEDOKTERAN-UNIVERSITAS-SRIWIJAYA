@@ -164,7 +164,7 @@ const Competences = () => {
 						</div>
 					</div>
 				</div>
-				<Button className="primary">Submit</Button>
+				<Button className="primary">Save</Button>
 			</form>
 		</div>
 	);
