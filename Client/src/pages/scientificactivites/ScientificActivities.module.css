@@ -1,0 +1,22 @@
+.dropdown {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+}
+.dropdown label {
+	font-size: 1.2rem;
+}
+.dropdown select {
+	font: inherit;
+	padding: 1rem;
+	border-radius: 50px;
+	border: 2px solid rgb(143, 186, 95);
+}
+.dropdown select option {
+	font: inherit;
+}
+.dates {
+	display: grid;
+	grid-template-columns: 1fr 2fr 1fr;
+	gap: 2rem;
+}

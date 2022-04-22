@@ -80,7 +80,7 @@ const Sidebar = () => {
 								</Link>
 							</li>
 							<li>
-								<Link to={"/kegiatanilmiah"}>
+								<Link to={"/scientific-activities"}>
 									<img
 										src={kegiatanIlmiah}
 										alt="kegiatan-ilmiah icon"

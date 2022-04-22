@@ -6,6 +6,7 @@ import Auth from "./pages/auth/Auth";
 import DashBoard from "./pages/dashboard/DashBoard";
 import Profile from "./pages/profile/Profile";
 import Competences from "./pages/competences/Competences";
+import ScientificActivities from "./pages/scientificactivites/ScientificActivities";
 
 import Sidebar from "./components/sidebar/Sidebar";
 import AuthContext from "./contexts/AuthContexts";
@@ -41,6 +42,14 @@ const App = () => {
 					element={
 						<RequireAuth>
 							<Competences />
+						</RequireAuth>
+					}
+				/>
+				<Route
+					path="/scientific-activities"
+					element={
+						<RequireAuth>
+							<ScientificActivities />
 						</RequireAuth>
 					}
 				/>
