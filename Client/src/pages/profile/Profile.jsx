@@ -33,12 +33,14 @@ const Profile = () => {
 					<img src={dummyProfile} alt="profile" />
 				</div>
 				<div className={styles.profileButton}>
-					<Button type="submit" className="primary">
-						Change
-					</Button>
-					<Button type="reset" className="secondary">
-						Remove
-					</Button>
+					<form action="" encType="multipart/form-data">
+						<Button type="submit" className="primary">
+							Change
+						</Button>
+						<Button type="reset" className="secondary">
+							Remove
+						</Button>
+					</form>
 				</div>
 			</section>
 			<section className={styles.formSection}>
@@ -63,8 +65,8 @@ const Profile = () => {
 							<label htmlFor="address">Alamat</label>
 							<input type="text" id="address" />
 						</div>
-						<div className={styles.date}>
-							<label htmlFor="dateOfBirth">Tanggal Lahir</label>
+						<div>
+							<label htmlFor="dateOfBirth">Tanggal</label>
 							<div
 								id="dateOfBirth"
 								className={`${styles.dropdown} ${styles.dates}`}

@@ -3,6 +3,26 @@ import Button from "../../components/ui/button/Button";
 
 import styles from "./Competences.module.css";
 
+const days = Array.from(Array(31), (x, i) => i + 1);
+const months = [
+	"Januari",
+	"Februari",
+	"Maret",
+	"April",
+	"Mei",
+	"Juni",
+	"Juli",
+	"Agustus",
+	"September",
+	"Oktober",
+	"November",
+	"Desember",
+];
+const date = new Date();
+const year = date.getFullYear();
+//create an array of year from date.getFullYear() to date.getFullYear() - 150
+const years = Array.from(Array(150), (x, i) => year - i);
+
 const Competences = () => {
 	return (
 		<div className={styles.page}>
@@ -19,8 +39,33 @@ const Competences = () => {
 					</select>
 				</div>
 				<div>
-					<label htmlFor="date">Tanggal</label>
-					<input type="date" name="date" id="date" />
+					<label htmlFor="dateOfBirth">Tanggal Lahir</label>
+					<div
+						id="dateOfBirth"
+						className={`${styles.dropdown} ${styles.dates}`}
+					>
+						<select name="days" id="days">
+							{days.map((day) => (
+								<option key={day} value={day}>
+									{day}
+								</option>
+							))}
+						</select>
+						<select name="months" id="months">
+							{months.map((month) => (
+								<option key={month} value={month}>
+									{month}
+								</option>
+							))}
+						</select>
+						<select name="years" id="years">
+							{years.map((year) => (
+								<option key={year} value={year}>
+									{year}
+								</option>
+							))}
+						</select>
+					</div>
 				</div>
 				<div>
 					<label htmlFor="hospital">Nama Rumah Sakit/Puskesmas</label>
@@ -36,7 +81,7 @@ const Competences = () => {
 					<label htmlFor="name">Inisial Nama Pasien</label>
 					<input
 						type="text"
-						placeholder={`Tuliskan "Pasien Simulasi" jika pasien tidak ada`}
+						placeholder={`Tuliskan "Pasien Simulasi" jika tidak ada`}
 					/>
 				</div>
 				<div>
