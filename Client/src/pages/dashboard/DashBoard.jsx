@@ -1,4 +1,5 @@
 import React from "react";
+import { Fade } from "react-reveal";
 
 import styles from "./DashBoard.module.css";
 
@@ -18,54 +19,69 @@ const DashBoard = () => {
 	const holiday = 1;
 	return (
 		<div className={styles.page}>
-			<SearchBar />
+			<Fade top>
+				<SearchBar />
+			</Fade>
 			<section className={styles.content}>
 				<div>
-					<div className={styles.welcomeCard}>
-						<div className={styles.texts}>
-							<h3>Fiolinora Syafiya</h3>
-							<p>
-								Selamat datang di E-Logbook Program Studi
-								Profesi Fakultas Kedokteran Universitas
-								Sriwijaya
-							</p>
+					<Fade top>
+						<div className={styles.welcomeCard}>
+							<div className={styles.texts}>
+								<h3>Fiolinora Syafiya</h3>
+								<p>
+									Selamat datang di E-Logbook Program Studi
+									Profesi Fakultas Kedokteran Universitas
+									Sriwijaya
+								</p>
+							</div>
+							<div className={styles.hero}>
+								<img
+									src={welcomeHero}
+									alt="welcome-card-hero"
+								/>
+							</div>
 						</div>
-						<div className={styles.hero}>
-							<img src={welcomeHero} alt="welcome-card-hero" />
-						</div>
-					</div>
+					</Fade>
 					<ul className={styles.progressList}>
-						<ProgressCard
-							title={"Capaian Penyakit"}
-							circleProgressBar
-							percentage={75}
-							className={styles.progressCard}
-						/>
-						<ProgressCard
-							title={"Capaian Penyakit"}
-							circleProgressBar
-							percentage={75}
-							className={styles.progressCard}
-						/>
+						<Fade left>
+							<ProgressCard
+								title={"Tuberkolosis"}
+								circleProgressBar
+								percentage={75}
+								className={styles.progressCard}
+							/>
+						</Fade>
+						<Fade right>
+							<ProgressCard
+								title={"Leukimia"}
+								circleProgressBar
+								percentage={75}
+								className={styles.progressCard}
+							/>
+						</Fade>
 					</ul>
-					<div className={styles.totalProgress}>
-						<TotalProgressCard
-							title={"Total Capaian Penyakit"}
-							percentage={75}
-						/>
-						<TotalProgressCard
-							title={"Capaian Keterampilan Klinik"}
-							percentage={40}
-						/>
-					</div>
+					<Fade bottom>
+						<div className={styles.totalProgress}>
+							<TotalProgressCard
+								title={"Total Capaian Penyakit"}
+								percentage={75}
+							/>
+							<TotalProgressCard
+								title={"Capaian Keterampilan Klinik"}
+								percentage={40}
+							/>
+						</div>
+					</Fade>
 				</div>
-				<PresentionCard
-					present={present}
-					sick={sick}
-					excused={excused}
-					absent={absent}
-					holiday={holiday}
-				/>
+				<Fade right>
+					<PresentionCard
+						present={present}
+						sick={sick}
+						excused={excused}
+						absent={absent}
+						holiday={holiday}
+					/>
+				</Fade>
 			</section>
 		</div>
 	);

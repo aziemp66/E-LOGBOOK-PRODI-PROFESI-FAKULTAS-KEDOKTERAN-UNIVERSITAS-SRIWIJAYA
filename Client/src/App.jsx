@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { Routes, Route } from "react-router-dom";
+
 import styles from "./App.module.css";
 
 import Auth from "./pages/auth/Auth";
