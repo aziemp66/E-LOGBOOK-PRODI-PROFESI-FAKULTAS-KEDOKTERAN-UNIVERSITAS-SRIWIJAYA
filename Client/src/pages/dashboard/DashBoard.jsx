@@ -46,7 +46,9 @@ const DashBoard = () => {
 						<Fade left>
 							<ProgressCard
 								title={"Tuberkolosis"}
-								circleProgressBar
+								stase={"Penyakit Dalam"}
+								skillCompetences={"4"}
+								diseasesCompetences={"3B"}
 								percentage={75}
 								className={styles.progressCard}
 							/>
@@ -54,7 +56,9 @@ const DashBoard = () => {
 						<Fade right>
 							<ProgressCard
 								title={"Leukimia"}
-								circleProgressBar
+								stase={"Bedah"}
+								skillCompetences={"3"}
+								diseasesCompetences={"3A"}
 								percentage={75}
 								className={styles.progressCard}
 							/>
