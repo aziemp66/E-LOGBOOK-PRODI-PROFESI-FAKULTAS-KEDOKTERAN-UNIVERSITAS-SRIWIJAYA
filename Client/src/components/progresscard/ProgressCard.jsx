@@ -3,7 +3,6 @@ import React from "react";
 import styles from "./ProgressCard.module.css";
 
 import CircularProgressBar from "../ui/circularprogressbar/CircularProgressBar";
-import LineProgressBar from "../ui/lineprogressbar/LineProgressBar";
 
 const ProgressCard = (props) => {
 	const { percentage, stase, skillCompetences, diseasesCompetences, title } =
