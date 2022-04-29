@@ -16,7 +16,6 @@ import RequireAuth from "./helpers/RequireAuth";
 
 const App = () => {
 	const authCtx = useContext(AuthContext);
-	console.log("Is Auth : " + authCtx.isAuth);
 	return (
 		<div className={styles.container}>
 			{authCtx.isAuth && <Sidebar />}

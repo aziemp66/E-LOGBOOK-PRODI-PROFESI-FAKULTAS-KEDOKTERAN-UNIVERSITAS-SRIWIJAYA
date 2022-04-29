@@ -6,12 +6,12 @@ import "./main.css";
 import { AuthProvider } from "./contexts/AuthContexts";
 
 ReactDOM.render(
-	<AuthProvider>
-		<React.StrictMode>
+	<React.StrictMode>
+		<AuthProvider>
 			<BrowserRouter>
 				<App />
 			</BrowserRouter>
-		</React.StrictMode>
-	</AuthProvider>,
+		</AuthProvider>
+	</React.StrictMode>,
 	document.getElementById("root")
 );

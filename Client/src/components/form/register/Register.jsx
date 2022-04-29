@@ -1,13 +1,27 @@
-import React from "react";
+import React, { useContext } from "react";
+import AuthContext from "../../../contexts/AuthContexts";
 import { Flip } from "react-reveal";
 
 import styles from "./Register.module.css";
 import Button from "../../ui/button/Button";
 
 const Register = (props) => {
+	const authCtx = useContext(AuthContext);
+
+	const onSubmitHandler = (e) => {
+		e.preventDefault();
+
+		authCtx.register(
+			e.target.email.value,
+			e.target.username.value,
+			e.target.password.value,
+			e.target.confirmPassword.value
+		);
+	};
+
 	return (
 		<Flip left>
-			<form className={styles.form}>
+			<form className={styles.form} onSubmit={onSubmitHandler}>
 				<div>
 					<h3>Sign Up</h3>
 				</div>

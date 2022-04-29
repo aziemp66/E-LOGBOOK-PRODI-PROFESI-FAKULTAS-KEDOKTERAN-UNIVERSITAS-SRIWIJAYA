@@ -7,7 +7,11 @@ const generateToken = require("../utility/generateToken");
 
 const userRegister = async (req, res) => {
 	try {
-		const { username, email, password } = req.body;
+		const { username, email, password, confirmPassword } = req.body;
+
+		//check if password and confirm password match
+		if (password !== confirmPassword)
+			return res.status(400).json({ error: "Passwords do not match" });
 
 		//check if user already exists
 		const existingUser =
