@@ -95,8 +95,8 @@ const Profile = () => {
 									))}
 								</select>
 								<select name="months" id="months">
-									{months.map((month) => (
-										<option key={month} value={month}>
+									{months.map((month, index) => (
+										<option key={month} value={index + 1}>
 											{month}
 										</option>
 									))}
@@ -109,6 +109,14 @@ const Profile = () => {
 									))}
 								</select>
 							</div>
+						</div>
+						<div>
+							<label htmlFor="email">Email</label>
+							<input
+								type="email"
+								id="email"
+								placeholder="hisammula69@gmail.com"
+							/>
 						</div>
 						<div>
 							<label htmlFor="phoneNumber">Nomor Telepon</label>

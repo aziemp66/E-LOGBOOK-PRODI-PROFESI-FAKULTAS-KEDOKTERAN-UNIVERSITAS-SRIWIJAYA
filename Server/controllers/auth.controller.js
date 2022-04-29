@@ -3,6 +3,7 @@ const uuid = require("uuid").v4;
 const bcrypt = require("bcrypt");
 
 const validation = require("../utility/validation");
+const generateToken = require("../utility/generateToken");
 
 const userRegister = async (req, res) => {
 	try {
@@ -65,11 +66,14 @@ const userLogin = async (req, res) => {
 			return res.status(400).json({ error: "User does not exist" });
 
 		const validPassword = await bcrypt.compare(password, user.password);
-
 		if (!validPassword)
 			return res.status(400).json({ error: "Invalid password" });
 
-		res.json(user);
+		const accessToken = generateToken(user.id, user.roles);
+
+		res.json({
+			accessToken,
+		});
 	} catch (err) {
 		res.status(500).json({
 			error: err.message,
