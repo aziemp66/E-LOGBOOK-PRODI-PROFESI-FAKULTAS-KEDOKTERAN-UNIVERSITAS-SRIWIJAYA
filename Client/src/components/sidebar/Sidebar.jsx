@@ -76,32 +76,12 @@ const Sidebar = () => {
 									</Link>
 								</li>
 								<li>
-									<Link to={"/keterangankompetensi"}>
-										<img
-											src={keteranganLevelKompetensi}
-											alt="keterangan-level-kompetensi icon"
-										/>
-										<a href="">
-											Keterangan Level Kompetensi
-										</a>
-									</Link>
-								</li>
-								<li>
 									<Link to={"/scientific-activities"}>
 										<img
 											src={kegiatanIlmiah}
 											alt="kegiatan-ilmiah icon"
 										/>
 										<a href="">Kegiatan Ilmiah</a>
-									</Link>
-								</li>
-								<li>
-									<Link to={"/rekapnilai"}>
-										<img
-											src={rekapitulasiPenilaian}
-											alt="rekapitulasi-penilaian icon"
-										/>
-										<a href="">Rekapitulasi Penilaian</a>
 									</Link>
 								</li>
 								<li>

@@ -1,6 +1,6 @@
 const db = require("../models");
 const uuid = require("uuid").v4;
-const bcrypt = require("bcryptjs");
+const bcrypt = require("bcrypt");
 
 const validation = require("../utility/validation");
 
@@ -30,8 +30,7 @@ const userRegister = async (req, res) => {
 		});
 		if (error) return res.status(400).send(error.details[0].message);
 
-		const genSalt = await bcrypt.genSalt(10);
-		const hashedPassword = await bcrypt.hash(password, genSalt);
+		const hashedPassword = await bcrypt.hash(password, 10);
 
 		const user = await db.User.create({
 			id: uuid(),
@@ -47,6 +46,38 @@ const userRegister = async (req, res) => {
 	}
 };
 
+const userLogin = async (req, res) => {
+	try {
+		const { username, password } = req.body;
+
+		const { error } = validation.loginValidation({
+			username,
+			password,
+		});
+		if (error) return res.status(400).send(error.details[0].message);
+
+		const user = await db.User.findOne({
+			where: {
+				username,
+			},
+		});
+		if (!user)
+			return res.status(400).json({ error: "User does not exist" });
+
+		const validPassword = await bcrypt.compare(password, user.password);
+
+		if (!validPassword)
+			return res.status(400).json({ error: "Invalid password" });
+
+		res.json(user);
+	} catch (err) {
+		res.status(500).json({
+			error: err.message,
+		});
+	}
+};
+
 module.exports = {
 	userRegister,
+	userLogin,
 };
