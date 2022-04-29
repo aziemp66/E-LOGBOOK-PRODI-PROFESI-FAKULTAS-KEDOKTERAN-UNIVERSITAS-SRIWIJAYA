@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-	const Account = sequelize.define("Account", {
+	const User = sequelize.define("User", {
 		id: {
 			type: DataTypes.STRING,
 			primaryKey: true,
@@ -19,6 +19,11 @@ module.exports = (sequelize, DataTypes) => {
 			type: DataTypes.STRING,
 			allowNull: false,
 			unique: true,
+		},
+		roles: {
+			type: DataTypes.STRING,
+			allowNull: false,
+			defaultValue: "student",
 		},
 		firstName: {
 			type: DataTypes.STRING,
@@ -53,5 +58,5 @@ module.exports = (sequelize, DataTypes) => {
 			allowNull: true,
 		},
 	});
-	return Account;
+	return User;
 };
