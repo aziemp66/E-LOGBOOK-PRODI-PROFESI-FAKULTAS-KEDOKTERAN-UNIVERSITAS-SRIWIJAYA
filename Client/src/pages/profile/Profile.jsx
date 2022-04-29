@@ -82,7 +82,7 @@ const Profile = () => {
 							/>
 						</div>
 						<div>
-							<label htmlFor="dateOfBirth">Tanggal</label>
+							<label htmlFor="dateOfBirth">Tanggal Lahir</label>
 							<div
 								id="dateOfBirth"
 								className={`${styles.dropdown} ${styles.dates}`}
@@ -131,10 +131,6 @@ const Profile = () => {
 								</option>
 							</select>
 						</div>
-						<div>
-							<label htmlFor="email">Email</label>
-							<input type="email" id="email" />
-						</div>
 					</div>
 					<div className={styles.counselors}>
 						<h2>Pembimbing Akademik</h2>
@@ -148,7 +144,7 @@ const Profile = () => {
 						</div>
 					</div>
 					<div>
-						<h2>Konfirmasi Pemilik</h2>
+						<h2>Konfirmasi Perubahan</h2>
 						<div>
 							<label htmlFor="password">Password</label>
 							<input type="password" id="password" />
