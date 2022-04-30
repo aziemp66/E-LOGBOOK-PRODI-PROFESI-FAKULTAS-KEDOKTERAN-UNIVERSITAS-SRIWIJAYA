@@ -16,22 +16,29 @@ export const AuthProvider = (props) => {
 	const [error, setError] = useState(null);
 
 	const register = (email, username, password, confirmPassword) => {
-		axios
-			.post(`${BASE_URL}/register`, {
+		fetch(`${BASE_URL}/register`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
 				email,
 				username,
 				password,
 				confirmPassword,
-			})
+			}),
+		})
 			.then((res) => {
-				if (res.data.error) {
-					setError(res.data.error);
-					return;
+				console.log("Fetch Success");
+				if (res.error) {
+					console.log(res.error);
+					setError(res.error);
+					throw new Error(res.error);
 				}
-				console.log(res.data);
 			})
 			.catch((err) => {
-				setError(err.message);
+				console.log(err);
+				setError(err);
 			});
 	};
 

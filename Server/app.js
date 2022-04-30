@@ -5,6 +5,7 @@ const db = require("./models");
 
 const corsMiddleware = require("./middlewares/cors");
 const verifyTokenMiddleware = require("./middlewares/verifyToken");
+const errorHandlerMiddleware = require("./middlewares/errorHandler");
 
 const authRoutes = require("./router/auth.routes");
 
@@ -20,6 +21,8 @@ app.use(corsMiddleware);
 app.use("/api", authRoutes);
 
 app.use(verifyTokenMiddleware);
+
+app.use(errorHandlerMiddleware);
 
 db.sequelize.sync().then(() => {
 	app.listen(PORT, () => {
