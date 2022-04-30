@@ -23,7 +23,7 @@ const Auth = () => {
 			navigate("/dashboard");
 			console.log("authCtx.userData", authCtx.userData);
 		}
-	});
+	}, [localStorage.getItem("token"), authCtx.userData]);
 
 	return (
 		<div className={styles.background}>

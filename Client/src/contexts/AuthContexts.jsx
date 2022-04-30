@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import jwtDecode from "jwt-decode";
 import axios from "axios";
 
 const AuthContext = React.createContext({
@@ -46,10 +47,11 @@ export const AuthProvider = (props) => {
 		if (response.data.error) {
 			console.log(response.data.error);
 			setError(response.data.error);
+			return;
 		}
 
 		localStorage.setItem("token", response.data.accessToken);
-		setUserData(localStorage.getItem("token"));
+		setUserData(jwtDecode(response.data.accessToken));
 	};
 
 	const logout = () => {
@@ -58,7 +60,12 @@ export const AuthProvider = (props) => {
 	};
 
 	const userDataHandler = (token) => {
-		setUserData(token);
+		const user = jwtDecode(token);
+		if (user.exp * 1000 < Date.now()) {
+			logout();
+			return;
+		}
+		setUserData(user);
 	};
 
 	return (

@@ -20,13 +20,14 @@ const App = () => {
 		if (localStorage.getItem("token")) {
 			authCtx.userDataHandler(localStorage.getItem("token"));
 		}
+		console.log("authCtx.userData", authCtx.userData);
 	}, []);
 	return (
 		<div className={styles.container}>
 			{authCtx.userData && <Sidebar />}
 			<Routes>
 				<Route path="/" element={<Auth />} />
-				<Route element={<RequireAuth />}>
+				<Route element={<RequireAuth roles="student" />}>
 					<Route path="/dashboard" element={<DashBoard />} />
 					<Route path="/profile" element={<Profile />} />
 					<Route

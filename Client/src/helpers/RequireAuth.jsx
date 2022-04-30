@@ -5,7 +5,10 @@ import AuthContext from "../contexts/AuthContexts";
 const RequireAuth = (props) => {
 	const authCtx = useContext(AuthContext);
 
-	const isAuthenticated = authCtx.userData ? true : false;
+	const isAuthenticated =
+		authCtx.userData &&
+		authCtx.userData.roles === props.roles &&
+		authCtx.userData.exp * 1000 > Date.now();
 
 	return isAuthenticated ? <Outlet /> : <Navigate to="/" />;
 };
