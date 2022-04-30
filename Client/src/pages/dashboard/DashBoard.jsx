@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useContext, useState } from "react";
 import { Fade } from "react-reveal";
 
 import styles from "./DashBoard.module.css";
@@ -6,17 +6,26 @@ import styles from "./DashBoard.module.css";
 import welcomeHero from "../../assets/hero/welcome-hero.svg";
 
 import SearchBar from "../../components/searchbar/SearchBar";
+import AuthContext from "../../contexts/AuthContexts";
 
 import PresentionCard from "../../components/presentioncard/PresentionCard";
 import ProgressCard from "../../components/progresscard/ProgressCard";
 import TotalProgressCard from "../../components/totalprogresscard/TotalProgressCard";
 
+const present = 26;
+const sick = 2;
+const excused = 1;
+const absent = 1;
+const holiday = 1;
+
 const DashBoard = () => {
-	const present = 26;
-	const sick = 2;
-	const excused = 1;
-	const absent = 1;
-	const holiday = 1;
+	const authCtx = useContext(AuthContext);
+	const [userId, setUserId] = useState(null);
+
+	useEffect(() => {
+		setUserId(authCtx.userData.id);
+	}, []);
+
 	return (
 		<div className={styles.page}>
 			<Fade top>
@@ -27,7 +36,7 @@ const DashBoard = () => {
 					<Fade top>
 						<div className={styles.welcomeCard}>
 							<div className={styles.texts}>
-								<h3>Fiolinora Syafiya</h3>
+								<h3>{userId}</h3>
 								<p>
 									Selamat datang di E-Logbook Program Studi
 									Profesi Fakultas Kedokteran Universitas

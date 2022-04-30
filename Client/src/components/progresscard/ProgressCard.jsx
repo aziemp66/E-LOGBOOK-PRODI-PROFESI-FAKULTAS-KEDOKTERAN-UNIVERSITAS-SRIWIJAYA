@@ -7,7 +7,6 @@ import CircularProgressBar from "../ui/circularprogressbar/CircularProgressBar";
 const ProgressCard = (props) => {
 	const { percentage, stase, skillCompetences, diseasesCompetences, title } =
 		props;
-	const uncompleted = 100 - percentage;
 	return (
 		<div className={styles.card}>
 			<div className={styles.title}>
@@ -19,7 +18,7 @@ const ProgressCard = (props) => {
 			<div className={styles.progressList}>
 				<div>
 					{/* prettier-ignore */}
-					<h4>Stase 					: {stase}</h4>
+					<h4>Stase : {stase}</h4>
 				</div>
 				<div>
 					{/* prettier-ignore */}
@@ -27,6 +26,11 @@ const ProgressCard = (props) => {
 				</div>
 				<div>
 					<h4>Kompetensi Keterampilan : Level {skillCompetences}</h4>
+				</div>
+				<div>
+					<h4>
+						Status : <span>Terverifikasi</span>
+					</h4>
 				</div>
 			</div>
 		</div>
