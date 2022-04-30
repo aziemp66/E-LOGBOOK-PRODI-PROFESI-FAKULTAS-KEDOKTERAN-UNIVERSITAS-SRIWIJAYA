@@ -20,14 +20,14 @@ export const AuthProvider = (props) => {
 		console.log("register", email, username, password, confirmPassword);
 
 		if (password !== confirmPassword) {
-			setError("Password and Confirm Password must be same");
-			return;
+			return setError("Password and Confirm Password must be same");
 		}
 
 		const response = await axios.post(`${BASE_URL}/register`, {
 			email,
 			username,
 			password,
+			confirmPassword,
 		});
 
 		if (response.data.error) {

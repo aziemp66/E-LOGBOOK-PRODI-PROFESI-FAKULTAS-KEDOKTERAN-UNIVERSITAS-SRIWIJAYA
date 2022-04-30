@@ -10,8 +10,7 @@ const userRegister = async (req, res, next) => {
 
 	//check if password and confirm password match
 	if (password !== confirmPassword)
-		next(new Error("Password and confirm password do not match"));
-	console.log("Checking Password and Confirm Password");
+		return next(new Error("Password and confirm password do not match"));
 
 	//check if user already exists
 
@@ -29,10 +28,10 @@ const userRegister = async (req, res, next) => {
 			}));
 
 		if (existingUser) {
-			next(new Error("Username or email already exists"));
+			return next(new Error("Username or email already exists"));
 		}
 	} catch (error) {
-		next(error);
+		return next(error);
 	}
 
 	const { error } = validation.registerValidation({
@@ -40,7 +39,7 @@ const userRegister = async (req, res, next) => {
 		email,
 		password,
 	});
-	if (error) next(error.details[0]);
+	if (error) return next(error.details[0]);
 
 	const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -53,7 +52,7 @@ const userRegister = async (req, res, next) => {
 			email,
 		});
 	} catch (error) {
-		next(error);
+		return next(error);
 	}
 
 	res.json(user);

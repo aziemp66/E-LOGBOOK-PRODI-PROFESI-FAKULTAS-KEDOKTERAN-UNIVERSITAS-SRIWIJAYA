@@ -27,19 +27,23 @@ const Register = (props) => {
 				</div>
 				<div>
 					<label htmlFor="email">Email</label>
-					<input type="email" id="email" />
+					<input type="email" id="email" name="email" />
 				</div>
 				<div>
 					<label htmlFor="username">Username</label>
-					<input type="text" id="username" />
+					<input type="text" id="username" name="username" />
 				</div>
 				<div>
 					<label htmlFor="password">Password</label>
-					<input type="password" id="password" />
+					<input type="password" id="password" name="password" />
 				</div>
 				<div>
 					<label htmlFor="confirmPassword">Confirm Password</label>
-					<input type="password" id="confirmPassword" />
+					<input
+						type="password"
+						id="confirmPassword"
+						name="confirmPassword"
+					/>
 				</div>
 				<Button type="submit" className="auth">
 					Sign Up

@@ -25,38 +25,6 @@ module.exports = (sequelize, DataTypes) => {
 			allowNull: false,
 			defaultValue: "student",
 		},
-		firstName: {
-			type: DataTypes.STRING,
-			allowNull: true,
-		},
-		lastName: {
-			type: DataTypes.STRING,
-			allowNull: true,
-		},
-		NIM: {
-			type: DataTypes.STRING,
-			allowNull: true,
-		},
-		address: {
-			type: DataTypes.STRING,
-			allowNull: true,
-		},
-		dateOfBirth: {
-			type: DataTypes.DATE,
-			allowNull: true,
-		},
-		phoneNumber: {
-			type: DataTypes.STRING,
-			allowNull: true,
-		},
-		periodYear: {
-			type: DataTypes.INTEGER,
-			allowNull: true,
-		},
-		academicCouncellor: {
-			type: DataTypes.STRING,
-			allowNull: true,
-		},
 	});
 	return User;
 };
