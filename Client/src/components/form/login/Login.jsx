@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { Flip } from "react-reveal";
 import { useNavigate } from "react-router-dom";
 import styles from "./Login.module.css";
@@ -11,7 +11,7 @@ const Login = (props) => {
 	const navigate = useNavigate();
 	const loginHandler = (e) => {
 		e.preventDefault();
-		authCtx.login();
+		authCtx.login(e.target.username.value, e.target.password.value);
 		navigate("/dashboard");
 	};
 

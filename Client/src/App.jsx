@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 
 import styles from "./App.module.css";
@@ -16,43 +16,28 @@ import RequireAuth from "./helpers/RequireAuth";
 
 const App = () => {
 	const authCtx = useContext(AuthContext);
+	useEffect(() => {
+		if (localStorage.getItem("token")) {
+			authCtx.userDataHandler(localStorage.getItem("token"));
+		}
+	}, []);
 	return (
 		<div className={styles.container}>
-			{authCtx.isAuth && <Sidebar />}
+			{authCtx.userData && <Sidebar />}
 			<Routes>
 				<Route path="/" element={<Auth />} />
-				<Route
-					path="/dashboard"
-					element={
-						<RequireAuth>
-							<DashBoard />
-						</RequireAuth>
-					}
-				/>
-				<Route
-					path="/profile"
-					element={
-						<RequireAuth>
-							<Profile />
-						</RequireAuth>
-					}
-				/>
-				<Route
-					path="/competences-achievement"
-					element={
-						<RequireAuth>
-							<Competences />
-						</RequireAuth>
-					}
-				/>
-				<Route
-					path="/scientific-activities"
-					element={
-						<RequireAuth>
-							<ScientificActivities />
-						</RequireAuth>
-					}
-				/>
+				<Route element={<RequireAuth />}>
+					<Route path="/dashboard" element={<DashBoard />} />
+					<Route path="/profile" element={<Profile />} />
+					<Route
+						path="/competences-achievement"
+						element={<Competences />}
+					/>
+					<Route
+						path="/scientific-activities"
+						element={<ScientificActivities />}
+					/>
+				</Route>
 			</Routes>
 		</div>
 	);

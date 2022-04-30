@@ -30,6 +30,7 @@ const Sidebar = () => {
 		authCtx.logout();
 		navigate("/");
 	};
+
 	return (
 		<div>
 			{showNav ? (
@@ -103,10 +104,10 @@ const Sidebar = () => {
 									</Link>
 								</li>
 								<li>
-									<a onClick={onLogoutHandler}>
+									<p onClick={onLogoutHandler}>
 										<img src={logout} alt="logout icon" />
 										<a>Logout</a>
-									</a>
+									</p>
 								</li>
 							</ul>
 						</div>

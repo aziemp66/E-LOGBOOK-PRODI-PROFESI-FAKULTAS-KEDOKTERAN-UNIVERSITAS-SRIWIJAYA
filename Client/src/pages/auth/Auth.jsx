@@ -16,10 +16,14 @@ const Auth = () => {
 	}, []);
 
 	useEffect(() => {
-		if (authCtx.isAuth) {
-			navigate("/dashboard");
+		if (localStorage.getItem("token")) {
+			authCtx.userDataHandler(localStorage.getItem("token"));
 		}
-	}, []);
+		if (authCtx.userData) {
+			navigate("/dashboard");
+			console.log("authCtx.userData", authCtx.userData);
+		}
+	});
 
 	return (
 		<div className={styles.background}>

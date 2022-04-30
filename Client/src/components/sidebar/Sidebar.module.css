@@ -67,6 +67,7 @@
 	height: 25px;
 	margin-right: 10px;
 }
+.nav-list li p,
 .nav-list li a {
 	display: flex;
 	justify-content: center;

@@ -2,69 +2,55 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 const AuthContext = React.createContext({
-	isAuth: false,
+	userData: null,
+	userDataHandler: (token) => {},
+	isError: false,
 	register: (email, username, password, confirmPassword) => {},
 	login: (username, password) => {},
 	logout: () => {},
-	error: null,
 });
 
 const BASE_URL = "http://localhost:5000/api";
 
 export const AuthProvider = (props) => {
-	const [isAuth, setIsAuth] = useState(false);
-	const [error, setError] = useState(null);
+	const [error, setError] = useState(false);
+	const [userData, setUserData] = useState(null);
 
-	const register = (email, username, password, confirmPassword) => {
-		fetch(`${BASE_URL}/register`, {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({
-				email,
-				username,
-				password,
-				confirmPassword,
-			}),
-		})
-			.then((res) => {
-				console.log("Fetch Success");
-				if (res.error) {
-					console.log(res.error);
-					setError(res.error);
-					throw new Error(res.error);
-				}
-			})
-			.catch((err) => {
-				console.log(err);
-				setError(err);
-			});
-	};
+	const register = (email, username, password, confirmPassword) => {};
 
-	const login = () => {
-		setIsAuth(true);
+	const login = async (username, password) => {
+		const response = await axios.post(`${BASE_URL}/login`, {
+			username,
+			password,
+		});
+
+		if (response.data.error) {
+			console.log(response.data.error);
+			setError(response.data.error);
+		}
+
+		localStorage.setItem("token", response.data.accessToken);
+		setUserData(localStorage.getItem("token"));
 	};
 
 	const logout = () => {
-		setIsAuth(false);
+		localStorage.removeItem("token");
+		setUserData(null);
 	};
 
-	useEffect(() => {
-		const token = localStorage.getItem("user");
-		if (token) {
-			setIsAuth(true);
-		}
-	}, []);
+	const userDataHandler = (token) => {
+		setUserData(token);
+	};
 
 	return (
 		<AuthContext.Provider
 			value={{
-				isAuth,
 				register,
 				login,
 				logout,
 				error,
+				userData,
+				userDataHandler,
 			}}
 		>
 			{props.children}
