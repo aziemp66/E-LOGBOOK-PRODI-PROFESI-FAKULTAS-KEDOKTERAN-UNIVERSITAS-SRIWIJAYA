@@ -143,19 +143,14 @@ const Profile = () => {
 					<div className={styles.counselors}>
 						<h2>Pembimbing Akademik</h2>
 						<div>
-							<label htmlFor="counselor">Nama</label>
+							<label htmlFor="counselor">
+								Nama Pembimbing Akademik
+							</label>
 							<input
 								type="text"
 								name="counselor"
 								id="counselor"
 							/>
-						</div>
-					</div>
-					<div>
-						<h2>Konfirmasi Perubahan</h2>
-						<div>
-							<label htmlFor="password">Password</label>
-							<input type="password" id="password" />
 						</div>
 					</div>
 					<Button className="primary">Save</Button>
