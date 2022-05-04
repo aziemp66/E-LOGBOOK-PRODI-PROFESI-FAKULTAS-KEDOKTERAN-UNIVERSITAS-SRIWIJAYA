@@ -20,7 +20,6 @@ const App = () => {
 		if (localStorage.getItem("token")) {
 			authCtx.userDataHandler(localStorage.getItem("token"));
 		}
-		console.log("authCtx.userData", authCtx.userData);
 	}, []);
 	return (
 		<div className={styles.container}>

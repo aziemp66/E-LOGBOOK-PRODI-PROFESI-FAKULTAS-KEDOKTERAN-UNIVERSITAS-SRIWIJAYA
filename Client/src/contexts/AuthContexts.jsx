@@ -18,35 +18,39 @@ export const AuthProvider = (props) => {
 	const [userData, setUserData] = useState(null);
 
 	const register = async (email, username, password, confirmPassword) => {
-		console.log("register", email, username, password, confirmPassword);
-
-		if (password !== confirmPassword) {
-			return setError("Password and Confirm Password must be same");
-		}
-
-		const response = await axios.post(`${BASE_URL}/register`, {
-			email,
-			username,
-			password,
-			confirmPassword,
-		});
-
-		if (response.data.error) {
-			console.log(response.data.error);
-			setError(response.data.error);
+		try {
+			const response = await axios.post(`${BASE_URL}/register`, {
+				email,
+				username,
+				password,
+				confirmPassword,
+			});
+			if (response.data.error) {
+				console.log(response.data.error);
+				setError(response.data.error);
+			}
+		} catch (error) {
+			console.log(error);
+			setError(error);
 			return;
 		}
 	};
 
 	const login = async (username, password) => {
-		const response = await axios.post(`${BASE_URL}/login`, {
-			username,
-			password,
-		});
-
-		if (response.data.error) {
-			console.log(response.data.error);
-			setError(response.data.error);
+		let response;
+		try {
+			response = await axios.post(`${BASE_URL}/login`, {
+				username,
+				password,
+			});
+			if (response.data.error) {
+				console.log(response.data.error);
+				setError(response.data.error);
+				return;
+			}
+		} catch (error) {
+			console.log(error);
+			setError(error);
 			return;
 		}
 

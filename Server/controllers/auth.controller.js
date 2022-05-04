@@ -65,18 +65,18 @@ const userLogin = async (req, res, next) => {
 		username,
 		password,
 	});
-	if (error) return res.status(400).send(error.details[0].message);
+	if (error) return next(new Error(error.details[0].message));
 
 	const user = await db.User.findOne({
 		where: {
 			username,
 		},
 	});
-	if (!user) return res.status(400).json({ error: "User does not exist" });
+	if (!user) return next(new Error("Username or password is incorrect"));
 
 	const validPassword = await bcrypt.compare(password, user.password);
 	if (!validPassword)
-		return res.status(400).json({ error: "Invalid password" });
+		return next(new Error("Username or password is incorrect"));
 
 	const accessToken = generateToken(user.id, user.roles);
 

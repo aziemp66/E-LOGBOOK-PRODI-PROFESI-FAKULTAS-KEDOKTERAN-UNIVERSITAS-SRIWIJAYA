@@ -56,15 +56,13 @@ const Sidebar = () => {
 											src={dashBoard}
 											alt="dashboard icon"
 										/>
-										<a href="#">
-											<span>Dashboard</span>
-										</a>
+										<span>Dashboard</span>
 									</Link>
 								</li>
 								<li>
 									<Link to={"/profile"}>
 										<img src={profile} alt="profile icon" />
-										<a href="">Profile</a>
+										<span>Profile</span>
 									</Link>
 								</li>
 								<li>
@@ -73,7 +71,7 @@ const Sidebar = () => {
 											src={capaianKompetensi}
 											alt="capaian-kompetensi icon"
 										/>
-										<a href="">Capaian Kompetensi</a>
+										<span>Capaian Kompetensi</span>
 									</Link>
 								</li>
 								<li>
@@ -82,7 +80,7 @@ const Sidebar = () => {
 											src={kegiatanIlmiah}
 											alt="kegiatan-ilmiah icon"
 										/>
-										<a href="">Kegiatan Ilmiah</a>
+										<span>Kegiatan Ilmiah</span>
 									</Link>
 								</li>
 								<li>
@@ -91,7 +89,7 @@ const Sidebar = () => {
 											src={dokumenTerkait}
 											alt="dokumen-terkait icon"
 										/>
-										<a href="">Dokumen Terkait</a>
+										<span>Dokumen Terkait</span>
 									</Link>
 								</li>
 								<li>
@@ -100,13 +98,13 @@ const Sidebar = () => {
 											src={helpDesk}
 											alt="help-desk icon"
 										/>
-										<a href="">Help Desk</a>
+										<span>Help Desk</span>
 									</Link>
 								</li>
 								<li>
 									<p onClick={onLogoutHandler}>
 										<img src={logout} alt="logout icon" />
-										<a>Logout</a>
+										<span>Logout</span>
 									</p>
 								</li>
 							</ul>
