@@ -64,7 +64,15 @@ export const AuthProvider = (props) => {
 	};
 
 	const userDataHandler = (token) => {
-		const user = jwtDecode(token);
+		let user;
+		try {
+			user = jwtDecode(token);
+		} catch (error) {
+			setError(error.message.split(":")[0]);
+			logout();
+			return;
+		}
+
 		if (user.exp * 1000 < Date.now()) {
 			logout();
 			return;

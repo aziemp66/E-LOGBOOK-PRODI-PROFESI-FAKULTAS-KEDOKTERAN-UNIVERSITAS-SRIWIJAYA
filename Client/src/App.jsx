@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 
 import styles from "./App.module.css";
 
@@ -16,11 +16,30 @@ import RequireAuth from "./helpers/RequireAuth";
 
 const App = () => {
 	const authCtx = useContext(AuthContext);
+	const navigate = useNavigate();
+
 	useEffect(() => {
-		if (localStorage.getItem("token")) {
-			authCtx.userDataHandler(localStorage.getItem("token"));
+		if (authCtx.userData) {
+			const roles = authCtx.userData.roles;
+			switch (roles) {
+				case "student":
+					navigate("/dashboard");
+					break;
+
+				default:
+					navigate("/");
+					break;
+			}
+			return;
+		} else {
+			if (localStorage.getItem("token")) {
+				authCtx.userDataHandler(localStorage.getItem("token"));
+			} else {
+				navigate("/");
+			}
 		}
-	}, []);
+	}, [localStorage.getItem("token"), authCtx.userData]);
+
 	return (
 		<div className={styles.container}>
 			{authCtx.userData && <Sidebar />}
