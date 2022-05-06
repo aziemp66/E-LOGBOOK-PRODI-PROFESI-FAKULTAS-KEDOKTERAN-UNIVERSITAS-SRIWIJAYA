@@ -8,6 +8,7 @@ const verifyTokenMiddleware = require("./middlewares/verifyToken");
 const errorHandlerMiddleware = require("./middlewares/errorHandler");
 
 const authRoutes = require("./router/auth.routes");
+const studentRoutes = require("./router/student.routes");
 
 require("dotenv").config();
 
@@ -21,6 +22,8 @@ app.use(corsMiddleware);
 app.use("/api", authRoutes);
 
 app.use(verifyTokenMiddleware);
+
+app.use("/api", studentRoutes);
 
 app.use(errorHandlerMiddleware);
 
