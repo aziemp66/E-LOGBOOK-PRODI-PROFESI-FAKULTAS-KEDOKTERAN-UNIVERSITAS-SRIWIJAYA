@@ -25,7 +25,7 @@ const updateProfileValidation = (data) => {
 		lastName: Joi.string().min(1).max(255),
 		studentNumber: Joi.string().min(1).max(255),
 		address: Joi.string().min(1).max(255),
-		email: Joi.string().min(6).max(255).required().email(),
+		email: Joi.string().min(6).max(255).email(),
 		phone: Joi.string().min(1).max(255),
 		entryPeriod: Joi.number().integer().min(1).max(99999999),
 		academicCouncellor: Joi.string().min(1).max(255),

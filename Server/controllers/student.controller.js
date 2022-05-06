@@ -1,5 +1,6 @@
 const db = require("../models");
 const validation = require("../utility/validation");
+const updateValidation = require("../utility/updateValidation");
 
 const updateProfile = async (req, res, next) => {
 	const { id } = req.user;
@@ -30,6 +31,7 @@ const updateProfile = async (req, res, next) => {
 
 	//check if Student Profile exists
 	let studentProfile;
+
 	try {
 		studentProfile = await db.StudentProfile.findOne({
 			where: {
@@ -41,6 +43,20 @@ const updateProfile = async (req, res, next) => {
 	}
 
 	if (studentProfile) {
+		//Fill in the missing fields
+		updateValidation.updateProfileValidation(
+			{
+				firstName,
+				lastName,
+				studentNumber,
+				address,
+				email,
+				phone,
+				entryPeriod,
+				academicCouncellor,
+			},
+			studentProfile
+		);
 		//update Student Profile
 		try {
 			await studentProfile.update({
