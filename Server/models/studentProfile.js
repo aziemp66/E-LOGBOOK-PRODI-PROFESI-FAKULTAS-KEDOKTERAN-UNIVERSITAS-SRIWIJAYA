@@ -1,5 +1,11 @@
 module.exports = (sequelize, DataTypes) => {
 	const StudentProfile = sequelize.define("StudentProfile", {
+		userId: {
+			type: DataTypes.STRING,
+			primaryKey: true,
+			allowNull: false,
+			unique: true,
+		},
 		firstName: {
 			type: DataTypes.STRING,
 			allowNull: true,
@@ -9,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
 			allowNull: true,
 		},
 		studentNumber: {
-			type: DataTypes.INTEGER,
+			type: DataTypes.STRING,
 			allowNull: false,
 		},
 		address: {
@@ -21,7 +27,7 @@ module.exports = (sequelize, DataTypes) => {
 			allowNull: false,
 		},
 		phone: {
-			type: DataTypes.INTEGER,
+			type: DataTypes.STRING,
 			allowNull: true,
 		},
 		entryPeriod: {
