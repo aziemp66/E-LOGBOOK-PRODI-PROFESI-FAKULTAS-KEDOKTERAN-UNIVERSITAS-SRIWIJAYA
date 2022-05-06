@@ -1,9 +1,18 @@
 const db = require("../models");
 
 const updateProfile = async (req, res, next) => {
-	res.json({
-		message: "Updating Student Profile",
-	});
+	const { id } = req.user;
+
+	const {
+		firstName,
+		lastname,
+		studentNumber,
+		address,
+		email,
+		phone,
+		entryPediod,
+		academicCouncellor,
+	} = req.body;
 };
 
 module.exports = {

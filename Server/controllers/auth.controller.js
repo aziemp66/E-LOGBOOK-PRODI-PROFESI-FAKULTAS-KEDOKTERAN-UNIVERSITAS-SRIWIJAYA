@@ -10,7 +10,7 @@ const userRegister = async (req, res, next) => {
 
 	//check if password and confirm password match
 	if (password !== confirmPassword)
-		return next(new Error("Password and confirm password do not match"));
+		return next("Password and confirm password do not match");
 
 	//check if user already exists
 
@@ -28,7 +28,7 @@ const userRegister = async (req, res, next) => {
 			}));
 
 		if (existingUser) {
-			return next(new Error("Username or email already exists"));
+			return next("Username or email already exists");
 		}
 	} catch (error) {
 		return next(error);
@@ -39,7 +39,7 @@ const userRegister = async (req, res, next) => {
 		email,
 		password,
 	});
-	if (error) return next(error.details[0]);
+	if (error) return next(error.details[0].message);
 
 	const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -65,18 +65,17 @@ const userLogin = async (req, res, next) => {
 		username,
 		password,
 	});
-	if (error) return next(new Error(error.details[0].message));
+	if (error) return next(error.details[0].message);
 
 	const user = await db.User.findOne({
 		where: {
 			username,
 		},
 	});
-	if (!user) return next(new Error("Username or password is incorrect"));
+	if (!user) return next("Username or password is incorrect");
 
 	const validPassword = await bcrypt.compare(password, user.password);
-	if (!validPassword)
-		return next(new Error("Username or password is incorrect"));
+	if (!validPassword) return next("Username or password is incorrect");
 
 	const accessToken = generateToken(user.id, user.roles);
 
