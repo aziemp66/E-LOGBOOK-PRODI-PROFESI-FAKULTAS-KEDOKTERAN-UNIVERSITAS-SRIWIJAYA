@@ -5,6 +5,7 @@ const db = require("./models");
 
 const corsMiddleware = require("./middlewares/cors");
 const verifyTokenMiddleware = require("./middlewares/verifyToken");
+const verifyRolesMiddleware = require("./middlewares/verifyRoles");
 const errorHandlerMiddleware = require("./middlewares/errorHandler");
 
 const authRoutes = require("./router/auth.routes");
@@ -23,7 +24,11 @@ app.use("/api", authRoutes);
 
 app.use(verifyTokenMiddleware);
 
-app.use("/api", studentRoutes);
+app.use(
+	"/api/student",
+	verifyRolesMiddleware.bind(null, "student"),
+	studentRoutes
+);
 
 app.use(errorHandlerMiddleware);
 
