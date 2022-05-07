@@ -2,6 +2,24 @@ const db = require("../models");
 const validation = require("../utility/validation");
 const updateValidation = require("../utility/updateValidation");
 
+const getProfile = async (req, res, next) => {
+	const { id } = req.user;
+
+	try {
+		const studentProfile = await db.Student.findOne({
+			where: {
+				userId: id,
+			},
+		});
+		if (!studentProfile) {
+			return next("Student profile not found");
+		}
+		res.json(studentProfile);
+	} catch (error) {
+		return next(error);
+	}
+};
+
 const updateProfile = async (req, res, next) => {
 	const { id } = req.user;
 
@@ -98,4 +116,5 @@ const updateProfile = async (req, res, next) => {
 
 module.exports = {
 	updateProfile,
+	getProfile,
 };
