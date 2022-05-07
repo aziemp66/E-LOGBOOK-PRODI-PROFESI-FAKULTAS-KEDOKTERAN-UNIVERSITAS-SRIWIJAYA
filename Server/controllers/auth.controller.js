@@ -1,6 +1,7 @@
 const db = require("../models");
 const uuid = require("uuid").v4;
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 const validation = require("../utility/validation");
 const generateToken = require("../utility/generateToken");
@@ -84,7 +85,20 @@ const userLogin = async (req, res, next) => {
 	});
 };
 
+const userToken = async (req, res, next) => {
+	const { token } = req.body;
+
+	//Verify token
+	try {
+		const verified = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+		res.json(verified);
+	} catch (error) {
+		return next(error);
+	}
+};
+
 module.exports = {
 	userRegister,
 	userLogin,
+	userToken,
 };

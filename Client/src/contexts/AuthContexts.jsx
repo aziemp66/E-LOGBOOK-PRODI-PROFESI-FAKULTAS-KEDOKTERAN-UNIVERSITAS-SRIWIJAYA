@@ -63,21 +63,24 @@ export const AuthProvider = (props) => {
 		setUserData(null);
 	};
 
-	const userDataHandler = (token) => {
+	const userDataHandler = async (token) => {
 		let user;
 		try {
-			user = jwtDecode(token);
+			user = await axios.post(`${BASE_URL}/user`, {
+				token,
+			});
+			console.log(user);
 		} catch (error) {
 			setError(error.message.split(":")[0]);
 			logout();
 			return;
 		}
 
-		if (user.exp * 1000 < Date.now()) {
+		if (user.data.exp * 1000 < Date.now()) {
 			logout();
 			return;
 		}
-		setUserData(user);
+		setUserData(user.data);
 	};
 
 	return (
