@@ -110,46 +110,46 @@ const Competences = () => {
 							<input
 								type="radio"
 								name="disease-competences"
-								id="level1"
+								id="disease-1"
 								value={`1`}
 							/>
-							<label htmlFor="level1">Level 1</label>
+							<label htmlFor="disease-1">Level 1</label>
 						</div>
 						<div>
 							<input
 								type="radio"
 								name="disease-competences"
-								id="level2"
+								id="disease-2"
 								value={`2`}
 							/>
-							<label htmlFor="level2">Level 2</label>
+							<label htmlFor="disease-2">Level 2</label>
 						</div>
 						<div>
 							<input
 								type="radio"
 								name="disease-competences"
-								id="level3a"
+								id="disease-3a"
 								value={`3A`}
 							/>
-							<label htmlFor="level3a">Level 3A</label>
+							<label htmlFor="disease-3a">Level 3A</label>
 						</div>
 						<div>
 							<input
 								type="radio"
 								name="disease-competences"
-								id="level3b"
+								id="disease-3b"
 								value={`3B`}
 							/>
-							<label htmlFor="level3b">Level 3B</label>
+							<label htmlFor="disease-3b">Level 3B</label>
 						</div>
 						<div>
 							<input
 								type="radio"
 								name="disease-competences"
-								id="level4"
+								id="disease-4"
 								value={`4`}
 							/>
-							<label htmlFor="level4">Level 4</label>
+							<label htmlFor="disease-4">Level 4</label>
 						</div>
 					</div>
 				</div>
@@ -177,37 +177,37 @@ const Competences = () => {
 							<input
 								type="radio"
 								name="skill-competences"
-								id="level1"
+								id="skill-1"
 								value={`1`}
 							/>
-							<label htmlFor="level1">Level 1</label>
+							<label htmlFor="skill-1">Level 1</label>
 						</div>
 						<div>
 							<input
 								type="radio"
 								name="skill-competences"
-								id="level2"
+								id="skill-2"
 								value={`2`}
 							/>
-							<label htmlFor="level2">Level 2</label>
+							<label htmlFor="skill-2">Level 2</label>
 						</div>
 						<div>
 							<input
 								type="radio"
 								name="skill-competences"
-								id="level3"
+								id="skill-3"
 								value={`3`}
 							/>
-							<label htmlFor="level3">Level 3</label>
+							<label htmlFor="skill-3">Level 3</label>
 						</div>
 						<div>
 							<input
 								type="radio"
 								name="skill-competences"
-								id="level4"
+								id="skill-4"
 								value={`4`}
 							/>
-							<label htmlFor="level4">Level 4</label>
+							<label htmlFor="skill-4">Level 4</label>
 						</div>
 					</div>
 				</div>
