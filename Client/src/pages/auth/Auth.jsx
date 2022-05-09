@@ -18,11 +18,13 @@ const Auth = () => {
 					SIRIWIJAYA
 				</h1>
 			</section>
-			{authSwitch ? (
-				<Register onSwitch={authSwitchHandler} />
-			) : (
-				<Login onSwitch={authSwitchHandler} />
-			)}
+			<section>
+				{authSwitch ? (
+					<Register onSwitch={authSwitchHandler} />
+				) : (
+					<Login onSwitch={authSwitchHandler} />
+				)}
+			</section>
 		</div>
 	);
 };

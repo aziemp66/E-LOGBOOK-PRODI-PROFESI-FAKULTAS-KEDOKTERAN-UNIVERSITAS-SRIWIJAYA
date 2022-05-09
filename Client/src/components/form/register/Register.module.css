@@ -10,7 +10,7 @@
 	width: 300px;
 	display: flex;
 	flex-direction: column;
-	margin-bottom: 20px;
+	gap: 1rem;
 }
 .form h3 {
 	text-align: center;
