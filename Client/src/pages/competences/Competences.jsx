@@ -39,9 +39,9 @@ const Competences = () => {
 					</select>
 				</div>
 				<div>
-					<label htmlFor="dateOfBirth">Tanggal Lahir</label>
+					<label htmlFor="dateOfBirth">Tanggal</label>
 					<div
-						id="dateOfBirth"
+						id="date"
 						className={`${styles.dropdown} ${styles.dates}`}
 					>
 						<select name="days" id="days">
@@ -89,7 +89,7 @@ const Competences = () => {
 						Nomor Rekam Medis Pasien
 					</label>
 					<input
-						type="number"
+						type="text"
 						placeholder={`Tuliskan 0 jika tidak ada`}
 					/>
 				</div>
@@ -154,7 +154,7 @@ const Competences = () => {
 					</div>
 				</div>
 				<div>
-					<label htmlFor="skill-competences">Keterampilan</label>
+					<label htmlFor="skill-competences">Nama Keterampilan</label>
 					<select name="skill-competences" id="skill-competences">
 						<option value="Universal Precaution">
 							Universal Precaution
