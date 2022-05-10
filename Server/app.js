@@ -26,7 +26,11 @@ app.use("/api/auth", authRoutes);
 
 app.use(verifyTokenMiddleware);
 
-app.use("/api/helper", helperRoutes);
+app.use(
+	"/api/helper",
+	verifyRolesMiddleware.bind(null, "student/admin/lecturer/inspector"),
+	helperRoutes
+);
 
 app.use(
 	"/api/student",
