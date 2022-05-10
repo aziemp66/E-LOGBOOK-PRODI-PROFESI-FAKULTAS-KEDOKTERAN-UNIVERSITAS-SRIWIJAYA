@@ -7,4 +7,6 @@ router.post("/disease", adminController.addDisease);
 
 router.post("/skill", adminController.addSkill);
 
+router.patch("/roles/:id", adminController.updateUserRoles);
+
 module.exports = router;

@@ -57,8 +57,35 @@ const addSkill = async (req, res, next) => {
 	});
 };
 
+const updateUserRoles = async (req, res, next) => {
+	const { id } = req.params;
+	const { roles } = req.body;
+
+	const { error } = validation.updateUserRolesValidation({ roles });
+	if (error) return next(error.details[0].message);
+
+	try {
+		await db.User.update(
+			{
+				roles,
+			},
+			{
+				where: {
+					id,
+				},
+			}
+		);
+	} catch (error) {
+		return next(error);
+	}
+	res.json({
+		message: "User roles updated successfully",
+	});
+};
+
 module.exports = {
 	addStation,
 	addDisease,
 	addSkill,
+	updateUserRoles,
 };
