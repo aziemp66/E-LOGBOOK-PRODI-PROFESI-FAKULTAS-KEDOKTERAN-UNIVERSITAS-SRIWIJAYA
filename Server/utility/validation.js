@@ -34,8 +34,37 @@ const updateProfileValidation = (data) => {
 	return schema.validate(data);
 };
 
+const addStationValidation = (data) => {
+	const schema = Joi.object({
+		name: Joi.string().min(1).max(255),
+	});
+
+	return schema.validate(data);
+};
+
+const addDiseaseValidation = (data) => {
+	const schema = Joi.object({
+		name: Joi.string().min(1).max(255),
+		station: Joi.string().min(1).max(255),
+	});
+
+	return schema.validate(data);
+};
+
+const addSkillValidation = (data) => {
+	const schema = Joi.object({
+		name: Joi.string().min(1).max(255),
+		station: Joi.string().min(1).max(255),
+	});
+
+	return schema.validate(data);
+};
+
 module.exports = {
 	registerValidation,
 	loginValidation,
 	updateProfileValidation,
+	addStationValidation,
+	addDiseaseValidation,
+	addSkillValidation,
 };

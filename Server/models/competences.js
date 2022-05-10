@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-	const CompetenceData = sequelize.define("CompetenceData", {
+	const Competence = sequelize.define("Competence", {
 		userId: {
 			type: DataTypes.STRING,
 			primaryKey: true,
@@ -43,5 +43,5 @@ module.exports = (sequelize, DataTypes) => {
 			allowNull: false,
 		},
 	});
-	return CompetenceData;
+	return Competence;
 };
