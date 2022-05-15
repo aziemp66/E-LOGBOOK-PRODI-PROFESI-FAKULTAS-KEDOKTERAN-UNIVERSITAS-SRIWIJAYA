@@ -11,6 +11,7 @@ const errorHandlerMiddleware = require("./middlewares/errorHandler");
 const authRoutes = require("./router/auth.routes");
 const studentRoutes = require("./router/student.routes");
 const adminRoutes = require("./router/admin.routes");
+const supervisorRoutes = require("./router/supervisor.routes");
 const helperRoutes = require("./router/helper.routes");
 
 require("dotenv").config();
@@ -39,6 +40,12 @@ app.use(
 );
 
 app.use("/api/admin", verifyRolesMiddleware.bind(null, "admin"), adminRoutes);
+
+app.use(
+	"/api/supervisor",
+	verifyRolesMiddleware.bind(null, "supervisor"),
+	supervisorRoutes
+);
 
 app.use(errorHandlerMiddleware);
 

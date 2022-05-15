@@ -1,6 +1,48 @@
 const db = require("../models");
 const validation = require("../utility/validation");
 
+const getAllStations = async (req, res, next) => {
+	let stations;
+	try {
+		stations = await db.Station.findAll();
+	} catch (error) {
+		return next(error);
+	}
+
+	res.json(stations);
+};
+
+const getAllDiseasesAndSkills = async (req, res, next) => {
+	const { station } = req.body;
+
+	let diseases;
+	try {
+		diseases = await db.Disease.findAll({
+			where: {
+				station,
+			},
+		});
+	} catch (error) {
+		return next(error);
+	}
+
+	let skills;
+	try {
+		skills = await db.Skill.findAll({
+			where: {
+				station,
+			},
+		});
+	} catch (error) {
+		return next(error);
+	}
+
+	res.json({
+		diseases,
+		skills,
+	});
+};
+
 const addStation = async (req, res, next) => {
 	const { name } = req.body;
 
@@ -84,6 +126,8 @@ const updateUserRoles = async (req, res, next) => {
 };
 
 module.exports = {
+	getAllStations,
+	getAllDiseasesAndSkills,
 	addStation,
 	addDisease,
 	addSkill,
