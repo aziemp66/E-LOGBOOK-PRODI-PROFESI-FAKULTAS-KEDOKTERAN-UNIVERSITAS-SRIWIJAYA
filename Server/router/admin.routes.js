@@ -1,11 +1,11 @@
 const router = require("express").Router();
 const adminController = require("../controllers/admin.controller");
 
-router.get("/stations", adminController.getStations);
+router.get("/stations", adminController.getAllStations);
 
-router.get("/disease-and-skill", adminController.getDiseaseAndSkill);
+router.get("/disease-and-skill", adminController.getAllDiseasesAndSkills);
 
-router.post("/station", adminController.addStation);
+router.post("/stations", adminController.addStation);
 
 router.post("/disease", adminController.addDisease);
 
