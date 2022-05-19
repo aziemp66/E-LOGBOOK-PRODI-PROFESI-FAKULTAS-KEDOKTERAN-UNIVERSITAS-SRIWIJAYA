@@ -125,6 +125,53 @@ const updateUserRoles = async (req, res, next) => {
 	});
 };
 
+const addStudentPresention = async (req, res, next) => {
+	const { studentId } = req.params;
+	const { month, year, present, sick, excused, absent } = req.body;
+
+	const { error } = validation.addStudentPresentionValidation({
+		studentId,
+		month,
+		year,
+		present,
+		sick,
+		excused,
+		absent,
+	});
+	if (error) return next(error.details[0].message);
+
+	//check if there is already student presention this month and year
+	try {
+		const presentionExist = db.Presention.findOne({
+			where: {
+				studentId,
+				month,
+				year,
+			},
+		});
+		if (presentionExist) return next("Presention already exist this month");
+	} catch (error) {
+		return next(error);
+	}
+
+	try {
+		await db.Presention.create({
+			studentId,
+			month,
+			year,
+			present,
+			absent,
+			sick,
+			excused,
+		});
+		res.json({
+			message: "Presention Successfully Created",
+		});
+	} catch (error) {
+		return next(error);
+	}
+};
+
 module.exports = {
 	getAllStations,
 	getAllDiseasesAndSkills,
@@ -132,4 +179,5 @@ module.exports = {
 	addDisease,
 	addSkill,
 	updateUserRoles,
+	addStudentPresention,
 };

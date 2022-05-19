@@ -20,7 +20,6 @@ const PresentionCard = (props) => {
 				<li>{sick} hari sakit</li>
 				<li>{excused} hari izin</li>
 				<li>{absent} hari alfa</li>
-				<li>{holiday} hari cuti</li>
 			</ul>
 		</div>
 	);

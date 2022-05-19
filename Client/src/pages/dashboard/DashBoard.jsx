@@ -15,8 +15,7 @@ import TotalProgressCard from "../../components/totalprogresscard/TotalProgressC
 const present = 26;
 const sick = 2;
 const excused = 1;
-const absent = 1;
-const holiday = 1;
+const absent = 2;
 
 const DashBoard = () => {
 	const authCtx = useContext(AuthContext);

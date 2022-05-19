@@ -4,8 +4,7 @@
 		"password": "dummypassword123",
 		"database": "elogbook_fk_unsri",
 		"host": "127.0.0.1",
-		"dialect": "mysql",
-		"port": 3306
+		"dialect": "mysql"
 	},
 	"test": {
 		"username": "root",

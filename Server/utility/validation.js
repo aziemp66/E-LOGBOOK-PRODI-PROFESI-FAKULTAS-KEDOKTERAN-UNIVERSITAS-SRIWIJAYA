@@ -68,6 +68,20 @@ const updateUserRolesValidation = (data) => {
 	return schema.validate(data);
 };
 
+const addStudentPresentionValidation = (data) => {
+	const schema = Joi.object({
+		studentId: Joi.string().min(1).max(255),
+		month: Joi.number().min(1).max(12),
+		year: Joi.number().min(1).max(9999),
+		present: Joi.number().min(1).max(31),
+		absent: Joi.number().min(1).max(31),
+		sick: Joi.number().min(1).max(31),
+		excused: Joi.number().min(1).max(31),
+	});
+
+	return schema.validate(data);
+};
+
 module.exports = {
 	registerValidation,
 	loginValidation,
@@ -76,4 +90,5 @@ module.exports = {
 	addDiseaseValidation,
 	addSkillValidation,
 	updateUserRolesValidation,
+	addStudentPresentionValidation,
 };

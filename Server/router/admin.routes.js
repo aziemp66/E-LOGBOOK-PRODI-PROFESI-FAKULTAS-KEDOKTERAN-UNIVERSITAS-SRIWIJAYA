@@ -13,4 +13,6 @@ router.post("/skill", adminController.addSkill);
 
 router.patch("/roles/:id", adminController.updateUserRoles);
 
+router.post("/presention", adminController.addStudentPresention);
+
 module.exports = router;
