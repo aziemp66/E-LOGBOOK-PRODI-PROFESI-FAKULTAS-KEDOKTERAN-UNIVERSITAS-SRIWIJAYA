@@ -82,6 +82,26 @@ const addStudentPresentionValidation = (data) => {
 	return schema.validate(data);
 };
 
+const addCompetenceValidation = (data) => {
+	const schema = Joi.object({
+		station: Joi.string().min(1).max(255),
+		days: Joi.number().min(1).max(31),
+		months: Joi.number().min(1).max(12),
+		years: Joi.number().min(1).max(9999),
+		hospital: Joi.string().min(1).max(255),
+		patientInitials: Joi.string().min(1).max(255),
+		patientMedicalNumber: Joi.string().min(1).max(255),
+		diseaseName: Joi.string().min(1).max(255),
+		diseaseCompetence: Joi.string().min(1).max(255),
+		skillName: Joi.string().min(1).max(255),
+		skillCompetence: Joi.string().min(1).max(255),
+		lecturer: Joi.string().min(1).max(255),
+		guidanceType: Joi.string().min(1).max(255),
+	});
+
+	return schema.validate(data);
+};
+
 module.exports = {
 	registerValidation,
 	loginValidation,
@@ -91,4 +111,5 @@ module.exports = {
 	addSkillValidation,
 	updateUserRolesValidation,
 	addStudentPresentionValidation,
+	addCompetenceValidation,
 };

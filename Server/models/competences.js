@@ -34,7 +34,7 @@ module.exports = (sequelize, DataTypes) => {
 			type: DataTypes.STRING,
 			allowNull: false,
 		},
-		lecturersName: {
+		lecturer: {
 			type: DataTypes.STRING,
 			allowNull: false,
 		},
@@ -46,6 +46,14 @@ module.exports = (sequelize, DataTypes) => {
 			type: DataTypes.BOOLEAN,
 			allowNull: false,
 			defaultValue: false,
+		},
+		date: {
+			type: DataTypes.DATE,
+			allowNull: false,
+		},
+		hospital: {
+			type: DataTypes.STRING,
+			allowNull: false,
 		},
 	});
 	return Competence;

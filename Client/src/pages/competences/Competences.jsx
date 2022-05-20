@@ -32,7 +32,7 @@ const Competences = () => {
 			<form className={styles.form} action="" method="post">
 				<div>
 					<label htmlFor="stase">Stase</label>
-					<select name="stase" id="stase">
+					<select name="stase" id="station">
 						<option value="bedah">Bedah</option>
 						<option value="anestesi">Anestesi</option>
 						<option value="kesehatan anak">Kesehatan Anak</option>
@@ -78,10 +78,12 @@ const Competences = () => {
 					</select>
 				</div>
 				<div>
-					<label htmlFor="name">Inisial Nama Pasien</label>
+					<label htmlFor="patientInitials">Inisial Nama Pasien</label>
 					<input
 						type="text"
 						placeholder={`Tuliskan "Pasien Simulasi" jika tidak ada`}
+						id="patientInitials"
+						name="patientInitials"
 					/>
 				</div>
 				<div>
@@ -154,8 +156,8 @@ const Competences = () => {
 					</div>
 				</div>
 				<div>
-					<label htmlFor="skill-competences">Nama Keterampilan</label>
-					<select name="skill-competences" id="skill-competences">
+					<label htmlFor="skill">Nama Keterampilan</label>
+					<select name="skill" id="skill">
 						<option value="Universal Precaution">
 							Universal Precaution
 						</option>
@@ -212,8 +214,8 @@ const Competences = () => {
 					</div>
 				</div>
 				<div>
-					<label htmlFor="dosen">Nama Dosen</label>
-					<select name="dosen" id="dosen">
+					<label htmlFor="lecturer">Nama Dosen</label>
+					<select name="lecturer" id="lecturer">
 						<option value="dr. Budi">dr. Budi</option>
 						<option value="dr. Agus">dr. Agus</option>
 						<option value="dr. Yuli">dr. Yuli</option>

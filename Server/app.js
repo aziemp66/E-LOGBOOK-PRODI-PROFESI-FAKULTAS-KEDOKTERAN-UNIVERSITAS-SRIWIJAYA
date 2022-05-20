@@ -29,7 +29,7 @@ app.use(verifyTokenMiddleware);
 
 app.use(
 	"/api/helper",
-	verifyRolesMiddleware.bind(null, "student/admin/lecturer/inspector"),
+	verifyRolesMiddleware.bind(null, "student/admin/lecturer/supervisor"),
 	helperRoutes
 );
 
