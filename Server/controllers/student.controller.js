@@ -1,6 +1,7 @@
 const db = require("../models");
 const validation = require("../utility/validation");
 const updateValidation = require("../utility/updateValidation");
+const uuid = require("uuid").v4;
 
 const getProfile = async (req, res, next) => {
 	const { id } = req.user;
@@ -299,6 +300,7 @@ const addCompetence = async (req, res, next) => {
 	//register new competence
 	try {
 		await db.StudentCompetence.create({
+			id: uuid(),
 			station: stationExist.id,
 			days,
 			months,

@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-	const lecturerProfile = sequelize.define("StudentProfile", {
+	const lecturerProfile = sequelize.define("LecturerProfile", {
 		userId: {
 			type: DataTypes.STRING,
 			primaryKey: true,

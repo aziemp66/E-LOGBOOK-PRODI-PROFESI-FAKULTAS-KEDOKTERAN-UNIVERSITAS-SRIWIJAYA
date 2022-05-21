@@ -1,10 +1,12 @@
 module.exports = (sequelize, DataTypes) => {
 	const Competence = sequelize.define("Competence", {
+		id: {
+			type: DataTypes.INTEGER,
+			primaryKey: true,
+		},
 		userId: {
 			type: DataTypes.STRING,
-			primaryKey: true,
 			allowNull: false,
-			unique: true,
 		},
 		date: {
 			type: DataTypes.DATE,

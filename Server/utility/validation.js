@@ -60,6 +60,15 @@ const addSkillValidation = (data) => {
 	return schema.validate(data);
 };
 
+const addGuidanceValidation = (data) => {
+	const schema = Joi.object({
+		name: Joi.string().min(1).max(255),
+		station: Joi.string().min(1).max(255),
+	});
+
+	return schema.validate(data);
+};
+
 const updateUserRolesValidation = (data) => {
 	const schema = Joi.object({
 		roles: Joi.array().items(Joi.string().min(1).max(255)),
@@ -109,6 +118,7 @@ module.exports = {
 	addStationValidation,
 	addDiseaseValidation,
 	addSkillValidation,
+	addGuidanceValidation,
 	updateUserRolesValidation,
 	addStudentPresentionValidation,
 	addCompetenceValidation,

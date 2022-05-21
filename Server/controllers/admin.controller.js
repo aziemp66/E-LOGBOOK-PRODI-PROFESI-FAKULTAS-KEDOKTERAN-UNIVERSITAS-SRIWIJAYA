@@ -99,6 +99,25 @@ const addSkill = async (req, res, next) => {
 	});
 };
 
+const addGuidance = async (req, res, next) => {
+	const { name, station } = req.body;
+
+	const { error } = validation.addGuidanceValidation({ name, station });
+	if (error) return next(error.details[0].message);
+
+	try {
+		await db.Guidance.create({
+			name,
+			station,
+		});
+	} catch (error) {
+		return next(error);
+	}
+	res.json({
+		message: "Guidance added successfully",
+	});
+};
+
 const updateUserRoles = async (req, res, next) => {
 	const { id } = req.params;
 	const { roles } = req.body;
@@ -178,6 +197,7 @@ module.exports = {
 	addStation,
 	addDisease,
 	addSkill,
+	addGuidance,
 	updateUserRoles,
 	addStudentPresention,
 };

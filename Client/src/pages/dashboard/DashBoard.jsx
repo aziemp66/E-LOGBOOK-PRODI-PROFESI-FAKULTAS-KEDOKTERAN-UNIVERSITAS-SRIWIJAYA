@@ -91,7 +91,6 @@ const DashBoard = () => {
 						sick={sick}
 						excused={excused}
 						absent={absent}
-						holiday={holiday}
 					/>
 				</Fade>
 			</section>
