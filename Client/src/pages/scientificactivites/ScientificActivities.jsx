@@ -194,7 +194,7 @@ const ScientificActivities = () => {
 				<input
 					type="file"
 					id="legalizationPage"
-					name="Halaman Pengesahan"
+					name="legalizationPage"
 					accept="application/pdf"
 					onChange={legalizationPageNameHandler}
 					hidden
@@ -202,7 +202,7 @@ const ScientificActivities = () => {
 				<input
 					type="file"
 					id="activityPhoto"
-					name="Foto Kegiatan Ilmiah"
+					name="activityPhoto"
 					onChange={activityPhotoNameHandler}
 					accept="image/*"
 					hidden
