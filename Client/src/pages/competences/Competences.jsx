@@ -24,6 +24,9 @@ const year = date.getFullYear();
 const years = Array.from(Array(150), (x, i) => year - i);
 
 const Competences = () => {
+	const onSubmitHandler = (e) => {
+		e.preventDefault();
+	};
 	return (
 		<div className={styles.page}>
 			<div className={styles.title}>

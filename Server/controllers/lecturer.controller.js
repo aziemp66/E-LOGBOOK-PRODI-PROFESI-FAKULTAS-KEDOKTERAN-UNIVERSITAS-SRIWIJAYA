@@ -1,3 +1,5 @@
 const db = require("../models");
 
-const verifyStudentCompetences = async (req, res, next) => {};
+const verifyStudentCompetences = async(req, res, next) => {
+
+};

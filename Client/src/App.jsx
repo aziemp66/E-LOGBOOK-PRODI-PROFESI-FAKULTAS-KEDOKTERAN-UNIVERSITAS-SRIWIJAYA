@@ -20,8 +20,8 @@ const App = () => {
 
 	useEffect(() => {
 		if (authCtx.userData) {
-			const roles = authCtx.userData.roles;
-			switch (roles) {
+			const role = authCtx.userData.role;
+			switch (role) {
 				case "student":
 					navigate("/dashboard");
 					break;
@@ -33,19 +33,19 @@ const App = () => {
 			return;
 		} else {
 			if (localStorage.getItem("token")) {
-				authCtx.userDataHandler(localStorage.getItem("token"));
+				authCtx.userDataHandler();
 			} else {
 				navigate("/");
 			}
 		}
-	}, [localStorage.getItem("token"), authCtx.userData]);
+	}, []);
 
 	return (
 		<div className={styles.container}>
 			{authCtx.userData && <Sidebar />}
 			<Routes>
 				<Route path="/" element={<Auth />} />
-				<Route element={<RequireAuth roles="student" />}>
+				<Route element={<RequireAuth role="student" />}>
 					<Route path="/dashboard" element={<DashBoard />} />
 					<Route path="/profile" element={<Profile />} />
 					<Route

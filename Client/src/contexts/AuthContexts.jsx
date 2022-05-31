@@ -4,7 +4,7 @@ import axios from "axios";
 
 const AuthContext = React.createContext({
 	userData: null,
-	userDataHandler: (token) => {},
+	userDataHandler: () => {},
 	isError: false,
 	register: (email, username, password, confirmPassword) => {},
 	login: (username, password) => {},
@@ -63,24 +63,13 @@ export const AuthProvider = (props) => {
 		setUserData(null);
 	};
 
-	const userDataHandler = async (token) => {
-		let user;
-		try {
-			user = await axios.post(`${BASE_URL}/user`, {
-				token,
-			});
-			console.log(user);
-		} catch (error) {
-			setError(error.message.split(":")[0]);
-			logout();
-			return;
+	const userDataHandler = async () => {
+		const token = localStorage.getItem("token");
+		if (token) {
+			setUserData(jwtDecode(token));
+		} else {
+			setUserData(null);
 		}
-
-		if (user.data.exp * 1000 < Date.now()) {
-			logout();
-			return;
-		}
-		setUserData(user.data);
 	};
 
 	return (

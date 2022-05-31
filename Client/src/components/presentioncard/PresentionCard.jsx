@@ -4,9 +4,9 @@ import CircularProgressBar from "../ui/circularprogressbar/CircularProgressBar";
 import styles from "./PresentionCard.module.css";
 
 const PresentionCard = (props) => {
-	const { present, sick, excused, absent, holiday } = props;
+	const { present, sick, excused, absent } = props;
 	const percentage = Math.floor(
-		(present / (present + sick + excused + absent + holiday)) * 100
+		(present / (present + sick + excused + absent )) * 100
 	);
 
 	return (
