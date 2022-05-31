@@ -1,15 +1,7 @@
-import { useState } from "react";
-import Register from "../../components/form/register/Register";
-import Login from "../../components/form/login/Login";
+import { Link } from "react-router-dom";
 import styles from "./Auth.module.css";
 
 const Auth = () => {
-	const [authSwitch, setAuthSwitch] = useState(false);
-
-	const authSwitchHandler = () => {
-		setAuthSwitch((prevAuthSwitch) => !prevAuthSwitch);
-	};
-
 	return (
 		<div className={styles.background}>
 			<section className={styles.title}>
@@ -18,12 +10,23 @@ const Auth = () => {
 					SIRIWIJAYA
 				</h1>
 			</section>
-			<section>
-				{authSwitch ? (
-					<Register onSwitch={authSwitchHandler} />
-				) : (
-					<Login onSwitch={authSwitchHandler} />
-				)}
+			<section className={styles.card}>
+				<div className={styles.welcome}>
+					<h2>
+						Selamat Datang di E-logbook Fakultas Kedokteran
+						Universitas Sriwijaya
+					</h2>
+				</div>
+				<ul className={styles.auth}>
+					<li>
+						<h2>Sudah Mempunyai Akun ?</h2>
+						<Link to={"/login"}>Login</Link>
+					</li>
+					<li>
+						<h2>Belum Mempunyai Akun ?</h2>
+						<Link to={"/register"}>Daftar</Link>
+					</li>
+				</ul>
 			</section>
 		</div>
 	);

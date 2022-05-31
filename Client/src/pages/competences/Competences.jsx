@@ -1,6 +1,8 @@
 import React from "react";
 import Button from "../../components/ui/button/Button";
 
+import axios from "axios";
+
 import styles from "./Competences.module.css";
 
 const days = Array.from(Array(31), (x, i) => i + 1);
@@ -24,18 +26,39 @@ const year = date.getFullYear();
 const years = Array.from(Array(150), (x, i) => year - i);
 
 const Competences = () => {
-	const onSubmitHandler = (e) => {
+	const onSubmitHandler = async (e) => {
 		e.preventDefault();
+
+		// station,
+		// days,
+		// months,
+		// years,
+		// hospital,
+		// patientInitials,
+		// patientMedicalNumber,
+		// disease: diseaseId,
+		// "disease-competences": diseaseCompetence,
+		// skill: skillId,
+		// "skill-competences": skillCompetence,
+		// lecturer: lecturer,
+		// guidances: guidanceId,
+
+		const response = await axios.post("/api/user/competences", {});
 	};
 	return (
 		<div className={styles.page}>
 			<div className={styles.title}>
 				<h1>Capaian Kompetensi</h1>
 			</div>
-			<form className={styles.form} action="" method="post">
+			<form
+				className={styles.form}
+				action=""
+				method="post"
+				onSubmit={onSubmitHandler}
+			>
 				<div>
-					<label htmlFor="stase">Stase</label>
-					<select name="stase" id="station">
+					<label htmlFor="station">Stase</label>
+					<select name="station" id="station">
 						<option value="bedah">Bedah</option>
 						<option value="anestesi">Anestesi</option>
 						<option value="kesehatan anak">Kesehatan Anak</option>

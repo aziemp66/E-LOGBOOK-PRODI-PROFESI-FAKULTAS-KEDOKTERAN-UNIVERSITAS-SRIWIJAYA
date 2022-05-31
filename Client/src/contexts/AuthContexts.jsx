@@ -5,7 +5,6 @@ import axios from "axios";
 const AuthContext = React.createContext({
 	userData: null,
 	userDataHandler: () => {},
-	isError: false,
 	register: (email, username, password, confirmPassword) => {},
 	login: (username, password) => {},
 	logout: () => {},
@@ -14,7 +13,6 @@ const AuthContext = React.createContext({
 const BASE_URL = "http://localhost:5000/api/auth";
 
 export const AuthProvider = (props) => {
-	const [error, setError] = useState(false);
 	const [userData, setUserData] = useState(null);
 
 	const register = async (email, username, password, confirmPassword) => {
@@ -78,7 +76,6 @@ export const AuthProvider = (props) => {
 				register,
 				login,
 				logout,
-				error,
 				userData,
 				userDataHandler,
 			}}

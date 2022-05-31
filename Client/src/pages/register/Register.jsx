@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
-import AuthContext from "../../../contexts/AuthContexts";
+import AuthContext from "../../contexts/AuthContexts";
 
 import styles from "./Register.module.css";
-import Button from "../../ui/button/Button";
+import Button from "../../components/ui/button/Button";
 
 import { Fade } from "react-reveal";
 
