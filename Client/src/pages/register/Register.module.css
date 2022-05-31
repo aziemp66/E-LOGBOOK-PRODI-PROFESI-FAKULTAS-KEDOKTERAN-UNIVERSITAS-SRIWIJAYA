@@ -7,7 +7,9 @@
 	align-items: center;
 	padding: 0 5rem;
 }
-
+.title {
+	width: 1000px;
+}
 .title h1 {
 	text-align: center;
 	font-size: 30px;
@@ -51,7 +53,8 @@
 .switch {
 	margin-top: 1rem;
 }
-.switch span {
+.switch a {
+	color: black;
 	font-size: 1rem;
 	font-weight: bold;
 	cursor: pointer;

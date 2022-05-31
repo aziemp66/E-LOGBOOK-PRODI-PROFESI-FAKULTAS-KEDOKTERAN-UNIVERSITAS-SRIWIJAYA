@@ -14,6 +14,7 @@ import AuthContext from "./contexts/AuthContexts";
 
 import RequireAuth from "./helpers/RequireAuth";
 import Login from "./pages/login/Login";
+import Register from "./pages/register/Register";
 
 const App = () => {
 	const authCtx = useContext(AuthContext);
@@ -47,6 +48,7 @@ const App = () => {
 			<Routes>
 				<Route path="/" element={<Auth />} />
 				<Route path="/login" element={<Login />} />
+				<Route path="/register" element={<Register />} />
 				<Route element={<RequireAuth role="student" />}>
 					<Route path="/dashboard" element={<DashBoard />} />
 					<Route path="/profile" element={<Profile />} />
