@@ -28,29 +28,29 @@ app.use("/api/auth", authRoutes);
 app.use(verifyTokenMiddleware);
 
 app.use(
-	"/api/helper",
-	verifyRolesMiddleware.bind(null, "student/admin/lecturer/supervisor"),
-	helperRoutes
+  "/api/helper",
+  verifyRolesMiddleware.bind(null, "student/admin/lecturer/supervisor"),
+  helperRoutes
 );
 
 app.use(
-	"/api/student",
-	verifyRolesMiddleware.bind(null, "student"),
-	studentRoutes
+  "/api/student",
+  verifyRolesMiddleware.bind(null, "student"),
+  studentRoutes
 );
 
 app.use("/api/admin", verifyRolesMiddleware.bind(null, "admin"), adminRoutes);
 
 app.use(
-	"/api/supervisor",
-	verifyRolesMiddleware.bind(null, "supervisor"),
-	supervisorRoutes
+  "/api/supervisor",
+  verifyRolesMiddleware.bind(null, "supervisor"),
+  supervisorRoutes
 );
 
 app.use(errorHandlerMiddleware);
 
 db.sequelize.sync().then(() => {
-	app.listen(PORT, () => {
-		console.log(`Server listening on port ${PORT}`);
-	});
+  app.listen(PORT, () => {
+    console.log(`Server listening on port ${PORT}`);
+  });
 });

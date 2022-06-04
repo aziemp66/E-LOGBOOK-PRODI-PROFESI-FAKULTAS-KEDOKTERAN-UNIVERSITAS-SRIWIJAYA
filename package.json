@@ -1,0 +1,34 @@
+{
+  "name": "elogbook-fk-unsri",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aziemp66/E-LOGBOOK-PRODI-PROFESI-FAKULTAS-KEDOKTERAN-UNIVERSITAS-SRIWIJAYA.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aziemp66/E-LOGBOOK-PRODI-PROFESI-FAKULTAS-KEDOKTERAN-UNIVERSITAS-SRIWIJAYA/issues"
+  },
+  "homepage": "https://github.com/aziemp66/E-LOGBOOK-PRODI-PROFESI-FAKULTAS-KEDOKTERAN-UNIVERSITAS-SRIWIJAYA#readme",
+  "devDependencies": {
+    "eslint-plugin-react": "^7.30.0",
+    "husky": "^8.0.1",
+    "lint-staged": "^13.0.0",
+    "prettier": "2.6.2"
+  },
+  "extends": [
+    "some-other-config-you-use",
+    "prettier"
+  ],
+  "lint-staged": {
+    "**/*": "prettier --write --ignore-unknown"
+  }
+}

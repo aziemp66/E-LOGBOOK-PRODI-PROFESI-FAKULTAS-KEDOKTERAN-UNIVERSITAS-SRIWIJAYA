@@ -3,14 +3,14 @@ import { Outlet, Navigate } from "react-router-dom";
 import AuthContext from "../contexts/AuthContexts";
 
 const RequireAuth = (props) => {
-	const authCtx = useContext(AuthContext);
+  const authCtx = useContext(AuthContext);
 
-	const isAuthenticated =
-		authCtx.userData &&
-		authCtx.userData.role === props.role &&
-		authCtx.userData.exp * 1000 > Date.now();
+  const isAuthenticated =
+    authCtx.userData &&
+    authCtx.userData.role === props.role &&
+    authCtx.userData.exp * 1000 > Date.now();
 
-	return isAuthenticated ? <Outlet /> : <Navigate to="/" />;
+  return isAuthenticated ? <Outlet /> : <Navigate to="/" />;
 };
 
 export default RequireAuth;
