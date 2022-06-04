@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const express = require("express");
 
 const app = express();
@@ -12,9 +14,8 @@ const authRoutes = require("./router/auth.routes");
 const studentRoutes = require("./router/student.routes");
 const adminRoutes = require("./router/admin.routes");
 const supervisorRoutes = require("./router/supervisor.routes");
+const lecturerRoutes = require("./router/lecturer.routes");
 const helperRoutes = require("./router/helper.routes");
-
-require("dotenv").config();
 
 const PORT = process.env.PORT || 5000;
 
@@ -31,6 +32,12 @@ app.use(
   "/api/helper",
   verifyRolesMiddleware.bind(null, "student/admin/lecturer/supervisor"),
   helperRoutes
+);
+
+app.use(
+  "/api/lecturer",
+  verifyRolesMiddleware.bind(null, "lecturer"),
+  lecturerRoutes
 );
 
 app.use(
