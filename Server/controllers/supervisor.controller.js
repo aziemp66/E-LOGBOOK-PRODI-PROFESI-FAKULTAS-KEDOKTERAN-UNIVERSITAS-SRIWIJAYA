@@ -1,46 +1,38 @@
 const db = require("../models");
 
-const getAllStudentsProfile = async (req, res) => {
-  let studentsWIthProfile;
+const getAllStudentsProfile = async (req, res, next) => {
+  let studentsWithProfile;
   try {
-    studentsWIthProfile = await db.Student.findAll({
-      include: [
-        {
-          model: db.StudentProfile,
-          attributes: {
-            exclude: ["userId", "createdAt", "updatedAt"],
-          },
-        },
-      ],
-    });
+    studentsWithProfile = await db.StudentProfile.findAll();
   } catch (error) {
     return next(error);
   }
 
-  res.json(studentsWIthProfile);
+  res.json(studentsWithProfile);
 };
 
-const getAllStudentsCompetence = async (req, res) => {
-  let studentWithCompetences;
+const getAllCompetence = async (req, res, next) => {
+  let allCompetences;
   try {
-    studentWithCompetences = await db.Student.findAll({
-      include: [
-        {
-          model: db.Competences,
-          attributes: {
-            exclude: ["userId", "createdAt", "updatedAt"],
-          },
-        },
-      ],
-    });
+    allCompetences = await db.Competence.findAll();
+    res.json(allCompetences);
   } catch (error) {
     return next(error);
   }
+};
 
-  res.json(studentWithCompetences);
+const getAllLecturersProfile = async (req, res) => {
+  let allLecturers;
+  try {
+    allLecturers = await db.LecturerProfile.findAll();
+    res.json(allLecturers);
+  } catch (error) {
+    return next(error);
+  }
 };
 
 module.exports = {
   getStudents: getAllStudentsProfile,
-  getCompetences: getAllStudentsCompetence,
+  getCompetences: getAllCompetence,
+  getLecturers: getAllLecturersProfile,
 };

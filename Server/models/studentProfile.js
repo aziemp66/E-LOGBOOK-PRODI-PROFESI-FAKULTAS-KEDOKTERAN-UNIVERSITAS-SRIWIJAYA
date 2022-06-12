@@ -14,9 +14,13 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: true,
     },
+    profilePicture: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
     studentNumber: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     address: {
       type: DataTypes.STRING,
@@ -24,7 +28,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     email: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     phone: {
       type: DataTypes.STRING,

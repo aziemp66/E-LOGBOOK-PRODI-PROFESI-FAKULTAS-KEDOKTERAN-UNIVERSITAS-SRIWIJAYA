@@ -1,11 +1,11 @@
 require("dotenv").config();
 
 const express = require("express");
-
-const app = express();
+const cors = require("cors");
 const db = require("./models");
 
-const corsMiddleware = require("./middlewares/cors");
+const app = express();
+
 const verifyTokenMiddleware = require("./middlewares/verifyToken");
 const verifyRolesMiddleware = require("./middlewares/verifyRoles");
 const errorHandlerMiddleware = require("./middlewares/errorHandler");
@@ -22,7 +22,7 @@ const PORT = process.env.PORT || 5000;
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.use(corsMiddleware);
+app.use(cors());
 
 app.use("/api/auth", authRoutes);
 
