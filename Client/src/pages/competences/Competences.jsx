@@ -58,7 +58,7 @@ const Competences = () => {
       >
         <div>
           <label htmlFor="station">Stase</label>
-          <select name="station" id="station">
+          <select name="stationId" id="station">
             <option value="bedah">Bedah</option>
             <option value="anestesi">Anestesi</option>
             <option value="kesehatan anak">Kesehatan Anak</option>
@@ -228,7 +228,7 @@ const Competences = () => {
         </div>
         <div>
           <label htmlFor="lecturer">Nama Dosen</label>
-          <select name="lecturer" id="lecturer">
+          <select name="lecturerId" id="lecturer">
             <option value="dr. Budi">dr. Budi</option>
             <option value="dr. Agus">dr. Agus</option>
             <option value="dr. Yuli">dr. Yuli</option>
@@ -240,7 +240,7 @@ const Competences = () => {
             <div>
               <input
                 type="radio"
-                name="guidances"
+                name="guidancesId"
                 id="Bedside Teaching"
                 value={"Bedside Teaching"}
               />

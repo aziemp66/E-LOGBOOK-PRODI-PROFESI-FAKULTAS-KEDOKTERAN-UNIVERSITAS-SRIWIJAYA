@@ -12,6 +12,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATE,
       allowNull: false,
     },
+    stationName: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     patientInitials: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -36,7 +40,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    lecturer: {
+    lecturerName: {
       type: DataTypes.STRING,
       allowNull: false,
     },

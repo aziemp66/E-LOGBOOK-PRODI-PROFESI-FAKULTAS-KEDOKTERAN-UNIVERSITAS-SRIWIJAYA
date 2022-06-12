@@ -38,11 +38,7 @@
 .auth {
   display: flex;
   text-align: center;
-  gap: 2rem;
-}
-
-.auth > * {
-  display: block;
+  gap: 1rem;
 }
 .auth > li {
   display: flex;

@@ -93,7 +93,7 @@ const addStudentPresentionValidation = (data) => {
 
 const addCompetenceValidation = (data) => {
   const schema = Joi.object({
-    station: Joi.string().min(1).max(255),
+    stationId: Joi.string().min(1).max(255),
     days: Joi.number().min(1).max(31),
     months: Joi.number().min(1).max(12),
     years: Joi.number().min(1).max(9999),
@@ -104,7 +104,7 @@ const addCompetenceValidation = (data) => {
     diseaseCompetence: Joi.string().min(1).max(255),
     skillName: Joi.string().min(1).max(255),
     skillCompetence: Joi.string().min(1).max(255),
-    lecturer: Joi.string().min(1).max(255),
+    lecturerId: Joi.string().min(1).max(255),
     guidanceType: Joi.string().min(1).max(255),
   });
 

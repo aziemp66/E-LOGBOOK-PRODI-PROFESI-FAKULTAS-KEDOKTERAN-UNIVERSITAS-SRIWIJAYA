@@ -116,8 +116,8 @@ const updateProfile = async (req, res, next) => {
 const addCompetence = async (req, res, next) => {
   const { id } = req.user;
 
-  const {
-    station,
+  let {
+    stationId,
     days,
     months,
     years,
@@ -128,12 +128,16 @@ const addCompetence = async (req, res, next) => {
     "disease-competences": diseaseCompetence,
     skill: skillId,
     "skill-competences": skillCompetence,
-    lecturer: lecturer,
-    guidances: guidanceId,
+    lecturerId,
+    guidanceId,
   } = req.body;
 
+  //add 0 to the beginning of the number if it is less than 10
+  if (days < 10) days = `0${days}`;
+  if (months < 10) months = `0${months}`;
+
   const validatedData = validation.addCompetenceValidation({
-    station,
+    stationId,
     days,
     months,
     years,
@@ -144,7 +148,7 @@ const addCompetence = async (req, res, next) => {
     diseaseCompetence,
     skillId,
     skillCompetence,
-    lecturer,
+    lecturerId,
     guidanceId,
   });
   if (validatedData.error) return next(validatedData.error.details[0].message);
@@ -207,7 +211,7 @@ const addCompetence = async (req, res, next) => {
   try {
     stationExist = await db.Station.findOne({
       where: {
-        name: station,
+        id: stationId,
       },
     });
   } catch (error) {
@@ -262,28 +266,12 @@ const addCompetence = async (req, res, next) => {
     return next("Guidance not found");
   }
 
-  //check if Student Competence with this station exists
-  let studentCompetenceExist;
-  try {
-    studentCompetenceExist = await db.StudentCompetence.findOne({
-      where: {
-        station: stationExist.id,
-        userId: id,
-      },
-    });
-  } catch (error) {
-    return next(error);
-  }
-  if (studentCompetenceExist) {
-    return next("Student Competence already exists");
-  }
-
   //check if lecturers exist
   let lecturerExist;
   try {
     lecturerExist = await db.user.findOne({
       where: {
-        id: lecturer,
+        id: lecturerId,
         roles: "lecturer",
       },
     });
@@ -294,29 +282,45 @@ const addCompetence = async (req, res, next) => {
     return next("Lecturer not found");
   }
 
-  //register new competence
+  //check if Student Competence with this station exists
+  let studentCompetenceExist;
   try {
-    await db.StudentCompetence.create({
-      id: uuid(),
-      station: stationExist.id,
-      days,
-      months,
-      years,
-      hospital,
-      patientInitials,
-      patientMedicalNumber,
-      disease: diseaseExist.id,
-      skill: skillExist.id,
-      lecturer: lecturerExist.id,
-      guidance: guidanceExist.id,
-      userId: id,
-    });
-
-    res.status(201).json({
-      message: "Student Competence registered successfully",
+    studentCompetenceExist = await db.StudentCompetence.findOne({
+      where: {
+        stationId: stationExist.id,
+        userId: id,
+      },
     });
   } catch (error) {
     return next(error);
+  }
+  if (studentCompetenceExist) {
+    return next("Student Competence with this station already exists");
+  } else {
+    //register new competence or update old competences
+    try {
+      await db.competence.create({
+        id: uuid(),
+        userId: id,
+        stationName: stationExist.name,
+        date: new Date(`${years}-${months}-${days}`),
+        patientInitials,
+        patientMedicalNumber,
+        diseaseName: diseaseExist.name,
+        diseaseCompetence,
+        skillName: skillExist.name,
+        skillCompetence,
+        lecturerName: lecturerExist.name,
+        guidanceType: guidanceExist.name,
+        hospital,
+      });
+
+      res.status(201).json({
+        message: "Student Competence registered successfully",
+      });
+    } catch (error) {
+      return next(error);
+    }
   }
 };
 
