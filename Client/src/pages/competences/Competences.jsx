@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Button from "../../components/ui/button/Button";
 
 import axios from "axios";
@@ -26,6 +26,12 @@ const year = date.getFullYear();
 const years = Array.from(Array(150), (x, i) => year - i);
 
 const Competences = () => {
+  const [disease, setDisease] = useState(null);
+  const [skill, setSkill] = useState(null);
+  const [guidance, setGuidance] = useState(null);
+
+  useEffect(() => {}, []);
+
   const onSubmitHandler = async (e) => {
     e.preventDefault();
 
@@ -45,6 +51,12 @@ const Competences = () => {
 
     const response = await axios.post("/api/user/competences", {});
   };
+
+  const stationChangeHandler = (e) => {
+    if (e.target.value === "empty") return;
+
+    console.log(e.target.value);
+  };
   return (
     <div className={styles.page}>
       <div className={styles.title}>
@@ -58,7 +70,8 @@ const Competences = () => {
       >
         <div>
           <label htmlFor="station">Stase</label>
-          <select name="stationId" id="station">
+          <select onChange={stationChangeHandler} name="stationId" id="station">
+            <option value={"empty"}>Silahkan Pilih Stase</option>
             <option value="bedah">Bedah</option>
             <option value="anestesi">Anestesi</option>
             <option value="kesehatan anak">Kesehatan Anak</option>
@@ -116,9 +129,11 @@ const Competences = () => {
         <div>
           <label htmlFor="diseases">Nama Penyakit</label>
           <select name="diseases" id="diseases">
-            <option value="Leukimia">Leukimia</option>
-            <option value="Osteoporosis">Osteoporosis</option>
-            <option value="Pnuemonia">Pneumonia</option>
+            {disease.map((disease) => (
+              <option key={disease.id} value={disease.id}>
+                {disease.name}
+              </option>
+            ))}
           </select>
         </div>
         <div>
@@ -174,13 +189,11 @@ const Competences = () => {
         <div>
           <label htmlFor="skill">Nama Keterampilan</label>
           <select name="skill" id="skill">
-            <option value="Universal Precaution">Universal Precaution</option>
-            <option value="Permintaan & interpretasi pemeriksaan X-ray: foto polos">
-              Permintaan & interpretasi pemeriksaan X-ray: foto polos
-            </option>
-            <option value="Ultrasound FAST abdomen">
-              Ultrasound FAST abdomen
-            </option>
+            {skill.map((skill) => (
+              <option key={skill.id} value={skill.id}>
+                {skill.name}
+              </option>
+            ))}
           </select>
         </div>
         <div>

@@ -114,27 +114,59 @@ const updateProfile = async (req, res, next) => {
 };
 
 const getCompetenceInfo = async (req, res, next) => {
-  const { stationId } = req.params;
   const user = req.user;
 
   //check existing competence info
-  let competenceInfo;
+  let existingCompetences;
   try {
-    competenceInfo = await db.Competence.findOne({
+    existingCompetences = await db.Competence.findAll({
       where: {
-        stationId,
         userId: user.id,
       },
     });
   } catch (error) {
     return next(error);
   }
-  if (!competenceInfo) {
-    return res.json({
-      message: "No Existing Competcence Info in This Station",
-    });
+  if (!existingCompetences) {
+    return next(new Error("No competence info found"));
   }
-  res.json(competenceInfo);
+
+  let stations;
+  try {
+    stations = await db.Station.findAll();
+  } catch (error) {
+    return next(error);
+  }
+  if (!stations) {
+    return next(new Error("No stations found"));
+  }
+
+  let lecturers;
+  try {
+    lecturers = await db.LecturerProfile.findAll();
+  } catch (error) {
+    return next(error);
+  }
+  if (!lecturers) {
+    return next(new Error("No lecturers found"));
+  }
+
+  let guidances;
+  try {
+    guidances = await db.Guidance.findAll();
+  } catch (error) {
+    return next(error);
+  }
+  if (!guidances) {
+    return next(new Error("No guidances found"));
+  }
+
+  res.json({
+    existingCompetences,
+    stations,
+    lecturers,
+    guidances,
+  });
 };
 
 const getStationDiseaseAndSkills = async (req, res, next) => {
@@ -168,9 +200,17 @@ const getStationDiseaseAndSkills = async (req, res, next) => {
     return next(new Error("No skills found"));
   }
 
+  let guidance;
+  try {
+    guidance = await db.Guidance.findAll();
+  } catch (error) {
+    return next(error);
+  }
+
   res.json({
     diseases,
     skills,
+    guidance,
   });
 };
 

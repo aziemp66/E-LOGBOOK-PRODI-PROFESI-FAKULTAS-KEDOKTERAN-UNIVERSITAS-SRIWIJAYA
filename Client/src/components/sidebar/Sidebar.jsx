@@ -78,7 +78,7 @@ const Sidebar = () => {
                   </Link>
                 </li>
                 <li>
-                  <Link to={"/dokumen"}>
+                  <Link to={"/document"}>
                     <img src={dokumenTerkait} alt="dokumen-terkait icon" />
                     <span>Dokumen Terkait</span>
                   </Link>
