@@ -249,7 +249,7 @@ const Competences = () => {
             <div>
               <input
                 type="radio"
-                name="guidances"
+                name="guidancesId"
                 id="Mini - CEX"
                 value={"Mini - CEX"}
               />
@@ -258,7 +258,7 @@ const Competences = () => {
             <div>
               <input
                 type="radio"
-                name="guidances"
+                name="guidancesId"
                 id="Procedural Skill"
                 value={"Procedural Skill"}
               />
@@ -267,7 +267,7 @@ const Competences = () => {
             <div>
               <input
                 type="radio"
-                name="guidances"
+                name="guidancesId"
                 id="Case Based Discussion"
                 value={"Case Based Discussion"}
               />
@@ -278,7 +278,7 @@ const Competences = () => {
             <div>
               <input
                 type="radio"
-                name="guidances"
+                name="guidancesId"
                 id="Lain-lain"
                 value={"Lain-lain"}
               />

@@ -1,11 +1,12 @@
 const router = require("express").Router();
 const adminController = require("../controllers/admin.controller");
 
-router.get("/stations", adminController.getAllStations);
+router.get(
+  "/disease-and-skill/:stationId",
+  adminController.getAllDiseasesAndSkills
+);
 
-router.get("/disease-and-skill", adminController.getAllDiseasesAndSkills);
-
-router.post("/stations", adminController.addStation);
+router.post("/station", adminController.addStation);
 
 router.post("/disease", adminController.addDisease);
 
@@ -13,7 +14,7 @@ router.post("/skill", adminController.addSkill);
 
 router.post("/guidance", adminController.addGuidance);
 
-router.patch("/roles/:id", adminController.updateUserRoles);
+router.patch("/roles", adminController.updateUserRoles);
 
 router.post("/presention", adminController.addStudentPresention);
 

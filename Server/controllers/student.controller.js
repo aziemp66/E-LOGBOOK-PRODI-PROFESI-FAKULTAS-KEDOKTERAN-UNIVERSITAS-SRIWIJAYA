@@ -113,6 +113,67 @@ const updateProfile = async (req, res, next) => {
   });
 };
 
+const getCompetenceInfo = async (req, res, next) => {
+  const { stationId } = req.params;
+  const user = req.user;
+
+  //check existing competence info
+  let competenceInfo;
+  try {
+    competenceInfo = await db.Competence.findOne({
+      where: {
+        stationId,
+        userId: user.id,
+      },
+    });
+  } catch (error) {
+    return next(error);
+  }
+  if (!competenceInfo) {
+    return res.json({
+      message: "No Existing Competcence Info in This Station",
+    });
+  }
+  res.json(competenceInfo);
+};
+
+const getStationDiseaseAndSkills = async (req, res, next) => {
+  const { stationId } = req.params;
+
+  let diseases;
+  try {
+    diseases = await db.Disease.findAll({
+      where: {
+        station: stationId,
+      },
+    });
+  } catch (error) {
+    return next(error);
+  }
+  if (!diseases) {
+    return next(new Error("No diseases found"));
+  }
+
+  let skills;
+  try {
+    skills = await db.Skill.findAll({
+      where: {
+        station: stationId,
+      },
+    });
+  } catch (error) {
+    return next(error);
+  }
+  if (!skills) {
+    return next(new Error("No skills found"));
+  }
+
+  res.json({
+    diseases,
+    skills,
+  });
+};
+
 const addCompetence = async (req, res, next) => {
   const { id } = req.user;
 
@@ -328,4 +389,6 @@ module.exports = {
   updateProfile,
   getProfile,
   addCompetence,
+  getCompetenceInfo,
+  getStationDiseaseAndSkills,
 };

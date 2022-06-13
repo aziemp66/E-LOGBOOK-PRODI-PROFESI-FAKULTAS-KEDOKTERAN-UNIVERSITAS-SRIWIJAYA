@@ -10,10 +10,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    station: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
   });
   return Guidance;
 };

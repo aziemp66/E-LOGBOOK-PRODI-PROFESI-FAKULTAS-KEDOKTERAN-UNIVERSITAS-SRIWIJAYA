@@ -1,7 +1,6 @@
 const db = require("../models");
 const uuid = require("uuid").v4;
 const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
 
 const validation = require("../utility/validation");
 const generateToken = require("../utility/generateToken");
@@ -55,8 +54,19 @@ const userRegister = async (req, res, next) => {
   } catch (error) {
     return next(error);
   }
+  if (!user) return next("User not created");
 
-  res.json(user);
+  try {
+    await db.StudentProfile.create({
+      userId: user.id,
+    });
+  } catch (error) {
+    return next(error);
+  }
+
+  res.json({
+    message: "User created successfully",
+  });
 };
 
 const userLogin = async (req, res, next) => {

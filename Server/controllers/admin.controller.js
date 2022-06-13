@@ -1,25 +1,14 @@
 const db = require("../models");
 const validation = require("../utility/validation");
 
-const getAllStations = async (req, res, next) => {
-  let stations;
-  try {
-    stations = await db.Station.findAll();
-  } catch (error) {
-    return next(error);
-  }
-
-  res.json(stations);
-};
-
 const getAllDiseasesAndSkills = async (req, res, next) => {
-  const { station } = req.body;
+  const { stationId } = req.params;
 
   let diseases;
   try {
     diseases = await db.Disease.findAll({
       where: {
-        station,
+        station: stationId,
       },
     });
   } catch (error) {
@@ -30,7 +19,7 @@ const getAllDiseasesAndSkills = async (req, res, next) => {
   try {
     skills = await db.Skill.findAll({
       where: {
-        station,
+        station: stationId,
       },
     });
   } catch (error) {
@@ -100,9 +89,9 @@ const addSkill = async (req, res, next) => {
 };
 
 const addGuidance = async (req, res, next) => {
-  const { name, station } = req.body;
+  const { name } = req.body;
 
-  const { error } = validation.addGuidanceValidation({ name, station });
+  const { error } = validation.addGuidanceValidation({ name });
   if (error) return next(error.details[0].message);
 
   try {
@@ -119,7 +108,7 @@ const addGuidance = async (req, res, next) => {
 };
 
 const updateUserRoles = async (req, res, next) => {
-  const { id } = req.params;
+  const { userId: id } = req.body;
   const { roles } = req.body;
 
   const { error } = validation.updateUserRolesValidation({ roles });
@@ -145,7 +134,7 @@ const updateUserRoles = async (req, res, next) => {
 };
 
 const addStudentPresention = async (req, res, next) => {
-  const { studentId } = req.params;
+  const { studentId } = req.body;
   const { month, year, present, sick, excused, absent } = req.body;
 
   const { error } = validation.addStudentPresentionValidation({
@@ -192,7 +181,6 @@ const addStudentPresention = async (req, res, next) => {
 };
 
 module.exports = {
-  getAllStations,
   getAllDiseasesAndSkills,
   addStation,
   addDisease,

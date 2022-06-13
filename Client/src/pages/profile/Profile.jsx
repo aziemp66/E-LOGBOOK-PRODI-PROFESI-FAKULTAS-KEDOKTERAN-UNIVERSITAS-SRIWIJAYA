@@ -116,9 +116,9 @@ const Profile = () => {
                 <option value="20222">
                   Periode Masuk 2022 (Angkatan 2019)
                 </option>
-                <option value="2021">Periode Masuk 2021 (Angkatan 2018)</option>
-                <option value="2020">Periode Masuk 2020 (Angkatan 2017)</option>
-                <option value="2019">Periode Masuk 2019 (Angkatan 2016)</option>
+                <option value="2021">Periode Masuk 2021 (Angkatan 2017)</option>
+                <option value="2020">Periode Masuk 2020 (Angkatan 2016)</option>
+                <option value="2019">Periode Masuk 2019 (Angkatan 2015)</option>
               </select>
             </div>
           </div>

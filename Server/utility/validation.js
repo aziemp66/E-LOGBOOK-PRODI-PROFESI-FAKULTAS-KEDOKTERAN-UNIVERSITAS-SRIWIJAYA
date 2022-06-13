@@ -36,7 +36,7 @@ const updateProfileValidation = (data) => {
 
 const addStationValidation = (data) => {
   const schema = Joi.object({
-    name: Joi.string().min(1).max(255),
+    name: Joi.string().min(1).max(255).required(),
   });
 
   return schema.validate(data);
@@ -44,8 +44,8 @@ const addStationValidation = (data) => {
 
 const addDiseaseValidation = (data) => {
   const schema = Joi.object({
-    name: Joi.string().min(1).max(255),
-    station: Joi.string().min(1).max(255),
+    name: Joi.string().min(1).max(255).required(),
+    station: Joi.string().min(1).max(255).required(),
   });
 
   return schema.validate(data);
@@ -53,8 +53,8 @@ const addDiseaseValidation = (data) => {
 
 const addSkillValidation = (data) => {
   const schema = Joi.object({
-    name: Joi.string().min(1).max(255),
-    station: Joi.string().min(1).max(255),
+    name: Joi.string().min(1).max(255).required(),
+    station: Joi.string().min(1).max(255).required(),
   });
 
   return schema.validate(data);
@@ -62,8 +62,7 @@ const addSkillValidation = (data) => {
 
 const addGuidanceValidation = (data) => {
   const schema = Joi.object({
-    name: Joi.string().min(1).max(255),
-    station: Joi.string().min(1).max(255),
+    name: Joi.string().min(1).max(255).required(),
   });
 
   return schema.validate(data);
@@ -71,7 +70,7 @@ const addGuidanceValidation = (data) => {
 
 const updateUserRolesValidation = (data) => {
   const schema = Joi.object({
-    roles: Joi.array().items(Joi.string().min(1).max(255)),
+    roles: Joi.array().items(Joi.string().min(1).max(255)).required(),
   });
 
   return schema.validate(data);
@@ -79,13 +78,13 @@ const updateUserRolesValidation = (data) => {
 
 const addStudentPresentionValidation = (data) => {
   const schema = Joi.object({
-    studentId: Joi.string().min(1).max(255),
-    month: Joi.number().min(1).max(12),
-    year: Joi.number().min(1).max(9999),
-    present: Joi.number().min(1).max(31),
-    absent: Joi.number().min(1).max(31),
-    sick: Joi.number().min(1).max(31),
-    excused: Joi.number().min(1).max(31),
+    studentId: Joi.string().min(1).max(255).required(),
+    month: Joi.number().min(1).max(12).required(),
+    year: Joi.number().min(1).max(9999).required(),
+    present: Joi.number().min(1).max(31).required(),
+    absent: Joi.number().min(1).max(31).required(),
+    sick: Joi.number().min(1).max(31).required(),
+    excused: Joi.number().min(1).max(31).required(),
   });
 
   return schema.validate(data);
