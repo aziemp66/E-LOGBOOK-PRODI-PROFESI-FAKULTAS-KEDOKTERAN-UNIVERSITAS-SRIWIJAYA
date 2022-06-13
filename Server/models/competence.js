@@ -12,41 +12,45 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATE,
       allowNull: false,
     },
+    stationId: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     stationName: {
       type: DataTypes.STRING,
       allowNull: false,
     },
     patientInitials: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     patientMedicalNumber: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     diseaseName: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     diseaseCompetence: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     skillName: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     skillCompetence: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     lecturerName: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     guidanceType: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     verified: {
       type: DataTypes.BOOLEAN,
@@ -55,11 +59,11 @@ module.exports = (sequelize, DataTypes) => {
     },
     date: {
       type: DataTypes.DATE,
-      allowNull: false,
+      allowNull: true,
     },
     hospital: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
   });
   return Competence;

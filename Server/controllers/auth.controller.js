@@ -12,34 +12,27 @@ const userRegister = async (req, res, next) => {
   if (password !== confirmPassword)
     return next("Password and confirm password do not match");
 
-  //check if user already exists
-
-  try {
-    const existingUser =
-      (await db.User.findOne({
-        where: {
-          username,
-        },
-      })) ||
-      (await db.User.findOne({
-        where: {
-          email,
-        },
-      }));
-
-    if (existingUser) {
-      return next("Username or email already exists");
-    }
-  } catch (error) {
-    return next(error);
-  }
-
   const { error } = validation.registerValidation({
     username,
     email,
     password,
   });
-  if (error) return next(error.details[0].message);
+  if (error) return next(error.details[0]);
+
+  //check if user already exists
+  let existingUser;
+  try {
+    existingUser = await db.User.findOne({
+      where: {
+        username,
+      },
+    });
+  } catch (error) {
+    return next(error);
+  }
+  if (existingUser) {
+    return next("Username or email already exists");
+  }
 
   const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -55,14 +48,6 @@ const userRegister = async (req, res, next) => {
     return next(error);
   }
   if (!user) return next("User not created");
-
-  try {
-    await db.StudentProfile.create({
-      userId: user.id,
-    });
-  } catch (error) {
-    return next(error);
-  }
 
   res.json({
     message: "User created successfully",

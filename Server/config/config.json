@@ -1,10 +1,11 @@
 {
   "development": {
-    "username": "development",
-    "password": "dummypassword123",
+    "username": "root",
+    "password": "azie122333",
     "database": "elogbook_fk_unsri",
     "host": "127.0.0.1",
-    "dialect": "mysql"
+    "dialect": "mysql",
+    "port": "3306"
   },
   "test": {
     "username": "root",

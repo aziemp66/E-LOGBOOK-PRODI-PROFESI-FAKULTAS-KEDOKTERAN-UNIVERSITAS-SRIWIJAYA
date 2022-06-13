@@ -1,7 +1,7 @@
 const verifyRoles = (roles, req, res, next) => {
   const user = req.user;
 
-  if (roles.includes(user.roles)) {
+  if (roles.includes(user.role)) {
     next();
   } else {
     res.json({

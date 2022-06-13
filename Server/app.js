@@ -15,7 +15,6 @@ const studentRoutes = require("./router/student.routes");
 const adminRoutes = require("./router/admin.routes");
 const supervisorRoutes = require("./router/supervisor.routes");
 const lecturerRoutes = require("./router/lecturer.routes");
-const helperRoutes = require("./router/helper.routes");
 
 const PORT = process.env.PORT || 5000;
 
@@ -27,12 +26,6 @@ app.use(cors());
 app.use("/api/auth", authRoutes);
 
 app.use(verifyTokenMiddleware);
-
-app.use(
-  "/api/helper",
-  verifyRolesMiddleware.bind(null, "student/admin/lecturer/supervisor"),
-  helperRoutes
-);
 
 app.use(
   "/api/lecturer",

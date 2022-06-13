@@ -26,11 +26,26 @@ const year = date.getFullYear();
 const years = Array.from(Array(150), (x, i) => year - i);
 
 const Competences = () => {
-  const [disease, setDisease] = useState(null);
-  const [skill, setSkill] = useState(null);
-  const [guidance, setGuidance] = useState(null);
+  const [existingCompetences, setExistingCompetences] = useState(null);
+  const [competenceValues, setCompetenceValues] = useState(null);
 
-  useEffect(() => {}, []);
+  const [stations, setStations] = useState(null);
+  const [guidances, setGuidances] = useState(null);
+  const [lecturers, setLecturers] = useState(null);
+
+  const [diseases, setDiseases] = useState(null);
+  const [skills, setSkills] = useState(null);
+
+  const baseUrl = "http://localhost:5000/api/student";
+
+  useEffect(() => {
+    axios.get(`${baseUrl}/competence`).then((res) => {
+      setExistingCompetences(res.data.existingCompetences);
+      setStations(res.data.stations);
+      setGuidances(res.data.guidances);
+      setLecturers(res.data.lecturers);
+    });
+  }, []);
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
@@ -55,8 +70,19 @@ const Competences = () => {
   const stationChangeHandler = (e) => {
     if (e.target.value === "empty") return;
 
+    existingCompetences.find((competence) => {
+      if (competence.stationId === e.target.value)
+        setCompetenceValues(competence);
+    });
+
+    axios.get(`${baseUrl}/disease-and-skill/${e.target.value}`).then((res) => {
+      setDiseases(res.data.diseases);
+      setSkills(res.data.skills);
+    });
+
     console.log(e.target.value);
   };
+
   return (
     <div className={styles.page}>
       <div className={styles.title}>
@@ -72,15 +98,24 @@ const Competences = () => {
           <label htmlFor="station">Stase</label>
           <select onChange={stationChangeHandler} name="stationId" id="station">
             <option value={"empty"}>Silahkan Pilih Stase</option>
-            <option value="bedah">Bedah</option>
-            <option value="anestesi">Anestesi</option>
-            <option value="kesehatan anak">Kesehatan Anak</option>
+            {stations &&
+              stations.map((station) => (
+                <option sel key={station.id} value={station.id}>
+                  {station.name}
+                </option>
+              ))}
           </select>
         </div>
         <div>
           <label htmlFor="dateOfBirth">Tanggal</label>
           <div id="date" className={`${styles.dropdown} ${styles.dates}`}>
-            <select name="days" id="days">
+            <select
+              value={() => {
+                if (competenceValues) return competenceValues.date.getDay();
+              }}
+              name="days"
+              id="days"
+            >
               {days.map((day) => (
                 <option key={day} value={day}>
                   {day}
@@ -129,7 +164,7 @@ const Competences = () => {
         <div>
           <label htmlFor="diseases">Nama Penyakit</label>
           <select name="diseases" id="diseases">
-            {disease.map((disease) => (
+            {diseases.map((disease) => (
               <option key={disease.id} value={disease.id}>
                 {disease.name}
               </option>
@@ -189,7 +224,7 @@ const Competences = () => {
         <div>
           <label htmlFor="skill">Nama Keterampilan</label>
           <select name="skill" id="skill">
-            {skill.map((skill) => (
+            {skills.map((skill) => (
               <option key={skill.id} value={skill.id}>
                 {skill.name}
               </option>
@@ -242,62 +277,24 @@ const Competences = () => {
         <div>
           <label htmlFor="lecturer">Nama Dosen</label>
           <select name="lecturerId" id="lecturer">
-            <option value="dr. Budi">dr. Budi</option>
-            <option value="dr. Agus">dr. Agus</option>
-            <option value="dr. Yuli">dr. Yuli</option>
+            {lecturers &&
+              lecturers.map((lecturer) => (
+                <option key={lecturer.id} value={lecturer.id}>
+                  {lecturer.name}
+                </option>
+              ))}
           </select>
         </div>
         <div>
-          <label htmlFor="guidances">Jenis Bimbingan</label>
-          <div className={styles.radio} id="guidances">
-            <div>
-              <input
-                type="radio"
-                name="guidancesId"
-                id="Bedside Teaching"
-                value={"Bedside Teaching"}
-              />
-              <label htmlFor="Bedside Teaching">Bedside Teaching</label>
-            </div>
-            <div>
-              <input
-                type="radio"
-                name="guidancesId"
-                id="Mini - CEX"
-                value={"Mini - CEX"}
-              />
-              <label htmlFor="Mini - CEX">Mini - CEX</label>
-            </div>
-            <div>
-              <input
-                type="radio"
-                name="guidancesId"
-                id="Procedural Skill"
-                value={"Procedural Skill"}
-              />
-              <label htmlFor="Procedural Skill">Procedural Skill</label>
-            </div>
-            <div>
-              <input
-                type="radio"
-                name="guidancesId"
-                id="Case Based Discussion"
-                value={"Case Based Discussion"}
-              />
-              <label htmlFor="Case Based Discussion">
-                Case Based Discussion
-              </label>
-            </div>
-            <div>
-              <input
-                type="radio"
-                name="guidancesId"
-                id="Lain-lain"
-                value={"Lain-lain"}
-              />
-              <label htmlFor="Lain-lain">Lain-lain</label>
-            </div>
-          </div>
+          <label htmlFor="guidancesId">Jenis Bimbingan</label>
+          <select name="guidanceId" id="guidanceId">
+            {guidances &&
+              guidances.map((guidance) => (
+                <option key={guidance.id} value={guidance.id}>
+                  {guidance.name}
+                </option>
+              ))}
+          </select>
         </div>
         <Button className="primary">Save</Button>
       </form>

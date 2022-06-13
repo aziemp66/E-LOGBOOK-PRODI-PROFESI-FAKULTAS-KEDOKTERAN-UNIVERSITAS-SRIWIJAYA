@@ -200,17 +200,9 @@ const getStationDiseaseAndSkills = async (req, res, next) => {
     return next(new Error("No skills found"));
   }
 
-  let guidance;
-  try {
-    guidance = await db.Guidance.findAll();
-  } catch (error) {
-    return next(error);
-  }
-
   res.json({
     diseases,
     skills,
-    guidance,
   });
 };
 
@@ -403,6 +395,7 @@ const addCompetence = async (req, res, next) => {
       await db.competence.create({
         id: uuid(),
         userId: id,
+        stationId: stationExist.id,
         stationName: stationExist.name,
         date: new Date(`${years}-${months}-${days}`),
         patientInitials,

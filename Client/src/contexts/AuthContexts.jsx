@@ -29,7 +29,6 @@ export const AuthProvider = (props) => {
       }
     } catch (error) {
       console.log(error);
-      setError(error);
       return;
     }
   };
@@ -48,7 +47,6 @@ export const AuthProvider = (props) => {
       }
     } catch (error) {
       console.log(error);
-      setError(error);
       return;
     }
 
