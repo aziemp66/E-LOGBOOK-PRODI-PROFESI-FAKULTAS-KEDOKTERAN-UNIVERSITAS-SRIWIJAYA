@@ -114,12 +114,30 @@ const addGuidance = async (req, res, next) => {
     await db.Guidance.create({
       name,
     });
+    res.json({
+      message: "Guidance added successfully",
+    });
   } catch (error) {
     return next(error);
   }
-  res.json({
-    message: "Guidance added successfully",
-  });
+};
+
+const addHospital = async (req, res, next) => {
+  const { name } = req.body;
+
+  const { error } = validation.addHospitalValidation({ name });
+  if (error) return next(error.details[0]);
+
+  try {
+    await db.Hospital.create({
+      name,
+    });
+    res.json({
+      message: "Hospital added successfully",
+    });
+  } catch (error) {
+    return next(error);
+  }
 };
 
 const updateUserRoles = async (req, res, next) => {

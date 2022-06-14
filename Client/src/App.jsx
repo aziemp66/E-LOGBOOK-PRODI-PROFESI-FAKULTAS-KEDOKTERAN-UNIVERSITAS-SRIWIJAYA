@@ -15,6 +15,7 @@ import AuthContext from "./contexts/AuthContexts";
 import RequireAuth from "./helpers/RequireAuth";
 import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
+import Admin from "./pages/admin/Admin";
 
 const App = () => {
   const authCtx = useContext(AuthContext);
@@ -27,7 +28,9 @@ const App = () => {
         case "student":
           navigate("/dashboard");
           break;
-
+        case "admin":
+          navigate("/admin");
+          break;
         default:
           navigate("/");
           break;
@@ -57,6 +60,9 @@ const App = () => {
             path="/scientific-activities"
             element={<ScientificActivities />}
           />
+        </Route>
+        <Route element={<RequireAuth role="admin" />}>
+          <Route path="/admin" element={<Admin />} />
         </Route>
       </Routes>
     </div>
