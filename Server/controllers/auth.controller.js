@@ -61,7 +61,7 @@ const userLogin = async (req, res, next) => {
     username,
     password,
   });
-  if (error) return next(error.details[0].message);
+  if (error) return next(error.details[0]);
 
   const user = await db.User.findOne({
     where: {

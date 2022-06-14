@@ -45,7 +45,7 @@ const addStationValidation = (data) => {
 const addDiseaseValidation = (data) => {
   const schema = Joi.object({
     name: Joi.string().min(1).max(255).required(),
-    station: Joi.string().min(1).max(255).required(),
+    stationId: Joi.string().min(1).max(255).required(),
   });
 
   return schema.validate(data);
@@ -54,7 +54,7 @@ const addDiseaseValidation = (data) => {
 const addSkillValidation = (data) => {
   const schema = Joi.object({
     name: Joi.string().min(1).max(255).required(),
-    station: Joi.string().min(1).max(255).required(),
+    stationId: Joi.string().min(1).max(255).required(),
   });
 
   return schema.validate(data);
