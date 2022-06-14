@@ -219,6 +219,7 @@ module.exports = {
   addDisease,
   addSkill,
   addGuidance,
+  addHospital,
   updateUserRoles,
   addStudentPresention,
 };
