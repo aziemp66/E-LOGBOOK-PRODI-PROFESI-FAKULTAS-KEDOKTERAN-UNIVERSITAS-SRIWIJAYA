@@ -1,11 +1,20 @@
-import React from "react";
+import React, { useContext } from "react";
+
+import styles from "./Admin.module.css";
+
+import AuthContext from "../../contexts/AuthContexts";
+
+import WelcomeCard from "../../components/welcomecard/WelcomeCard";
 
 const Admin = () => {
+  const authCtx = useContext(AuthContext);
+
   return (
-    <div>
-      <div>
-        <h1>Selamat Datang di Menu Admin</h1>
-      </div>
+    <div className={styles.container}>
+      <WelcomeCard
+        username={authCtx.userData.username}
+        message="Selamat Datang di Dashboard Admin"
+      />
       <div>
         <div>
           <div>

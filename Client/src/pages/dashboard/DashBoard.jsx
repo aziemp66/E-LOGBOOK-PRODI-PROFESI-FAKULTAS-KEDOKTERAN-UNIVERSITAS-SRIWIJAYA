@@ -8,6 +8,7 @@ import welcomeHero from "../../assets/hero/welcome-hero.svg";
 import SearchBar from "../../components/searchbar/SearchBar";
 import AuthContext from "../../contexts/AuthContexts";
 
+import WelcomeCard from "../../components/welcomecard/WelcomeCard";
 import PresentionCard from "../../components/presentioncard/PresentionCard";
 import ProgressCard from "../../components/progresscard/ProgressCard";
 import TotalProgressCard from "../../components/totalprogresscard/TotalProgressCard";
@@ -19,11 +20,6 @@ const absent = 2;
 
 const DashBoard = () => {
   const authCtx = useContext(AuthContext);
-  const [userId, setUserId] = useState(null);
-
-  useEffect(() => {
-    setUserId(authCtx.userData.id);
-  }, []);
 
   return (
     <div className={styles.page}>
@@ -33,18 +29,11 @@ const DashBoard = () => {
       <section className={styles.content}>
         <div>
           <Fade top>
-            <div className={styles.welcomeCard}>
-              <div className={styles.texts}>
-                <h3>{userId}</h3>
-                <p>
-                  Selamat datang di E-Logbook Program Studi Profesi Fakultas
-                  Kedokteran Universitas Sriwijaya
-                </p>
-              </div>
-              <div className={styles.hero}>
-                <img src={welcomeHero} alt="welcome-card-hero" />
-              </div>
-            </div>
+            <WelcomeCard
+              username={authCtx.userData.username}
+              message="Selamat datang di E-Logbook Program Studi Profesi Fakultas
+                  Kedokteran Universitas Sriwijaya"
+            />
           </Fade>
           <ul className={styles.progressList}>
             <Fade left>
