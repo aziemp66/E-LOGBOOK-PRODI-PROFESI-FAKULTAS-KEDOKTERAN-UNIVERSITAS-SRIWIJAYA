@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import jwtDecode from "jwt-decode";
 import axios from "axios";
 
@@ -14,6 +15,7 @@ const BASE_URL = "http://localhost:5000/api/auth";
 
 export const AuthProvider = (props) => {
   const [userData, setUserData] = useState(null);
+  const navigate = useNavigate();
 
   const register = async (email, username, password, confirmPassword) => {
     try {
@@ -26,7 +28,9 @@ export const AuthProvider = (props) => {
       if (response.data.error) {
         console.log(response.data.error);
         setError(response.data.error);
+        return;
       }
+      navigate("/login");
     } catch (error) {
       console.log(error);
       return;
@@ -62,9 +66,11 @@ export const AuthProvider = (props) => {
   const userDataHandler = async () => {
     const token = localStorage.getItem("token");
     if (token) {
-      setUserData(jwtDecode(token));
-    } else {
-      setUserData(null);
+      const decoded = jwtDecode(token);
+      if (decoded.exp < Date.now() / 1000) {
+        return logout();
+      }
+      setUserData(decoded);
     }
   };
 

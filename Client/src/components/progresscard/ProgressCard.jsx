@@ -17,20 +17,18 @@ const ProgressCard = (props) => {
       </div>
       <div className={styles.progressList}>
         <div>
-          {/* prettier-ignore */}
-          <h4>Stase : {stase}</h4>
+          <p>Stase : {stase}</p>
         </div>
         <div>
-          {/* prettier-ignore */}
-          <h4>Kompetensi Penyakit 	: Level {diseasesCompetences}</h4>
+          <p>Kompetensi Penyakit : Level {diseasesCompetences}</p>
         </div>
         <div>
-          <h4>Kompetensi Keterampilan : Level {skillCompetences}</h4>
+          <p>Kompetensi Keterampilan : Level {skillCompetences}</p>
         </div>
         <div>
-          <h4>
+          <p>
             Status : <span>Terverifikasi</span>
-          </h4>
+          </p>
         </div>
       </div>
     </div>

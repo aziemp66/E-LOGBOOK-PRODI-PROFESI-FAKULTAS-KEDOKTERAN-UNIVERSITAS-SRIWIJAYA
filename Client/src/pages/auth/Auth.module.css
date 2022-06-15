@@ -36,7 +36,10 @@
 }
 
 .auth {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr / auto;
+  justify-content: center;
+  align-items: center;
   text-align: center;
   gap: 1rem;
 }
@@ -61,6 +64,7 @@
   border-radius: 20px;
   padding: 0 2rem;
   text-decoration: none;
+  transition: all 0.3s ease-in-out;
 }
 
 .auth > li > a:hover {

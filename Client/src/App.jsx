@@ -43,7 +43,7 @@ const App = () => {
         navigate("/");
       }
     }
-  }, [localStorage.getItem("token")]);
+  }, []);
 
   return (
     <div className={styles.container}>

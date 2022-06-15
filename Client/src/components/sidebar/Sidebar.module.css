@@ -40,7 +40,7 @@
 .sidebar-body {
   padding: 0;
   margin: 0;
-  width: 80%;
+  width: 100%;
   text-align: left;
   display: flex;
   flex-direction: column;
@@ -77,7 +77,7 @@
   font-size: 1.2rem;
 }
 .hamburger {
-  position: sticky;
+  position: absolute;
   top: 0;
   left: 0;
   padding: 1rem;

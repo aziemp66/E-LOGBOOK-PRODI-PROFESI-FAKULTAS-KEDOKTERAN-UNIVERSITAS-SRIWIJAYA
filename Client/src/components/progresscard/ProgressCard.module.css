@@ -30,7 +30,6 @@
   align-items: left;
   gap: 1rem;
 }
-.progressList > div > h4 {
-  font-size: 1.2rem;
+.progressList > div > p {
   text-align: left;
 }
