@@ -22,27 +22,7 @@ const App = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (authCtx.userData) {
-      const role = authCtx.userData.role;
-      switch (role) {
-        case "student":
-          navigate("/dashboard");
-          break;
-        case "admin":
-          navigate("/admin");
-          break;
-        default:
-          navigate("/");
-          break;
-      }
-      return;
-    } else {
-      if (localStorage.getItem("token")) {
-        authCtx.userDataHandler();
-      } else {
-        navigate("/");
-      }
-    }
+    authCtx.userDataHandler();
   }, []);
 
   return (

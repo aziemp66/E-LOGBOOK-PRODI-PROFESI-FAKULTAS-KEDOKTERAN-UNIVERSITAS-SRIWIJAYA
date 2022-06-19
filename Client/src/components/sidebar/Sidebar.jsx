@@ -88,7 +88,7 @@ const Sidebar = () => {
                   {authCtx.userData.role === "admin" && (
                     <>
                       <li>
-                        <Link to={"/admin/logbook"}>
+                        <Link to={"/admin"}>
                           <img src={dashBoard} alt="dashboard icon" />
                           <span>Dashboard Admin</span>
                         </Link>
