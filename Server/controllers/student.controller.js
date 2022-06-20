@@ -13,7 +13,7 @@ const getProfile = async (req, res, next) => {
       },
     });
     if (!studentProfile) {
-      return next("Student profile not found");
+      return next(new Error("Student profile not found"));
     }
     res.json(studentProfile);
   } catch (error) {
@@ -35,7 +35,7 @@ const updateProfile = async (req, res, next) => {
     academicCouncellor,
   } = req.body;
 
-  const validatedData = validation.updateProfileValidation({
+  const { error } = validation.updateProfileValidation({
     firstName,
     lastName,
     studentNumber,
@@ -45,7 +45,7 @@ const updateProfile = async (req, res, next) => {
     entryPeriod,
     academicCouncellor,
   });
-  if (validatedData.error) return next(validatedData.error.details[0].message);
+  if (error) return next(validatedData.error.details[0]);
 
   //check if Student Profile exists
   let studentProfile;
@@ -274,7 +274,7 @@ const addCompetence = async (req, res, next) => {
       studentProfile.entryPeriod === null ||
       studentProfile.academicCouncellor === null
     ) {
-      return next("Please complete your student profile to proceed");
+      return next(new Error("Please complete your student profile to proceed"));
     }
   }
 
@@ -286,7 +286,7 @@ const addCompetence = async (req, res, next) => {
     diseaseCompetence !== "3B" ||
     diseaseCompetence !== "4"
   ) {
-    return next("Invalid disease competence");
+    return next(new Error("Invalid disease competence"));
   }
 
   //check if skillCompetence exists
@@ -296,7 +296,7 @@ const addCompetence = async (req, res, next) => {
     skillCompetence !== "3" ||
     skillCompetence !== "4"
   ) {
-    return next("Invalid skill competence");
+    return next(new Error("Invalid skill competence"));
   }
 
   //check if Student Competence station, disease and skill exists
@@ -311,7 +311,7 @@ const addCompetence = async (req, res, next) => {
     return next(error);
   }
   if (!stationExist) {
-    return next("Station not found");
+    return next(new Error("Station not found"));
   }
 
   let diseaseExist;
@@ -326,7 +326,7 @@ const addCompetence = async (req, res, next) => {
     return next(error);
   }
   if (!diseaseExist) {
-    return next("Disease not found");
+    return next(new Error("Disease not found"));
   }
 
   let skillExist;
@@ -341,7 +341,7 @@ const addCompetence = async (req, res, next) => {
     return next(error);
   }
   if (!skillExist) {
-    return next("Skill not found");
+    return next(new Error("Skill not found"));
   }
 
   let guidanceExist;
@@ -356,7 +356,7 @@ const addCompetence = async (req, res, next) => {
     return next(error);
   }
   if (!guidanceExist) {
-    return next("Guidance not found");
+    return next(new Error("Guidance not found"));
   }
 
   //check if lecturers exist
@@ -372,7 +372,7 @@ const addCompetence = async (req, res, next) => {
     return next(error);
   }
   if (!lecturerExist) {
-    return next("Lecturer not found");
+    return next(new Error("Lecturer not found"));
   }
 
   //check if Student Competence with this station exists
@@ -388,7 +388,9 @@ const addCompetence = async (req, res, next) => {
     return next(error);
   }
   if (studentCompetenceExist) {
-    return next("Student Competence with this station already exists");
+    return next(
+      new Error("Student Competence with this station already exists")
+    );
   } else {
     //register new competence or update old competences
     try {

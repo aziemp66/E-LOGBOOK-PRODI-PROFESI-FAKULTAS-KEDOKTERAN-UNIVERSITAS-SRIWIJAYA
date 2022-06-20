@@ -27,7 +27,6 @@ export const AuthProvider = (props) => {
       });
       if (response.data.error) {
         console.log(response.data.error);
-        setError(response.data.error);
         return;
       }
       navigate("/login");
@@ -46,7 +45,6 @@ export const AuthProvider = (props) => {
       });
       if (response.data.error) {
         console.log(response.data.error);
-        setError(response.data.error);
         return;
       }
     } catch (error) {

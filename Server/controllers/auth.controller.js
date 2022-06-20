@@ -10,7 +10,7 @@ const userRegister = async (req, res, next) => {
 
   //check if password and confirm password match
   if (password !== confirmPassword)
-    return next("Password and confirm password do not match");
+    return next(new Error("Password and confirm password do not match"));
 
   const { error } = validation.registerValidation({
     username,
@@ -31,7 +31,7 @@ const userRegister = async (req, res, next) => {
     return next(error);
   }
   if (existingUser) {
-    return next("Username or email already exists");
+    return next(new Error("Username or email already exists"));
   }
 
   const hashedPassword = await bcrypt.hash(password, 10);
@@ -47,7 +47,7 @@ const userRegister = async (req, res, next) => {
   } catch (error) {
     return next(error);
   }
-  if (!user) return next("User not created");
+  if (!user) return next(new Error("User not created"));
 
   //creating student profile
   let studentProfile;
@@ -58,7 +58,7 @@ const userRegister = async (req, res, next) => {
   } catch (error) {
     return next(error);
   }
-  if (!studentProfile) return next("Student profile not created");
+  if (!studentProfile) return next(new Error("Student profile not created"));
 
   res.json({
     message: "User created successfully",
@@ -79,10 +79,11 @@ const userLogin = async (req, res, next) => {
       username,
     },
   });
-  if (!user) return next("Username or password is incorrect");
+  if (!user) return next(new Error("Username or password is incorrect"));
 
   const validPassword = await bcrypt.compare(password, user.password);
-  if (!validPassword) return next("Username or password is incorrect");
+  if (!validPassword)
+    return next(new Error("Username or password is incorrect"));
 
   const accessToken = generateToken({
     id: user.id,

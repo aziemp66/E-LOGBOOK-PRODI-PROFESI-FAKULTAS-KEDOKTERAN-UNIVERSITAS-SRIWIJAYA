@@ -34,7 +34,7 @@ const verifyStudentCompetences = async (req, res, next) => {
     return next(error);
   }
   if (!competences) {
-    return next("Competences not found");
+    return next(new Error("Competences not found"));
   }
 
   //verify competences

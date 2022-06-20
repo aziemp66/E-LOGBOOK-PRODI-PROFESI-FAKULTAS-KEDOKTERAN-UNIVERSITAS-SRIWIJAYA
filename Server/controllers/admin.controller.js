@@ -70,7 +70,7 @@ const addDisease = async (req, res, next) => {
   } catch (error) {
     return next(error);
   }
-  if (!existingStation) return next("Station does not exist");
+  if (!existingStation) return next(new Error("Station does not exist"));
 
   try {
     await db.Disease.create({
@@ -141,18 +141,32 @@ const addHospital = async (req, res, next) => {
 };
 
 const updateUserRoles = async (req, res, next) => {
-  const { userId: id, role } = req.body;
+  const { id: userId } = req.params;
+  const { role } = req.body;
 
   const { error } = validation.updateUserRolesValidation({ role });
   if (error) return next(error.details[0]);
 
+  //check if user exist
+  let existingUser;
+  try {
+    existingUser = await db.User.findOne({
+      where: {
+        id: userId,
+      },
+    });
+  } catch (error) {
+    return next(error);
+  }
+  if (!existingUser) return next(new Error("User does not exist"));
+
   if (
-    (role !== "admin") |
-    (role !== "student") |
-    (role !== "lecturer") |
-    (role !== "supervisor")
+    role !== "admin" &&
+    role !== "student" &&
+    role !== "lecturer" &&
+    role !== "supervisor"
   )
-    return next("Invalid role");
+    return next(new Error("Invalid role"));
 
   try {
     await db.User.update(
@@ -161,7 +175,7 @@ const updateUserRoles = async (req, res, next) => {
       },
       {
         where: {
-          id,
+          id: existingUser.id,
         },
       }
     );
@@ -176,7 +190,8 @@ const updateUserRoles = async (req, res, next) => {
 
     try {
       await db[profiles].create({
-        userId: id,
+        userId: existingUser.id,
+        displayName: existingUser.username,
       });
     } catch (error) {
       return next(error);
@@ -212,7 +227,8 @@ const addStudentPresention = async (req, res, next) => {
         year,
       },
     });
-    if (presentionExist) return next("Presention already exist this month");
+    if (presentionExist)
+      return next(new Error("Presention already exist this month"));
   } catch (error) {
     return next(error);
   }
