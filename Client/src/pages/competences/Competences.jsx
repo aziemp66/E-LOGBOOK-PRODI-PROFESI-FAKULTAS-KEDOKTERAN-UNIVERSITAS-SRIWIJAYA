@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Button from "../../components/ui/button/Button";
 
 import axios from "axios";
@@ -35,6 +35,8 @@ const Competences = () => {
 
   const [diseases, setDiseases] = useState(null);
   const [skills, setSkills] = useState(null);
+
+  const stationRef = useRef();
 
   const baseUrl = "http://localhost:5000/api/student";
 
@@ -95,6 +97,7 @@ const Competences = () => {
         },
       })
       .then((res) => {
+        console.log(stationRef.current.value);
         setDiseases(res.data.diseases);
         setSkills(res.data.skills);
       });
@@ -113,203 +116,216 @@ const Competences = () => {
       >
         <div>
           <label htmlFor="station">Stase</label>
-          <select onChange={stationChangeHandler} name="stationId" id="station">
-            <option>Silahkan Pilih Stase</option>
+          <select
+            ref={stationRef}
+            onChange={stationChangeHandler}
+            name="stationId"
+            id="station"
+          >
+            <option value={"empty"}>Silahkan Pilih Stase</option>
             {stations &&
               stations.map((station) => (
-                <option sel key={station.id} value={station.id}>
+                <option key={station.id} value={station.id}>
                   {station.name}
                 </option>
               ))}
           </select>
         </div>
-        <div>
-          <label htmlFor="dateOfBirth">Tanggal</label>
-          <div id="date" className={`${styles.dropdown} ${styles.dates}`}>
-            <select name="days" id="days">
-              {days.map((day) => (
-                <option key={day} value={day}>
-                  {day}
+        {stationRef.current.value !== "empty" && (
+          <>
+            <div>
+              <label htmlFor="dateOfBirth">Tanggal</label>
+              <div id="date" className={`${styles.dropdown} ${styles.dates}`}>
+                <select name="days" id="days">
+                  {days.map((day) => (
+                    <option key={day} value={day}>
+                      {day}
+                    </option>
+                  ))}
+                </select>
+                <select name="months" id="months">
+                  {months.map((month) => (
+                    <option key={month} value={month}>
+                      {month}
+                    </option>
+                  ))}
+                </select>
+                <select name="years" id="years">
+                  {years.map((year) => (
+                    <option key={year} value={year}>
+                      {year}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+            <div>
+              <label htmlFor="hospital">Nama Rumah Sakit/Puskesmas</label>
+              <select name="hospital" id="hospital">
+                <option value="rsud kayuagung">RSUD Kayuagung</option>
+                <option value="rsud sobirin lubuk linggau">
+                  RSUD sobirin lubuk linggau
                 </option>
-              ))}
-            </select>
-            <select name="months" id="months">
-              {months.map((month) => (
-                <option key={month} value={month}>
-                  {month}
-                </option>
-              ))}
-            </select>
-            <select name="years" id="years">
-              {years.map((year) => (
-                <option key={year} value={year}>
-                  {year}
-                </option>
-              ))}
-            </select>
-          </div>
-        </div>
-        <div>
-          <label htmlFor="hospital">Nama Rumah Sakit/Puskesmas</label>
-          <select name="hospital" id="hospital">
-            <option value="rsud kayuagung">RSUD Kayuagung</option>
-            <option value="rsud sobirin lubuk linggau">
-              RSUD sobirin lubuk linggau
-            </option>
-            <option value="puskesmas">Puskesmas</option>
-          </select>
-        </div>
-        <div>
-          <label htmlFor="patientInitials">Inisial Nama Pasien</label>
-          <input
-            type="text"
-            placeholder={`Tuliskan "Pasien Simulasi" jika tidak ada`}
-            id="patientInitials"
-            name="patientInitials"
-          />
-        </div>
-        <div>
-          <label htmlFor="medicalRecordNumber">Nomor Rekam Medis Pasien</label>
-          <input type="text" placeholder={`Tuliskan 0 jika tidak ada`} />
-        </div>
-        <div>
-          <label htmlFor="diseases">Nama Penyakit</label>
-          <select name="diseases" id="diseases">
-            {diseases &&
-              diseases.map((disease) => (
-                <option key={disease.id} value={disease.id}>
-                  {disease.name}
-                </option>
-              ))}
-          </select>
-        </div>
-        <div>
-          <label htmlFor="disease-competences">Level Kompetensi Penyakit</label>
-          <div className={styles.radio} id="disease-competences">
-            <div>
-              <input
-                type="radio"
-                name="disease-competences"
-                id="disease-1"
-                value={`1`}
-              />
-              <label htmlFor="disease-1">Level 1</label>
+                <option value="puskesmas">Puskesmas</option>
+              </select>
             </div>
             <div>
+              <label htmlFor="patientInitials">Inisial Nama Pasien</label>
               <input
-                type="radio"
-                name="disease-competences"
-                id="disease-2"
-                value={`2`}
+                type="text"
+                placeholder={`Tuliskan "Pasien Simulasi" jika tidak ada`}
+                id="patientInitials"
+                name="patientInitials"
               />
-              <label htmlFor="disease-2">Level 2</label>
             </div>
             <div>
-              <input
-                type="radio"
-                name="disease-competences"
-                id="disease-3a"
-                value={`3A`}
-              />
-              <label htmlFor="disease-3a">Level 3A</label>
+              <label htmlFor="medicalRecordNumber">
+                Nomor Rekam Medis Pasien
+              </label>
+              <input type="text" placeholder={`Tuliskan 0 jika tidak ada`} />
             </div>
             <div>
-              <input
-                type="radio"
-                name="disease-competences"
-                id="disease-3b"
-                value={`3B`}
-              />
-              <label htmlFor="disease-3b">Level 3B</label>
+              <label htmlFor="diseases">Nama Penyakit</label>
+              <select name="diseases" id="diseases">
+                {diseases &&
+                  diseases.map((disease) => (
+                    <option key={disease.id} value={disease.id}>
+                      {disease.name}
+                    </option>
+                  ))}
+              </select>
             </div>
             <div>
-              <input
-                type="radio"
-                name="disease-competences"
-                id="disease-4"
-                value={`4`}
-              />
-              <label htmlFor="disease-4">Level 4</label>
-            </div>
-          </div>
-        </div>
-        <div>
-          <label htmlFor="skill">Nama Keterampilan</label>
-          <select name="skill" id="skill">
-            {skills &&
-              skills.map((skill) => (
-                <option key={skill.id} value={skill.id}>
-                  {skill.name}
-                </option>
-              ))}
-          </select>
-        </div>
-        <div>
-          <label htmlFor="skill-competences">
-            Level Kompetensi Keterampilan
-          </label>
-          <div className={styles.radio} id="skill-competences">
-            <div>
-              <input
-                type="radio"
-                name="skill-competences"
-                id="skill-1"
-                value={`1`}
-              />
-              <label htmlFor="skill-1">Level 1</label>
-            </div>
-            <div>
-              <input
-                type="radio"
-                name="skill-competences"
-                id="skill-2"
-                value={`2`}
-              />
-              <label htmlFor="skill-2">Level 2</label>
-            </div>
-            <div>
-              <input
-                type="radio"
-                name="skill-competences"
-                id="skill-3"
-                value={`3`}
-              />
-              <label htmlFor="skill-3">Level 3</label>
+              <label htmlFor="disease-competences">
+                Level Kompetensi Penyakit
+              </label>
+              <div className={styles.radio} id="disease-competences">
+                <div>
+                  <input
+                    type="radio"
+                    name="disease-competences"
+                    id="disease-1"
+                    value={`1`}
+                  />
+                  <label htmlFor="disease-1">Level 1</label>
+                </div>
+                <div>
+                  <input
+                    type="radio"
+                    name="disease-competences"
+                    id="disease-2"
+                    value={`2`}
+                  />
+                  <label htmlFor="disease-2">Level 2</label>
+                </div>
+                <div>
+                  <input
+                    type="radio"
+                    name="disease-competences"
+                    id="disease-3a"
+                    value={`3A`}
+                  />
+                  <label htmlFor="disease-3a">Level 3A</label>
+                </div>
+                <div>
+                  <input
+                    type="radio"
+                    name="disease-competences"
+                    id="disease-3b"
+                    value={`3B`}
+                  />
+                  <label htmlFor="disease-3b">Level 3B</label>
+                </div>
+                <div>
+                  <input
+                    type="radio"
+                    name="disease-competences"
+                    id="disease-4"
+                    value={`4`}
+                  />
+                  <label htmlFor="disease-4">Level 4</label>
+                </div>
+              </div>
             </div>
             <div>
-              <input
-                type="radio"
-                name="skill-competences"
-                id="skill-4"
-                value={`4`}
-              />
-              <label htmlFor="skill-4">Level 4</label>
+              <label htmlFor="skill">Nama Keterampilan</label>
+              <select name="skill" id="skill">
+                {skills &&
+                  skills.map((skill) => (
+                    <option key={skill.id} value={skill.id}>
+                      {skill.name}
+                    </option>
+                  ))}
+              </select>
             </div>
-          </div>
-        </div>
-        <div>
-          <label htmlFor="lecturer">Nama Dosen</label>
-          <select name="lecturerId" id="lecturer">
-            {lecturers &&
-              lecturers.map((lecturer) => (
-                <option key={lecturer.id} value={lecturer.id}>
-                  {lecturer.name}
-                </option>
-              ))}
-          </select>
-        </div>
-        <div>
-          <label htmlFor="guidancesId">Jenis Bimbingan</label>
-          <select name="guidanceId" id="guidanceId">
-            {guidances &&
-              guidances.map((guidance) => (
-                <option key={guidance.id} value={guidance.id}>
-                  {guidance.name}
-                </option>
-              ))}
-          </select>
-        </div>
-        <Button className="primary">Save</Button>
+            <div>
+              <label htmlFor="skill-competences">
+                Level Kompetensi Keterampilan
+              </label>
+              <div className={styles.radio} id="skill-competences">
+                <div>
+                  <input
+                    type="radio"
+                    name="skill-competences"
+                    id="skill-1"
+                    value={`1`}
+                  />
+                  <label htmlFor="skill-1">Level 1</label>
+                </div>
+                <div>
+                  <input
+                    type="radio"
+                    name="skill-competences"
+                    id="skill-2"
+                    value={`2`}
+                  />
+                  <label htmlFor="skill-2">Level 2</label>
+                </div>
+                <div>
+                  <input
+                    type="radio"
+                    name="skill-competences"
+                    id="skill-3"
+                    value={`3`}
+                  />
+                  <label htmlFor="skill-3">Level 3</label>
+                </div>
+                <div>
+                  <input
+                    type="radio"
+                    name="skill-competences"
+                    id="skill-4"
+                    value={`4`}
+                  />
+                  <label htmlFor="skill-4">Level 4</label>
+                </div>
+              </div>
+            </div>
+            <div>
+              <label htmlFor="lecturer">Nama Dosen</label>
+              <select name="lecturerId" id="lecturer">
+                {lecturers &&
+                  lecturers.map((lecturer) => (
+                    <option key={lecturer.id} value={lecturer.id}>
+                      {lecturer.name}
+                    </option>
+                  ))}
+              </select>
+            </div>
+            <div>
+              <label htmlFor="guidancesId">Jenis Bimbingan</label>
+              <select name="guidanceId" id="guidanceId">
+                {guidances &&
+                  guidances.map((guidance) => (
+                    <option key={guidance.id} value={guidance.id}>
+                      {guidance.name}
+                    </option>
+                  ))}
+              </select>
+            </div>
+            <Button className="primary">Save</Button>
+          </>
+        )}
       </form>
     </div>
   );

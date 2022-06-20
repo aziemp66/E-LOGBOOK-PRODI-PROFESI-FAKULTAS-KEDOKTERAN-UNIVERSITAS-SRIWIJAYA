@@ -141,16 +141,23 @@ const addHospital = async (req, res, next) => {
 };
 
 const updateUserRoles = async (req, res, next) => {
-  const { userId: id } = req.body;
-  const { roles } = req.body;
+  const { userId: id, role } = req.body;
 
-  const { error } = validation.updateUserRolesValidation({ roles });
+  const { error } = validation.updateUserRolesValidation({ role });
   if (error) return next(error.details[0]);
+
+  if (
+    (role !== "admin") |
+    (role !== "student") |
+    (role !== "lecturer") |
+    (role !== "supervisor")
+  )
+    return next("Invalid role");
 
   try {
     await db.User.update(
       {
-        roles,
+        roles: role,
       },
       {
         where: {
@@ -161,8 +168,23 @@ const updateUserRoles = async (req, res, next) => {
   } catch (error) {
     return next(error);
   }
+
+  //creating user profile if user is student or lecturer
+  if (role === "student" || role === "lecturer") {
+    const capitalizeRole = role.charAt(0).toUpperCase() + role.slice(1);
+    const profiles = `${capitalizeRole}Profile`;
+
+    try {
+      await db[profiles].create({
+        userId: id,
+      });
+    } catch (error) {
+      return next(error);
+    }
+  }
+
   res.json({
-    message: "User roles updated successfully",
+    message: "User role updated successfully",
   });
 };
 

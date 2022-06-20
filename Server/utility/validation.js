@@ -78,7 +78,7 @@ const addHospitalValidation = (data) => {
 
 const updateUserRolesValidation = (data) => {
   const schema = Joi.object({
-    roles: Joi.array().items(Joi.string().min(1).max(255)).required(),
+    role: Joi.string().min(1).max(255).required(),
   });
 
   return schema.validate(data);

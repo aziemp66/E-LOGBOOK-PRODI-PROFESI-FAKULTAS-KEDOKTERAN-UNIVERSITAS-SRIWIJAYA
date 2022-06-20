@@ -49,6 +49,17 @@ const userRegister = async (req, res, next) => {
   }
   if (!user) return next("User not created");
 
+  //creating student profile
+  let studentProfile;
+  try {
+    studentProfile = await db.StudentProfile.create({
+      userId: user.id,
+    });
+  } catch (error) {
+    return next(error);
+  }
+  if (!studentProfile) return next("Student profile not created");
+
   res.json({
     message: "User created successfully",
   });
