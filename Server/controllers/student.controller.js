@@ -7,7 +7,7 @@ const getProfile = async (req, res, next) => {
   const { id } = req.user;
 
   try {
-    const studentProfile = await db.Student.findOne({
+    const studentProfile = await db.StudentProfile.findOne({
       where: {
         userId: id,
       },
