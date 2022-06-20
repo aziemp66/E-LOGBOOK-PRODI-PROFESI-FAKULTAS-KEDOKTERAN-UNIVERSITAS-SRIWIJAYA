@@ -76,12 +76,36 @@ const Competences = () => {
     // "skill-competences": skillCompetence,
     // lecturer: lecturer,
     // guidances: guidanceId,
-
-    const response = await axios.post(`${baseUrl}`, {
-      headers: {
-        "auth-token": localStorage.getItem("auth-token"),
-      },
-    });
+    await axios
+      .post(
+        `${baseUrl}/competence`,
+        {
+          stationId: stationRef.current.value,
+          days: e.target.days.value,
+          months: e.target.months.value,
+          years: e.target.years.value,
+          hospital: e.target.hospital.value,
+          patientInitials: e.target.patientInitials.value,
+          patientMedicalNumber: e.target.patientMedicalNumber.value,
+          disease: e.target.disease.value,
+          "disease-competences": e.target["disease-competences"].value,
+          skill: e.target.skill.value,
+          "skill-competences": e.target["skill-competences"].value,
+          lecturerId: e.target.lecturerId.value,
+          guidancesId: e.target.guidanceId.value,
+        },
+        {
+          headers: {
+            "auth-token": localStorage.getItem("token"),
+          },
+        }
+      )
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const stationChangeHandler = (e) => {
@@ -148,8 +172,8 @@ const Competences = () => {
                     ))}
                   </select>
                   <select name="months" id="months">
-                    {months.map((month) => (
-                      <option key={month} value={month}>
+                    {months.map((month, index) => (
+                      <option key={index + 1} value={index + 1}>
                         {month}
                       </option>
                     ))}
@@ -184,14 +208,18 @@ const Competences = () => {
                 />
               </div>
               <div>
-                <label htmlFor="medicalRecordNumber">
+                <label htmlFor="patientMedicalNumber">
                   Nomor Rekam Medis Pasien
                 </label>
-                <input type="text" placeholder={`Tuliskan 0 jika tidak ada`} />
+                <input
+                  type="text"
+                  name="patientMedicalNumber"
+                  placeholder={`Tuliskan 0 jika tidak ada`}
+                />
               </div>
               <div>
-                <label htmlFor="diseases">Nama Penyakit</label>
-                <select name="diseases" id="diseases">
+                <label htmlFor="disease">Nama Penyakit</label>
+                <select name="disease" id="disease">
                   {diseases &&
                     diseases.map((disease) => (
                       <option key={disease.id} value={disease.id}>
@@ -318,7 +346,7 @@ const Competences = () => {
                 </select>
               </div>
               <div>
-                <label htmlFor="guidancesId">Jenis Bimbingan</label>
+                <label htmlFor="guidanceId">Jenis Bimbingan</label>
                 <select name="guidanceId" id="guidanceId">
                   {guidances &&
                     guidances.map((guidance) => (

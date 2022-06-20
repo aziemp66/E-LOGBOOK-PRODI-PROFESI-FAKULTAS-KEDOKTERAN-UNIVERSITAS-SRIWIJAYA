@@ -107,12 +107,12 @@ const addCompetenceValidation = (data) => {
     hospital: Joi.string().min(1).max(255),
     patientInitials: Joi.string().min(1).max(255),
     patientMedicalNumber: Joi.string().min(1).max(255),
-    diseaseName: Joi.string().min(1).max(255),
+    diseaseId: Joi.string().min(1).max(255),
     diseaseCompetence: Joi.string().min(1).max(255),
-    skillName: Joi.string().min(1).max(255),
+    skillId: Joi.string().min(1).max(255),
     skillCompetence: Joi.string().min(1).max(255),
     lecturerId: Joi.string().min(1).max(255),
-    guidanceType: Joi.string().min(1).max(255),
+    guidanceId: Joi.string().min(1).max(255),
   });
 
   return schema.validate(data);

@@ -240,7 +240,7 @@ const addCompetence = async (req, res, next) => {
   if (days < 10) days = `0${days}`;
   if (months < 10) months = `0${months}`;
 
-  const validatedData = validation.addCompetenceValidation({
+  const { error } = validation.addCompetenceValidation({
     stationId,
     days,
     months,
@@ -255,7 +255,9 @@ const addCompetence = async (req, res, next) => {
     lecturerId,
     guidanceId,
   });
-  if (validatedData.error) return next(validatedData.error.details[0].message);
+  if (error) return next(error.details[0]);
+
+  console.log("here");
 
   //check if Student Profile exists
   let studentProfile;
