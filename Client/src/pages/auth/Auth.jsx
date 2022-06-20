@@ -8,19 +8,29 @@ const Auth = () => {
   const navigate = useNavigate();
   const authCtx = useContext(AuthContext);
   useEffect(() => {
-    if (authCtx.userData) {
-      console.log(authCtx.userData);
-      switch (authCtx.userData.role) {
+    authCtx.userDataHandler().then((response) => {
+      if (response.error) {
+        console.log(response.error);
+        return navigate("/login");
+      }
+      switch (response.role) {
         case "student":
           navigate("/dashboard");
           break;
         case "admin":
           navigate("/admin");
           break;
+        case "lecturer":
+          navigate("/lecturer");
+          break;
+        case "supervisor":
+          navigate("/supervisor");
+          break;
+
         default:
           break;
       }
-    }
+    });
   }, [authCtx.userData]);
   return (
     <div className={styles.background}>

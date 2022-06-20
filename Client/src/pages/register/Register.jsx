@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import AuthContext from "../../contexts/AuthContexts";
 
 import styles from "./Register.module.css";
@@ -9,16 +9,24 @@ import { Link } from "react-router-dom";
 
 const Register = () => {
   const authCtx = useContext(AuthContext);
+  const [isError, setIsError] = useState(null);
+  const [isMessage, setIsMessage] = useState(null);
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
 
-    authCtx.register(
+    const response = authCtx.register(
       e.target.email.value,
       e.target.username.value,
       e.target.password.value,
       e.target.confirmPassword.value
     );
+    if (response.error) return setIsError(response.error);
+
+    setIsMessage(response.message);
+    setTimeout(() => {
+      navigate("/login");
+    }, 1000);
   };
 
   return (
@@ -58,6 +66,16 @@ const Register = () => {
               Sign Up
             </Button>
           </div>
+          {isError && (
+            <div className={styles.error}>
+              <p>{isError}</p>
+            </div>
+          )}
+          {isMessage && (
+            <div className={styles.message}>
+              <p>{isMessage}</p>
+            </div>
+          )}
           <div className={styles.switch}>
             <p>
               Already have an account? <Link to={"/login"}>Log in</Link>

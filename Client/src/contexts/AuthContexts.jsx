@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import jwtDecode from "jwt-decode";
 import axios from "axios";
 
@@ -15,7 +14,6 @@ const BASE_URL = "http://localhost:5000/api/auth";
 
 export const AuthProvider = (props) => {
   const [userData, setUserData] = useState(null);
-  const navigate = useNavigate();
 
   const register = async (email, username, password, confirmPassword) => {
     try {
@@ -27,13 +25,15 @@ export const AuthProvider = (props) => {
       });
       if (response.data.error) {
         console.log(response.data.error);
-        return;
+        return { error: response.data.error };
       }
-      navigate("/login");
     } catch (error) {
-      console.log(error);
-      return;
+      return { error: response.data.error };
     }
+
+    return {
+      message: "Successfully registered",
+    };
   };
 
   const login = async (username, password) => {
@@ -45,15 +45,22 @@ export const AuthProvider = (props) => {
       });
       if (response.data.error) {
         console.log(response.data.error);
-        return;
+        return { error: response.data.error };
       }
     } catch (error) {
-      console.log(error);
-      return;
+      return {
+        error: response.data.error,
+      };
     }
 
     localStorage.setItem("token", response.data.accessToken);
-    setUserData(jwtDecode(response.data.accessToken));
+    const decoded = jwtDecode(response.data.accessToken);
+    setUserData(decoded);
+
+    return {
+      message: "Successfully logged in, redirecting...",
+      role: decoded.role,
+    };
   };
 
   const logout = () => {
@@ -63,13 +70,19 @@ export const AuthProvider = (props) => {
 
   const userDataHandler = async () => {
     const token = localStorage.getItem("token");
-    if (token) {
-      const decoded = jwtDecode(token);
-      if (decoded.exp < Date.now() / 1000) {
-        return logout();
-      }
-      setUserData(decoded);
+    if (!token)
+      return {
+        error: "No token found",
+      };
+    const decoded = jwtDecode(token);
+    if (decoded.exp < Date.now() / 1000) {
+      return logout();
     }
+    setUserData(decoded);
+    return {
+      role: decoded.role,
+      message: "Successfully logged in",
+    };
   };
 
   return (

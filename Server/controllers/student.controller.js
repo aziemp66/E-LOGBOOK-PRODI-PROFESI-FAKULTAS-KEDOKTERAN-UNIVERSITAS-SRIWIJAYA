@@ -161,11 +161,22 @@ const getCompetenceInfo = async (req, res, next) => {
     return next(new Error("No guidances found"));
   }
 
+  let hospitals;
+  try {
+    hospitals = await db.Hospital.findAll();
+  } catch (error) {
+    return next(error);
+  }
+  if (!hospitals) {
+    return next(new Error("No hospitals found"));
+  }
+
   res.json({
     existingCompetences,
     stations,
     lecturers,
     guidances,
+    hospitals,
   });
 };
 

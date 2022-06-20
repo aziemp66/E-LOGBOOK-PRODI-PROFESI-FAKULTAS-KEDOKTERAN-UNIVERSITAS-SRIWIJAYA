@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./Login.module.css";
 import Button from "../../components/ui/button/Button";
@@ -10,10 +10,41 @@ import AuthContext from "../../contexts/AuthContexts";
 const Login = (props) => {
   const authCtx = useContext(AuthContext);
   const navigate = useNavigate();
+  const [isMessage, setIsMessage] = useState(null);
+  const [isError, setIsError] = useState(null);
+
   const loginHandler = (e) => {
     e.preventDefault();
-    authCtx.login(e.target.username.value, e.target.password.value);
-    navigate("/dashboard");
+    authCtx
+      .login(e.target.username.value, e.target.password.value)
+      .then((response) => {
+        if (response.error) {
+          setIsMessage(null);
+          return setIsError(response.error);
+        }
+
+        setIsMessage(response.message);
+        setIsError(null);
+        setTimeout(() => {
+          switch (response.role) {
+            case "student":
+              navigate("/dashboard");
+              break;
+            case "admin":
+              navigate("/admin");
+              break;
+            case "lecturer":
+              navigate("/lecturer");
+              break;
+            case "supervisor":
+              navigate("/supervisor");
+              break;
+
+            default:
+              break;
+          }
+        }, 1000);
+      });
   };
 
   return (
@@ -44,6 +75,16 @@ const Login = (props) => {
               Log in
             </Button>
           </div>
+          {isError && (
+            <div className={styles.error}>
+              <p>{isError}</p>
+            </div>
+          )}
+          {isMessage && (
+            <div className={styles.message}>
+              <p>{isMessage}</p>
+            </div>
+          )}
           <div>
             <p className={styles.switch}>
               Don't have an account? <Link to={"/register"}>Sign up</Link>
