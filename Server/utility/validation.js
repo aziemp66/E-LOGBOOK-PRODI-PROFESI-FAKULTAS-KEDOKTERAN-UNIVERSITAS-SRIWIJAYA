@@ -23,12 +23,15 @@ const updateProfileValidation = (data) => {
   const schema = Joi.object({
     firstName: Joi.string().min(1).max(255),
     lastName: Joi.string().min(1).max(255),
-    studentNumber: Joi.string().min(1).max(255),
+    studentNumber: Joi.string().min(14).max(14),
     address: Joi.string().min(1).max(255),
     email: Joi.string().min(6).max(255).email(),
     phone: Joi.string().min(1).max(255),
     entryPeriod: Joi.number().integer().min(1).max(99999999),
-    academicCouncellor: Joi.string().min(1).max(255),
+    academicCounselor: Joi.string().min(1).max(255),
+    days: Joi.number().integer().min(1).max(31),
+    months: Joi.number().integer().min(1).max(12),
+    years: Joi.number().integer().min(1).max(9999),
   });
 
   return schema.validate(data);

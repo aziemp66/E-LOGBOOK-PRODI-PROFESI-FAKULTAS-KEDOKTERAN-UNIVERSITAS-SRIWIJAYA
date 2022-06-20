@@ -6,6 +6,10 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       unique: true,
     },
+    profilePicture: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
     firstName: {
       type: DataTypes.STRING,
       allowNull: true,
@@ -14,8 +18,8 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: true,
     },
-    profilePicture: {
-      type: DataTypes.STRING,
+    dateOfBirth: {
+      type: DataTypes.DATE,
       allowNull: true,
     },
     studentNumber: {
@@ -38,7 +42,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: true,
     },
-    academicCouncellor: {
+    academicCounselor: {
       type: DataTypes.STRING,
       allowNull: true,
     },

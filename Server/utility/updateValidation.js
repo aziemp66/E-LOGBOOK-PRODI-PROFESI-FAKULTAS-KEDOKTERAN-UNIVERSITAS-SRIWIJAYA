@@ -6,8 +6,7 @@ const updateProfileValidation = (data, user) => {
   if (!data.email) data.email = user.email || "";
   if (!data.phone) data.phone = user.phone || "";
   if (!data.entryPeriod) data.entryPeriod = user.entryPeriod || "";
-  if (!data.academicCouncellor)
-    data.academicCouncellor = user.academicCouncellor;
+  if (!data.academicCounselor) data.academicCounselor = user.academicCounselor;
 };
 
 module.exports = {

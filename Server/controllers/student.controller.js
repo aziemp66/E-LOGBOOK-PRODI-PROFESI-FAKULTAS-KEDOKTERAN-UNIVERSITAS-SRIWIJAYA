@@ -24,16 +24,27 @@ const getProfile = async (req, res, next) => {
 const updateProfile = async (req, res, next) => {
   const { id } = req.user;
 
-  const {
+  let {
     firstName,
     lastName,
     studentNumber,
     address,
     email,
     phone,
+    days,
+    months,
+    years,
     entryPeriod,
-    academicCouncellor,
+    academicCounselor,
   } = req.body;
+
+  //add 0 to the front of the day and month if it is less than 10
+  if (days < 10) {
+    days = `0${days}`;
+  }
+  if (months < 10) {
+    months = `0${months}`;
+  }
 
   const { error } = validation.updateProfileValidation({
     firstName,
@@ -43,9 +54,15 @@ const updateProfile = async (req, res, next) => {
     email,
     phone,
     entryPeriod,
-    academicCouncellor,
+    academicCounselor,
+    days,
+    months,
+    years,
   });
   if (error) return next(validatedData.error.details[0]);
+
+  //convert date to YYYY-MM-DD
+  const dateOfBirth = `${years}-${months}-${days}`;
 
   //check if Student Profile exists
   let studentProfile;
@@ -70,7 +87,7 @@ const updateProfile = async (req, res, next) => {
         email,
         phone,
         entryPeriod,
-        academicCouncellor,
+        academicCounselor,
       },
       studentProfile
     );
@@ -84,7 +101,7 @@ const updateProfile = async (req, res, next) => {
         email,
         phone,
         entryPeriod,
-        academicCouncellor,
+        academicCounselor,
       });
     } catch (error) {
       return next(error);
@@ -101,7 +118,8 @@ const updateProfile = async (req, res, next) => {
         email,
         phone,
         entryPeriod,
-        academicCouncellor,
+        dateOfBirth,
+        academicCounselor,
       });
     } catch (error) {
       return next(error);
@@ -257,8 +275,6 @@ const addCompetence = async (req, res, next) => {
   });
   if (error) return next(error.details[0]);
 
-  console.log("here");
-
   //check if Student Profile exists
   let studentProfile;
   try {
@@ -285,7 +301,7 @@ const addCompetence = async (req, res, next) => {
       studentProfile.email === null ||
       studentProfile.phone === null ||
       studentProfile.entryPeriod === null ||
-      studentProfile.academicCouncellor === null
+      studentProfile.academicCounselor === null
     ) {
       return next(new Error("Please complete your student profile to proceed"));
     }

@@ -1,6 +1,8 @@
 import React from "react";
 import Button from "../../components/ui/button/Button";
 
+import axios from "axios";
+
 import dummyProfile from "../../assets/dummy/profile.png";
 
 import styles from "./Profile.module.css";
@@ -26,6 +28,40 @@ const year = date.getFullYear();
 const years = Array.from(Array(150), (x, i) => year - i);
 
 const Profile = () => {
+  const baseUrl = "http://localhost:5000/api/student";
+
+  const onSubmitHandler = (e) => {
+    e.preventDefault();
+
+    axios
+      .patch(
+        `${baseUrl}/profile`,
+        {
+          firstName: e.target.firstName.value,
+          lastName: e.target.lastName.value,
+          studentNumber: e.target.studentNumber.value,
+          address: e.target.address.value,
+          email: e.target.email.value,
+          phone: e.target.phone.value,
+          entryPeriod: e.target.entryPeriod.value,
+          academicCounselor: e.target.academicCounselor.value,
+          days: e.target.days.value,
+          months: e.target.months.value,
+          years: e.target.years.value,
+        },
+        {
+          headers: {
+            "auth-token": localStorage.getItem("token"),
+          },
+        }
+      )
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   return (
     <div className={styles.page}>
       <section className={styles.profileSection}>
@@ -44,7 +80,7 @@ const Profile = () => {
         </div>
       </section>
       <section className={styles.formSection}>
-        <form action="" method="POST">
+        <form onSubmit={onSubmitHandler}>
           <div className={styles.studentData}>
             <h2>Mahasiswa</h2>
             <div className={styles.names}>
@@ -58,14 +94,20 @@ const Profile = () => {
               </div>
             </div>
             <div>
-              <label htmlFor="nim">NIM</label>
-              <input type="text" id="nim" placeholder="09XXXXXXXXXXXX" />
+              <label htmlFor="studentNumber">NIM</label>
+              <input
+                type="text"
+                id="studentNumber"
+                name="studentNumber"
+                placeholder="09XXXXXXXXXXXX"
+              />
             </div>
             <div>
               <label htmlFor="address">Alamat</label>
               <input
                 type="text"
                 id="address"
+                name="address"
                 placeholder="Desa Seriguna, Kecamatan Teluk Gelam"
               />
             </div>
@@ -103,16 +145,17 @@ const Profile = () => {
               <input
                 type="email"
                 id="email"
+                name="email"
                 placeholder="hisammula69@gmail.com"
               />
             </div>
             <div>
-              <label htmlFor="phoneNumber">Nomor Telepon</label>
-              <input type="number" id="phoneNumber" />
+              <label htmlFor="phone">Nomor Telepon</label>
+              <input type="number" name="phone" id="phone" />
             </div>
             <div className={styles.dropdown}>
-              <label htmlFor="period">Periode Masuk</label>
-              <select name="period" id="period">
+              <label htmlFor="entryPeriod">Periode Masuk</label>
+              <select name="entryPeriod" id="entryPeriod">
                 <option value="20222">
                   Periode Masuk 2022 (Angkatan 2019)
                 </option>
@@ -125,8 +168,14 @@ const Profile = () => {
           <div className={styles.counselors}>
             <h2>Pembimbing Akademik</h2>
             <div>
-              <label htmlFor="counselor">Nama Pembimbing Akademik</label>
-              <input type="text" name="counselor" id="counselor" />
+              <label htmlFor="academicCounselor">
+                Nama Pembimbing Akademik
+              </label>
+              <input
+                type="text"
+                name="academicCounselor"
+                id="academicCounselor"
+              />
             </div>
           </div>
           <Button className="primary">Save</Button>
