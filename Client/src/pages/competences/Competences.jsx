@@ -39,12 +39,21 @@ const Competences = () => {
   const baseUrl = "http://localhost:5000/api/student";
 
   useEffect(() => {
-    axios.get(`${baseUrl}/competence`).then((res) => {
-      setExistingCompetences(res.data.existingCompetences);
-      setStations(res.data.stations);
-      setGuidances(res.data.guidances);
-      setLecturers(res.data.lecturers);
-    });
+    axios
+      .get(`${baseUrl}/competence`, {
+        headers: {
+          "auth-token": localStorage.getItem("token"),
+        },
+      })
+      .then((res) => {
+        setExistingCompetences(res.data.existingCompetences);
+        setStations(res.data.stations);
+        setGuidances(res.data.guidances);
+        setLecturers(res.data.lecturers);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
 
   const onSubmitHandler = async (e) => {
@@ -64,7 +73,11 @@ const Competences = () => {
     // lecturer: lecturer,
     // guidances: guidanceId,
 
-    const response = await axios.post("/api/user/competences", {});
+    const response = await axios.post(`${baseUrl}`, {
+      headers: {
+        "auth-token": localStorage.getItem("auth-token"),
+      },
+    });
   };
 
   const stationChangeHandler = (e) => {
@@ -75,12 +88,16 @@ const Competences = () => {
         setCompetenceValues(competence);
     });
 
-    axios.get(`${baseUrl}/disease-and-skill/${e.target.value}`).then((res) => {
-      setDiseases(res.data.diseases);
-      setSkills(res.data.skills);
-    });
-
-    console.log(e.target.value);
+    axios
+      .get(`${baseUrl}/disease-and-skill/${e.target.value}`, {
+        headers: {
+          "auth-token": localStorage.getItem("token"),
+        },
+      })
+      .then((res) => {
+        setDiseases(res.data.diseases);
+        setSkills(res.data.skills);
+      });
   };
 
   return (
@@ -97,7 +114,7 @@ const Competences = () => {
         <div>
           <label htmlFor="station">Stase</label>
           <select onChange={stationChangeHandler} name="stationId" id="station">
-            <option value={"empty"}>Silahkan Pilih Stase</option>
+            <option>Silahkan Pilih Stase</option>
             {stations &&
               stations.map((station) => (
                 <option sel key={station.id} value={station.id}>
@@ -109,13 +126,7 @@ const Competences = () => {
         <div>
           <label htmlFor="dateOfBirth">Tanggal</label>
           <div id="date" className={`${styles.dropdown} ${styles.dates}`}>
-            <select
-              value={() => {
-                if (competenceValues) return competenceValues.date.getDay();
-              }}
-              name="days"
-              id="days"
-            >
+            <select name="days" id="days">
               {days.map((day) => (
                 <option key={day} value={day}>
                   {day}
@@ -164,11 +175,12 @@ const Competences = () => {
         <div>
           <label htmlFor="diseases">Nama Penyakit</label>
           <select name="diseases" id="diseases">
-            {diseases.map((disease) => (
-              <option key={disease.id} value={disease.id}>
-                {disease.name}
-              </option>
-            ))}
+            {diseases &&
+              diseases.map((disease) => (
+                <option key={disease.id} value={disease.id}>
+                  {disease.name}
+                </option>
+              ))}
           </select>
         </div>
         <div>
@@ -224,11 +236,12 @@ const Competences = () => {
         <div>
           <label htmlFor="skill">Nama Keterampilan</label>
           <select name="skill" id="skill">
-            {skills.map((skill) => (
-              <option key={skill.id} value={skill.id}>
-                {skill.name}
-              </option>
-            ))}
+            {skills &&
+              skills.map((skill) => (
+                <option key={skill.id} value={skill.id}>
+                  {skill.name}
+                </option>
+              ))}
           </select>
         </div>
         <div>

@@ -16,6 +16,8 @@ router.post("/guidance", adminController.addGuidance);
 
 router.post("/hospital", adminController.addHospital);
 
+router.get("/user", adminController.getAllUsers);
+
 router.patch("/roles", adminController.updateUserRoles);
 
 router.post("/presention", adminController.addStudentPresention);

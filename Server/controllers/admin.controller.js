@@ -88,13 +88,13 @@ const addDisease = async (req, res, next) => {
 const addSkill = async (req, res, next) => {
   const { name, stationId } = req.body;
 
-  const { error } = validation.addSkillValidation({ name, station: stationId });
+  const { error } = validation.addSkillValidation({ name, stationId });
   if (error) return next(error.details[0]);
 
   try {
     await db.Skill.create({
       name,
-      stationId,
+      station: stationId,
     });
   } catch (error) {
     return next(error);
@@ -213,6 +213,15 @@ const addStudentPresention = async (req, res, next) => {
   }
 };
 
+const getAllUsers = async (req, res, next) => {
+  try {
+    const users = await db.User.findAll();
+    res.json(users);
+  } catch (error) {
+    return next(error);
+  }
+};
+
 module.exports = {
   getAllDiseasesAndSkills,
   addStation,
@@ -222,4 +231,5 @@ module.exports = {
   addHospital,
   updateUserRoles,
   addStudentPresention,
+  getAllUsers,
 };
