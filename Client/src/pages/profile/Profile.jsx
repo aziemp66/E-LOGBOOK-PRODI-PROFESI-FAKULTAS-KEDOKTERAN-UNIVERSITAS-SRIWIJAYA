@@ -33,27 +33,14 @@ const Profile = () => {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm();
-
-  const firstName = useRef();
-  const lastName = useRef();
-  const email = useRef();
-  const phone = useRef();
-  const address = useRef();
-  const studentNumber = useRef();
-  const entryPeriod = useRef();
-  const academicCounselor = useRef();
-  const daysRef = useRef();
-  const monthsRef = useRef();
-  const yearsRef = useRef();
-
   const baseUrl = "http://localhost:5000/api/student";
 
   const onSubmitHandler = (data) => {
     console.log(data);
   };
-  console.log(errors);
 
   useEffect(() => {
     axios
@@ -64,35 +51,24 @@ const Profile = () => {
       })
       .then((res) => {
         console.log(res.data);
-        firstName.current.value = res.data.firstName;
-        lastName.current.value = res.data.lastName;
-        email.current.value = res.data.email;
-        phone.current.value = res.data.phone;
-        address.current.value = res.data.address;
-        studentNumber.current.value = res.data.studentNumber;
-        entryPeriod.current.value = res.data.entryPeriod;
-        academicCounselor.current.value = res.data.academicCounselor;
-        const dateOfBirth = res.data.dateOfBirth.split("T")[0].split("-");
-        setYear(+dateOfBirth[0]);
-        setMonth(+dateOfBirth[1]);
-        setDay(+dateOfBirth[2]);
+        setValue("firstName", res.data.firstName);
+        setValue("lastName", res.data.lastName);
+        setValue("studentNumber", res.data.studentNumber);
+        setValue("address", res.data.address);
+        let date = res.data.dateOfBirth;
+        date = date.split("T")[0].split("-");
+        setValue("days", +date[2]);
+        setValue("months", +date[1]);
+        setValue("years", +date[0]);
+        setValue("email", res.data.email);
+        setValue("phone", res.data.phone);
+        setValue("entryPeriod", res.data.entryPeriod);
+        setValue("academicCounselor", res.data.academicCounselor);
       })
       .catch((err) => {
         console.log(err);
       });
-  }, [
-    firstName,
-    lastName,
-    email,
-    phone,
-    address,
-    studentNumber,
-    entryPeriod,
-    academicCounselor,
-    daysRef,
-    monthsRef,
-    yearsRef,
-  ]);
+  }, []);
 
   return (
     <div className={styles.page}>
@@ -122,7 +98,6 @@ const Profile = () => {
                   type="text"
                   id="firstName"
                   placeholder="Azie"
-                  ref={firstName}
                   {...register("firstName", {
                     required: "Your First Name Is Required",
                     maxLength: 255,
@@ -138,7 +113,6 @@ const Profile = () => {
                   type="text"
                   id="lastName"
                   placeholder="Melza Pratama"
-                  ref={lastName}
                   {...register("lastName", {
                     required: "Your Last Name Is Required",
                     maxLength: 255,
@@ -156,7 +130,6 @@ const Profile = () => {
                 id="studentNumber"
                 name="studentNumber"
                 placeholder="09XXXXXXXXXXXX"
-                ref={studentNumber}
                 {...register("studentNumber")}
               />
             </div>
@@ -167,7 +140,6 @@ const Profile = () => {
                 id="address"
                 name="address"
                 placeholder="Desa Seriguna, Kecamatan Teluk Gelam"
-                ref={address}
                 {...register("address")}
               />
             </div>
@@ -180,7 +152,6 @@ const Profile = () => {
                 <select
                   name="days"
                   id="days"
-                  ref={daysRef}
                   {...register("days", {
                     min: 1,
                     max: 31,
@@ -196,7 +167,6 @@ const Profile = () => {
                 <select
                   name="months"
                   id="months"
-                  ref={monthsRef}
                   {...register("months", {
                     min: 1,
                     max: 12,
@@ -212,7 +182,6 @@ const Profile = () => {
                 <select
                   name="years"
                   id="years"
-                  ref={yearsRef}
                   {...register("years", { valueAsNumber: true })}
                 >
                   {years.map((year) => (
@@ -230,7 +199,6 @@ const Profile = () => {
                 id="email"
                 name="email"
                 placeholder="hisammula69@gmail.com"
-                ref={email}
                 {...register("email")}
               />
             </div>
@@ -240,7 +208,6 @@ const Profile = () => {
                 type="number"
                 name="phone"
                 id="phone"
-                ref={phone}
                 {...register("phone")}
               />
             </div>
@@ -249,7 +216,6 @@ const Profile = () => {
               <select
                 name="entryPeriod"
                 id="entryPeriod"
-                ref={entryPeriod}
                 {...register("entryPeriod")}
               >
                 <option value="2022">Periode Masuk 2022 (Angkatan 2019)</option>
@@ -269,7 +235,6 @@ const Profile = () => {
                 type="text"
                 name="academicCounselor"
                 id="academicCounselor"
-                ref={academicCounselor}
                 {...register("academicCounselor")}
               />
             </div>
