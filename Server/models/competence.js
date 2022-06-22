@@ -8,10 +8,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    date: {
-      type: DataTypes.DATE,
-      allowNull: false,
-    },
     stationId: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -48,7 +44,11 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: true,
     },
-    guidanceType: {
+    guidanceName: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    hospitalName: {
       type: DataTypes.STRING,
       allowNull: true,
     },
@@ -56,14 +56,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: false,
-    },
-    date: {
-      type: DataTypes.DATE,
-      allowNull: true,
-    },
-    hospital: {
-      type: DataTypes.STRING,
-      allowNull: true,
     },
   });
   return Competence;

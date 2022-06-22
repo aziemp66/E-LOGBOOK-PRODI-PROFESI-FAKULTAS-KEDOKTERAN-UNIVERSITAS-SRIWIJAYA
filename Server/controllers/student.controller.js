@@ -243,13 +243,13 @@ const addCompetence = async (req, res, next) => {
     days,
     months,
     years,
-    hospital,
+    hospitalId,
     patientInitials,
     patientMedicalNumber,
-    disease: diseaseId,
-    "disease-competences": diseaseCompetence,
-    skill: skillId,
-    "skill-competences": skillCompetence,
+    diseaseId,
+    diseaseCompetence,
+    skillId,
+    skillCompetence,
     lecturerId,
     guidanceId,
   } = req.body;
@@ -263,7 +263,7 @@ const addCompetence = async (req, res, next) => {
     days,
     months,
     years,
-    hospital,
+    hospitalId,
     patientInitials,
     patientMedicalNumber,
     diseaseId,
@@ -309,10 +309,10 @@ const addCompetence = async (req, res, next) => {
 
   //check if disease competence exists
   if (
-    diseaseCompetence !== "1" ||
-    diseaseCompetence !== "2" ||
-    diseaseCompetence !== "3A" ||
-    diseaseCompetence !== "3B" ||
+    diseaseCompetence !== "1" &&
+    diseaseCompetence !== "2" &&
+    diseaseCompetence !== "3A" &&
+    diseaseCompetence !== "3B" &&
     diseaseCompetence !== "4"
   ) {
     return next(new Error("Invalid disease competence"));
@@ -320,9 +320,9 @@ const addCompetence = async (req, res, next) => {
 
   //check if skillCompetence exists
   if (
-    skillCompetence !== "1" ||
-    skillCompetence !== "2" ||
-    skillCompetence !== "3" ||
+    skillCompetence !== "1" &&
+    skillCompetence !== "2" &&
+    skillCompetence !== "3" &&
     skillCompetence !== "4"
   ) {
     return next(new Error("Invalid skill competence"));
@@ -378,7 +378,6 @@ const addCompetence = async (req, res, next) => {
     guidanceExist = await db.Guidance.findOne({
       where: {
         id: guidanceId,
-        station: stationExist.id,
       },
     });
   } catch (error) {
@@ -386,6 +385,20 @@ const addCompetence = async (req, res, next) => {
   }
   if (!guidanceExist) {
     return next(new Error("Guidance not found"));
+  }
+
+  let hospitalExist;
+  try {
+    hospitalExist = await db.Hospital.findOne({
+      where: {
+        id: hospitalId,
+      },
+    });
+  } catch (error) {
+    return next(error);
+  }
+  if (!hospitalExist) {
+    return next(new Error("Hospital not found"));
   }
 
   //check if lecturers exist
@@ -404,31 +417,48 @@ const addCompetence = async (req, res, next) => {
     return next(new Error("Lecturer not found"));
   }
 
-  //check if Student Competence with this station exists
   let studentCompetenceExist;
   try {
     studentCompetenceExist = await db.StudentCompetence.findOne({
       where: {
-        stationId: stationExist.id,
         userId: id,
+        stationId: stationExist.id,
       },
     });
   } catch (error) {
     return next(error);
   }
   if (studentCompetenceExist) {
-    return next(
-      new Error("Student Competence with this station already exists")
-    );
-  } else {
-    //register new competence or update old competences
     try {
-      await db.competence.create({
+      await db.Competence.update(
+        {
+          patientInitials,
+          patientMedicalNumber,
+          diseaseName: diseaseExist.name,
+          diseaseCompetence,
+          skillName: skillExist.name,
+          skillCompetence,
+          lecturerName: lecturerExist.name,
+          guidanceName: guidanceExist.name,
+          hospitalName: hospitalExist.name,
+        },
+        {
+          where: {
+            userId: stationExist.id,
+            stationId: stationExist.id,
+          },
+        }
+      );
+    } catch (error) {
+      return next(error);
+    }
+  } else {
+    try {
+      await db.Competence.create({
         id: uuid(),
         userId: id,
         stationId: stationExist.id,
         stationName: stationExist.name,
-        date: new Date(`${years}-${months}-${days}`),
         patientInitials,
         patientMedicalNumber,
         diseaseName: diseaseExist.name,
@@ -436,11 +466,11 @@ const addCompetence = async (req, res, next) => {
         skillName: skillExist.name,
         skillCompetence,
         lecturerName: lecturerExist.name,
-        guidanceType: guidanceExist.name,
-        hospital,
+        guidanceName: guidanceExist.name,
+        hospitalName: hospitalExist.name,
       });
 
-      res.status(201).json({
+      res.json({
         message: "Student Competence registered successfully",
       });
     } catch (error) {

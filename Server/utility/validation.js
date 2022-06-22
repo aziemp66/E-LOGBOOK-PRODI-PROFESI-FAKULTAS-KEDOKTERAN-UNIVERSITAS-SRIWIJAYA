@@ -107,7 +107,7 @@ const addCompetenceValidation = (data) => {
     days: Joi.number().min(1).max(31),
     months: Joi.number().min(1).max(12),
     years: Joi.number().min(1).max(9999),
-    hospital: Joi.string().min(1).max(255),
+    hospitalId: Joi.string().min(1).max(255),
     patientInitials: Joi.string().min(1).max(255),
     patientMedicalNumber: Joi.string().min(1).max(255),
     diseaseId: Joi.string().min(1).max(255),
