@@ -10,6 +10,8 @@ router.get("/competence", studentController.getCompetenceInfo);
 
 router.post("/competence", studentController.addCompetence);
 
+router.put;
+
 router.get(
   "/disease-and-skill/:stationId",
   studentController.getStationDiseaseAndSkills

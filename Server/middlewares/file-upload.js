@@ -67,5 +67,5 @@ const studentProfilePhotoUpload = multer({
 module.exports = {
   legalizationPageUpload,
   activityPhotoUpload,
-  studentProfilePhotoUpload,
+  studentProfilePhotoUpload: studentProfilePhotoUpload.single("profilePicture"),
 };
