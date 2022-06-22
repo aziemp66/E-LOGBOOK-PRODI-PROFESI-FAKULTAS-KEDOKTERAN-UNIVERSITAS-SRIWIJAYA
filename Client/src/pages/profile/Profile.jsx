@@ -1,7 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import Button from "../../components/ui/button/Button";
-import Select from "react-select";
 
 import axios from "axios";
 
@@ -111,6 +110,7 @@ const Profile = () => {
             <Button type="reset" className="secondary">
               Remove
             </Button>
+            <input type="file" id="profilePicture" />
           </form>
         </div>
       </section>
@@ -157,8 +157,13 @@ const Profile = () => {
                 id="studentNumber"
                 name="studentNumber"
                 placeholder="09XXXXXXXXXXXX"
-                {...register("studentNumber")}
+                {...register("studentNumber", {
+                  required: "Your Student Number is Required",
+                })}
               />
+              {errors.studentNumber && (
+                <p className={styles.error}>{errors.studentNumber.message}</p>
+              )}
             </div>
             <div>
               <label htmlFor="address">Alamat</label>
@@ -209,7 +214,11 @@ const Profile = () => {
                 <select
                   name="years"
                   id="years"
-                  {...register("years", { valueAsNumber: true })}
+                  {...register("years", {
+                    valueAsNumber: true,
+                    min: year - 100,
+                    max: year,
+                  })}
                 >
                   {years.map((year) => (
                     <option key={year} value={year}>
@@ -243,12 +252,21 @@ const Profile = () => {
               <select
                 name="entryPeriod"
                 id="entryPeriod"
-                {...register("entryPeriod")}
+                {...register("entryPeriod", {
+                  required: "Entry Period is Required",
+                  valueAsNumber: true,
+                  min: 1962,
+                  max: year,
+                })}
               >
-                <option value="2022">Periode Masuk 2022 (Angkatan 2019)</option>
-                <option value="2021">Periode Masuk 2021 (Angkatan 2017)</option>
-                <option value="2020">Periode Masuk 2020 (Angkatan 2016)</option>
-                <option value="2019">Periode Masuk 2019 (Angkatan 2015)</option>
+                {years.map((year) => {
+                  if (year < 1962) return;
+                  return (
+                    <option key={year} value={year}>
+                      {`Periode Masuk ${year} (Angkatan ${year - 3})`}
+                    </option>
+                  );
+                })}
               </select>
             </div>
           </div>

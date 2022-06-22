@@ -449,8 +449,11 @@ const addCompetence = async (req, res, next) => {
   }
 };
 
+const updateProfilePicture = (req, res, next) => {};
+
 module.exports = {
   updateProfile,
+  updateProfilePicture,
   getProfile,
   addCompetence,
   getCompetenceInfo,

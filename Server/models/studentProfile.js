@@ -12,11 +12,11 @@ module.exports = (sequelize, DataTypes) => {
     },
     firstName: {
       type: DataTypes.STRING,
-      allowNull: true,
+      allowNull: false,
     },
     lastName: {
       type: DataTypes.STRING,
-      allowNull: true,
+      allowNull: false,
     },
     dateOfBirth: {
       type: DataTypes.DATE,
@@ -24,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     studentNumber: {
       type: DataTypes.STRING,
-      allowNull: true,
+      allowNull: false,
     },
     address: {
       type: DataTypes.STRING,
@@ -40,7 +40,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     entryPeriod: {
       type: DataTypes.INTEGER,
-      allowNull: true,
+      allowNull: false,
     },
     academicCounselor: {
       type: DataTypes.STRING,
