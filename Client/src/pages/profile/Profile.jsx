@@ -1,10 +1,10 @@
-import React, { useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import Button from "../../components/ui/button/Button";
 
 import axios from "axios";
 
-import dummyProfile from "../../assets/dummy/profile.png";
+import dummyProfile from "../../assets/dummy/default_profile.png";
 
 import styles from "./Profile.module.css";
 
@@ -29,6 +29,8 @@ const year = date.getFullYear();
 const years = Array.from(Array(100), (x, i) => year - i);
 
 const Profile = () => {
+  const [profilePicture, setProfilePicture] = useState(null);
+
   const {
     register,
     handleSubmit,
@@ -36,6 +38,7 @@ const Profile = () => {
     formState: { errors },
   } = useForm();
   const baseUrl = "http://localhost:5000/api/student";
+  const profileUrl = "http://localhost:5000/profile-pictures";
 
   const profilePictureChangeHandler = (e) => {
     console.log(e.target.files[0]);
@@ -127,6 +130,7 @@ const Profile = () => {
         setValue("phone", res.data.phone);
         setValue("entryPeriod", res.data.entryPeriod);
         setValue("academicCounselor", res.data.academicCounselor);
+        setProfilePicture(res.data.profilePicture);
       })
       .catch((err) => {
         console.log(err);
@@ -137,7 +141,12 @@ const Profile = () => {
     <div className={styles.page}>
       <section className={styles.profileSection}>
         <div className={styles.profilePhoto}>
-          <img src={dummyProfile} alt="profile" />
+          <img
+            src={
+              profilePicture ? `${profileUrl}/${profilePicture}` : dummyProfile
+            }
+            alt="profile"
+          />
         </div>
         <div className={styles.profileButton}>
           <div>
