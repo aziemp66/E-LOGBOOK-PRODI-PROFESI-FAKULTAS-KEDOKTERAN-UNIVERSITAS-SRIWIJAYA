@@ -23,6 +23,10 @@ app.use(express.json());
 
 app.use(cors());
 
+app.use("/activites", express.static("./public/activities"));
+app.use("/legalizations", express.static("./public/legalizations"));
+app.use("/profile-pictures", express.static("./public/profile-pictures"));
+
 app.use("/api/auth", authRoutes);
 
 app.use(verifyTokenMiddleware);

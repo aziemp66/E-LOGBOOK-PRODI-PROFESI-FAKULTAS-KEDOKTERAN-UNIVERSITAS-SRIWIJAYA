@@ -449,7 +449,34 @@ const addCompetence = async (req, res, next) => {
   }
 };
 
-const updateProfilePicture = (req, res, next) => {};
+const updateProfilePicture = async (req, res, next) => {
+  const { id } = req.user;
+  let profilePicture;
+
+  try {
+    profilePicture = req.file.fileName;
+  } catch (error) {
+    return next(error);
+  }
+
+  try {
+    await db.studentProfile.update(
+      {
+        profilePicture,
+      },
+      {
+        where: {
+          userId: id,
+        },
+      }
+    );
+    res.json({
+      message: "Profile Picture updated successfully",
+    });
+  } catch (error) {
+    return next(error);
+  }
+};
 
 module.exports = {
   updateProfile,

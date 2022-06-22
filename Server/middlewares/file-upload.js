@@ -5,17 +5,16 @@ const uuid = require("uuid").v4;
 const legalizationPageUpload = multer({
   storage: multer.diskStorage({
     destination: (req, file, cb) => {
-      cb(null, "uploads/legalization-pages");
+      cb(null, "public/legalizations");
     },
   }),
   fileName: (req, file, cb) => {
-    cb(null, `legalPage_${uuid()}_${file.originalname}`);
+    cb(null, `legalization_${uuid()}_${file.originalname}`);
   },
   fileFilter: (req, file, cb) => {
-    if (file.mimetype === ".pdf") {
-      cb(null, true);
-    } else {
-      cb(null, false);
+    let ext = path.extname(file.originalname);
+    if (ext !== ".png" && ext !== ".jpg" && ext !== ".jpeg" && ext !== ".pdf") {
+      return cb(new Error("Only png, jpg, jpeg and pdf files are allowed"));
     }
   },
 });
@@ -23,21 +22,16 @@ const legalizationPageUpload = multer({
 const activityPhotoUpload = multer({
   storage: multer.diskStorage({
     destination: (req, file, cb) => {
-      cb(null, "uploads/activity-photos");
+      cb(null, "public/activities");
     },
   }),
   fileName: (req, file, cb) => {
-    cb(null, `activityPhoto_${uuid()}_${file.originalname}`);
+    cb(null, `activity_${uuid()}_${file.originalname}`);
   },
   fileFilter: (req, file, cb) => {
-    if (
-      file.mimetype === ".jpeg" ||
-      file.mimetype === ".png" ||
-      file.mimetype === ".jpg"
-    ) {
-      cb(null, true);
-    } else {
-      cb(null, false);
+    let ext = path.extname(file.originalname);
+    if (ext !== ".png" && ext !== ".jpg" && ext !== ".jpeg") {
+      return cb(new Error("Only png, jpg and jpeg files are allowed"));
     }
   },
 });
@@ -45,21 +39,16 @@ const activityPhotoUpload = multer({
 const studentProfilePhotoUpload = multer({
   storage: multer.diskStorage({
     destination: (req, file, cb) => {
-      cb(null, "uploads/student-profile-photos");
+      cb(null, "public/profile-pictures");
     },
   }),
   fileName: (req, file, cb) => {
-    cb(null, `studentProfilePhoto_${uuid()}_${file.originalname}`);
+    cb(null, `profile-picture_${uuid()}_${file.originalname}`);
   },
   fileFilter: (req, file, cb) => {
-    if (
-      file.mimetype === ".jpeg" ||
-      file.mimetype === ".png" ||
-      file.mimetype === ".jpg"
-    ) {
-      cb(null, true);
-    } else {
-      cb(null, false);
+    let ext = path.extname(file.originalname);
+    if (ext !== ".png" && ext !== ".jpg" && ext !== ".jpeg") {
+      return cb(new Error("Only png, jpg and jpeg files are allowed"));
     }
   },
 });
