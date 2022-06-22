@@ -1,4 +1,5 @@
 import React, { useRef, useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 import Button from "../../components/ui/button/Button";
 import Select from "react-select";
 
@@ -28,23 +29,12 @@ const date = new Date();
 const year = date.getFullYear();
 const years = Array.from(Array(100), (x, i) => year - i);
 
-const daysOptions = days.map((day) => ({
-  value: day,
-  label: day,
-}));
-const monthsOptions = months.map((month, index) => ({
-  value: index + 1,
-  label: month,
-}));
-const yearsOptions = years.map((year) => ({
-  value: year,
-  label: year,
-}));
-
 const Profile = () => {
-  const [day, setDay] = useState(null);
-  const [month, setMonth] = useState(null);
-  const [year, setYear] = useState(null);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
   const firstName = useRef();
   const lastName = useRef();
@@ -60,38 +50,10 @@ const Profile = () => {
 
   const baseUrl = "http://localhost:5000/api/student";
 
-  const onSubmitHandler = (e) => {
-    e.preventDefault();
-
-    axios
-      .patch(
-        `${baseUrl}/profile`,
-        {
-          firstName: firstName.current.value,
-          lastName: lastName.current.value,
-          email: email.current.value,
-          phone: phone.current.value,
-          address: address.current.value,
-          studentNumber: studentNumber.current.value,
-          entryPeriod: entryPeriod.current.value,
-          academicCounselor: academicCounselor.current.value,
-          days: daysRef.current.value,
-          months: monthsRef.current.value,
-          years: yearsRef.current.value,
-        },
-        {
-          headers: {
-            "auth-token": localStorage.getItem("token"),
-          },
-        }
-      )
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+  const onSubmitHandler = (data) => {
+    console.log(data);
   };
+  console.log(errors);
 
   useEffect(() => {
     axios
@@ -150,7 +112,7 @@ const Profile = () => {
         </div>
       </section>
       <section className={styles.formSection}>
-        <form onSubmit={onSubmitHandler}>
+        <form onSubmit={handleSubmit(onSubmitHandler)}>
           <div className={styles.studentData}>
             <h2>Mahasiswa</h2>
             <div className={styles.names}>
@@ -161,7 +123,14 @@ const Profile = () => {
                   id="firstName"
                   placeholder="Azie"
                   ref={firstName}
+                  {...register("firstName", {
+                    required: "Your First Name Is Required",
+                    maxLength: 255,
+                  })}
                 />
+                {errors.firstName && (
+                  <p className={styles.error}>{errors.firstName.message}</p>
+                )}
               </div>
               <div>
                 <label htmlFor="lastName">Nama Belakang</label>
@@ -170,7 +139,14 @@ const Profile = () => {
                   id="lastName"
                   placeholder="Melza Pratama"
                   ref={lastName}
+                  {...register("lastName", {
+                    required: "Your Last Name Is Required",
+                    maxLength: 255,
+                  })}
                 />
+                {errors.lastName && (
+                  <p className={styles.error}>{errors.lastName.message}</p>
+                )}
               </div>
             </div>
             <div>
@@ -181,6 +157,7 @@ const Profile = () => {
                 name="studentNumber"
                 placeholder="09XXXXXXXXXXXX"
                 ref={studentNumber}
+                {...register("studentNumber")}
               />
             </div>
             <div>
@@ -191,6 +168,7 @@ const Profile = () => {
                 name="address"
                 placeholder="Desa Seriguna, Kecamatan Teluk Gelam"
                 ref={address}
+                {...register("address")}
               />
             </div>
             <div>
@@ -199,23 +177,50 @@ const Profile = () => {
                 id="dateOfBirth"
                 className={`${styles.dropdown} ${styles.dates}`}
               >
-                <Select
-                  defaultValue={daysOptions[day - 1]}
-                  options={daysOptions}
-                  onChange={(e) => setDay(e.value)}
-                />
-                <Select
-                  defaultValue={monthsOptions[month - 1]}
-                  options={monthsOptions}
-                  onChange={(e) => setMonth(e.value)}
-                />
-                <Select
-                  defaultValue={yearsOptions.find(
-                    (yearOption) => yearOption.value === year
-                  )}
-                  options={yearsOptions}
-                  onChange={(e) => setYear(e.value)}
-                />
+                <select
+                  name="days"
+                  id="days"
+                  ref={daysRef}
+                  {...register("days", {
+                    min: 1,
+                    max: 31,
+                    valueAsNumber: true,
+                  })}
+                >
+                  {days.map((day) => (
+                    <option key={day} value={day}>
+                      {day}
+                    </option>
+                  ))}
+                </select>
+                <select
+                  name="months"
+                  id="months"
+                  ref={monthsRef}
+                  {...register("months", {
+                    min: 1,
+                    max: 12,
+                    valueAsNumber: true,
+                  })}
+                >
+                  {months.map((month, index) => (
+                    <option key={month} value={index + 1}>
+                      {month}
+                    </option>
+                  ))}
+                </select>
+                <select
+                  name="years"
+                  id="years"
+                  ref={yearsRef}
+                  {...register("years", { valueAsNumber: true })}
+                >
+                  {years.map((year) => (
+                    <option key={year} value={year}>
+                      {year}
+                    </option>
+                  ))}
+                </select>
               </div>
             </div>
             <div>
@@ -226,15 +231,27 @@ const Profile = () => {
                 name="email"
                 placeholder="hisammula69@gmail.com"
                 ref={email}
+                {...register("email")}
               />
             </div>
             <div>
               <label htmlFor="phone">Nomor Telepon</label>
-              <input type="number" name="phone" id="phone" ref={phone} />
+              <input
+                type="number"
+                name="phone"
+                id="phone"
+                ref={phone}
+                {...register("phone")}
+              />
             </div>
             <div className={styles.dropdown}>
               <label htmlFor="entryPeriod">Periode Masuk</label>
-              <select name="entryPeriod" id="entryPeriod" ref={entryPeriod}>
+              <select
+                name="entryPeriod"
+                id="entryPeriod"
+                ref={entryPeriod}
+                {...register("entryPeriod")}
+              >
                 <option value="2022">Periode Masuk 2022 (Angkatan 2019)</option>
                 <option value="2021">Periode Masuk 2021 (Angkatan 2017)</option>
                 <option value="2020">Periode Masuk 2020 (Angkatan 2016)</option>
@@ -253,6 +270,7 @@ const Profile = () => {
                 name="academicCounselor"
                 id="academicCounselor"
                 ref={academicCounselor}
+                {...register("academicCounselor")}
               />
             </div>
           </div>

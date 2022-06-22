@@ -7,31 +7,6 @@ import AuthContext from "../../contexts/AuthContexts";
 const Auth = () => {
   const navigate = useNavigate();
   const authCtx = useContext(AuthContext);
-  useEffect(() => {
-    authCtx.userDataHandler().then((response) => {
-      if (response.error) {
-        console.log(response.error);
-        return navigate("/login");
-      }
-      switch (response.role) {
-        case "student":
-          navigate("/dashboard");
-          break;
-        case "admin":
-          navigate("/admin");
-          break;
-        case "lecturer":
-          navigate("/lecturer");
-          break;
-        case "supervisor":
-          navigate("/supervisor");
-          break;
-
-        default:
-          break;
-      }
-    });
-  }, [authCtx.userData]);
   return (
     <div className={styles.background}>
       <section className={styles.title}>
@@ -47,14 +22,39 @@ const Auth = () => {
           </h2>
         </div>
         <ul className={styles.auth}>
-          <li>
-            <h2>Sudah Mempunyai Akun ?</h2>
-            <Link to={"/login"}>Login</Link>
-          </li>
-          <li>
-            <h2>Belum Mempunyai Akun ?</h2>
-            <Link to={"/register"}>Daftar</Link>
-          </li>
+          {authCtx.userData ? (
+            (authCtx.userData.role === "student" && (
+              <>
+                <li>
+                  <h2>Masuk ke Dashboard</h2>
+                  <Link to={"/Dashboard"}>Dashboard</Link>
+                </li>
+                <li>
+                  <h2>Ubah Profil</h2>
+                  <Link to={"/Profile"}>Profile</Link>
+                </li>
+              </>
+            )) ||
+            (authCtx.userData.role === "admin" && (
+              <>
+                <li>
+                  <h2>Masuk ke Dashboard Admin</h2>
+                  <Link to={"/admin"}>Admin Dashboard</Link>
+                </li>
+              </>
+            ))
+          ) : (
+            <>
+              <li>
+                <h2>Sudah Mempunyai Akun ?</h2>
+                <Link to={"/login"}>Login</Link>
+              </li>
+              <li>
+                <h2>Belum Mempunyai Akun ?</h2>
+                <Link to={"/register"}>Daftar</Link>
+              </li>
+            </>
+          )}
         </ul>
       </section>
     </div>

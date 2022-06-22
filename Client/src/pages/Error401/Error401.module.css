@@ -1,0 +1,25 @@
+.container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 1rem;
+}
+.container h1 {
+  text-align: center;
+  color: red;
+}
+.container p {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+.container a {
+  color: rgb(24, 24, 227);
+  text-decoration: none;
+}
+.container a:hover {
+  color: blue;
+  text-decoration: underline;
+}

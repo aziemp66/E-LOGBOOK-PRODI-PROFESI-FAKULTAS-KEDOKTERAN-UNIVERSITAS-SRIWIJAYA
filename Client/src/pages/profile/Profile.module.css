@@ -80,3 +80,7 @@
   grid-template-columns: 1fr 2fr 1fr;
   gap: 2rem;
 }
+.error {
+  color: red;
+  font-weight: 500;
+}

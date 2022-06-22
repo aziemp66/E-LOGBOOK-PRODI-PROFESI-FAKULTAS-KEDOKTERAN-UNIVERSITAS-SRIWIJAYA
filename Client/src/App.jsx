@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 
 import styles from "./App.module.css";
 
@@ -19,7 +19,6 @@ import Admin from "./pages/admin/Admin";
 
 const App = () => {
   const authCtx = useContext(AuthContext);
-  const navigate = useNavigate();
 
   useEffect(() => {
     authCtx.userDataHandler();

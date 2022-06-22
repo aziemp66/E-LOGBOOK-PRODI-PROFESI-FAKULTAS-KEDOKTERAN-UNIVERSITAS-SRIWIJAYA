@@ -3,7 +3,7 @@ import jwtDecode from "jwt-decode";
 import axios from "axios";
 
 const AuthContext = React.createContext({
-  userData: null,
+  userData: {},
   userDataHandler: () => {},
   register: (email, username, password, confirmPassword) => {},
   login: (username, password) => {},
@@ -70,19 +70,13 @@ export const AuthProvider = (props) => {
 
   const userDataHandler = async () => {
     const token = localStorage.getItem("token");
-    if (!token)
-      return {
-        error: "No token found",
-      };
-    const decoded = jwtDecode(token);
-    if (decoded.exp < Date.now() / 1000) {
-      return logout();
+    if (token) {
+      const decoded = jwtDecode(token);
+      if (decoded.exp < Date.now() / 1000) {
+        return logout();
+      }
+      setUserData(decoded);
     }
-    setUserData(decoded);
-    return {
-      role: decoded.role,
-      message: "Successfully logged in",
-    };
   };
 
   return (
