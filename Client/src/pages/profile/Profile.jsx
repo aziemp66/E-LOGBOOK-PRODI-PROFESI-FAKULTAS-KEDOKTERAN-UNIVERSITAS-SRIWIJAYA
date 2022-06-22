@@ -38,8 +38,36 @@ const Profile = () => {
   } = useForm();
   const baseUrl = "http://localhost:5000/api/student";
 
-  const onSubmitHandler = (data) => {
+  const onSubmitHandler = async (data) => {
     console.log(data);
+    let response;
+    try {
+      response = await axios.patch(
+        `${baseUrl}/profile`,
+        {
+          firstName: data.firstName,
+          lastName: data.lastName,
+          email: data.email,
+          phone: data.phone,
+          address: data.address,
+          studentNumber: data.studentNumber,
+          entryPeriod: data.entryPeriod,
+          academicCounselor: data.academicCounselor,
+          days: data.days,
+          months: data.months,
+          years: data.years,
+        },
+        {
+          headers: {
+            "auth-token": localStorage.getItem("token"),
+          },
+        }
+      );
+    } catch (error) {
+      console.log(error);
+    }
+    if (!response) console.log("Something is Wrong");
+    if (response.error) console.log(response.error);
   };
 
   useEffect(() => {
@@ -50,7 +78,6 @@ const Profile = () => {
         },
       })
       .then((res) => {
-        console.log(res.data);
         setValue("firstName", res.data.firstName);
         setValue("lastName", res.data.lastName);
         setValue("studentNumber", res.data.studentNumber);
