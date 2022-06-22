@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import Button from "../../components/ui/button/Button";
 
@@ -36,6 +36,43 @@ const Profile = () => {
     formState: { errors },
   } = useForm();
   const baseUrl = "http://localhost:5000/api/student";
+
+  const profilePictureChangeHandler = (e) => {
+    console.log(e.target.files[0]);
+    const formData = new FormData();
+    formData.append("profilePicture", e.target.files[0]);
+
+    axios
+      .patch(`${baseUrl}/profile/picture`, formData, {
+        headers: {
+          "auth-token": localStorage.getItem("token"),
+          "content-type": "multipart/form-data",
+        },
+      })
+      .then((res) => {
+        if (res.data.error) return console.log(res.data.error);
+        console.log(res.data.message);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const profilePictureResetHandler = () => {
+    axios
+      .delete(`${baseUrl}/profile/picture`, null, {
+        headers: {
+          "auth-token": localStorage.getItem("token"),
+        },
+      })
+      .then((res) => {
+        if (res.data.error) return console.log(res.data.error);
+        console.log(res.data.message);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   const onSubmitHandler = async (data) => {
     console.log(data);
@@ -103,15 +140,25 @@ const Profile = () => {
           <img src={dummyProfile} alt="profile" />
         </div>
         <div className={styles.profileButton}>
-          <form action="" encType="multipart/form-data">
-            <Button type="submit" className="primary">
+          <div>
+            <Button
+              onClick={() => {
+                document.getElementById("profilePicture").click();
+              }}
+              className="primary"
+            >
               Change
             </Button>
-            <Button type="reset" className="secondary">
+            <Button onClick={profilePictureResetHandler} className="secondary">
               Remove
             </Button>
-            <input type="file" id="profilePicture" />
-          </form>
+            <input
+              type="file"
+              id="profilePicture"
+              onChange={profilePictureChangeHandler}
+              hidden
+            />
+          </div>
         </div>
       </section>
       <section className={styles.formSection}>

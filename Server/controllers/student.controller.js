@@ -454,13 +454,13 @@ const updateProfilePicture = async (req, res, next) => {
   let profilePicture;
 
   try {
-    profilePicture = req.file.fileName;
+    profilePicture = req.file.filename;
   } catch (error) {
     return next(error);
   }
 
   try {
-    await db.studentProfile.update(
+    await db.StudentProfile.update(
       {
         profilePicture,
       },
@@ -478,9 +478,32 @@ const updateProfilePicture = async (req, res, next) => {
   }
 };
 
+const deleteProfilePicture = async (req, res, next) => {
+  const { id } = req.user;
+
+  try {
+    db.StudentProfile.update(
+      {
+        profilePicture: "",
+      },
+      {
+        where: {
+          userId: id,
+        },
+      }
+    );
+    res.json({
+      message: "Profile Picture Resetted successfully",
+    });
+  } catch (error) {
+    return next(error);
+  }
+};
+
 module.exports = {
   updateProfile,
   updateProfilePicture,
+  deleteProfilePicture,
   getProfile,
   addCompetence,
   getCompetenceInfo,
