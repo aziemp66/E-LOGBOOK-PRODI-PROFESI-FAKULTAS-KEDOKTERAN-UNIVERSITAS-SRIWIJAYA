@@ -24,11 +24,19 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: true,
     },
+    diseaseId: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
     diseaseName: {
       type: DataTypes.STRING,
       allowNull: true,
     },
     diseaseCompetence: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    skillId: {
       type: DataTypes.STRING,
       allowNull: true,
     },
@@ -48,7 +56,15 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: true,
     },
+    guidanceId: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
     guidanceName: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    hospitalId: {
       type: DataTypes.STRING,
       allowNull: true,
     },

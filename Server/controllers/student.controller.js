@@ -251,9 +251,7 @@ const addCompetence = async (req, res, next) => {
     guidanceId,
   } = req.body;
 
-  console.log(hospitalId);
-
-  let submittedForm = {
+  let submitedForm = {
     id: uuid(),
     userId: id,
   };
@@ -272,8 +270,8 @@ const addCompetence = async (req, res, next) => {
   });
   if (error) return next(error.details[0]);
 
-  submittedForm.patientInitials = patientInitials;
-  submittedForm.patientMedicalNumber = patientMedicalNumber;
+  submitedForm.patientInitials = patientInitials;
+  submitedForm.patientMedicalNumber = patientMedicalNumber;
 
   //check if Student Profile exists
   let studentProfile;
@@ -319,7 +317,7 @@ const addCompetence = async (req, res, next) => {
   ) {
     return next(new Error("Invalid disease competence"));
   }
-  submittedForm.diseaseCompetence =
+  submitedForm.diseaseCompetence =
     !diseaseCompetence || diseaseCompetence === "" ? null : diseaseCompetence;
 
   //check if skillCompetence exists
@@ -333,7 +331,7 @@ const addCompetence = async (req, res, next) => {
   ) {
     return next(new Error("Invalid skill competence"));
   }
-  submittedForm.skillCompetence =
+  submitedForm.skillCompetence =
     !skillCompetence || skillCompetence === "" ? null : skillCompetence;
 
   //check if Student Competence station, disease and skill exists
@@ -350,8 +348,8 @@ const addCompetence = async (req, res, next) => {
   if (!stationExist) {
     return next(new Error("Station not found"));
   }
-  submittedForm.stationName = stationExist.name;
-  submittedForm.stationId = stationExist.id;
+  submitedForm.stationName = stationExist.name;
+  submitedForm.stationId = stationExist.id;
 
   let diseaseExist;
   try {
@@ -367,9 +365,11 @@ const addCompetence = async (req, res, next) => {
     return next(error);
   }
   if (!diseaseExist) {
-    submittedForm.diseaseName = null;
+    submitedForm.diseaseName = null;
+    submitedForm.diseaseId = null;
   } else {
-    submittedForm.diseaseName = diseaseExist.name;
+    submitedForm.diseaseName = diseaseExist.name;
+    submitedForm.diseaseId = diseaseExist.id;
   }
 
   let skillExist;
@@ -386,9 +386,11 @@ const addCompetence = async (req, res, next) => {
     return next(error);
   }
   if (!skillExist) {
-    submittedForm.skillName = null;
+    submitedForm.skillName = null;
+    submitedForm.skillId = null;
   } else {
-    submittedForm.skillName = skillExist.name;
+    submitedForm.skillName = skillExist.name;
+    submitedForm.skillId = skillExist.id;
   }
 
   let guidanceExist;
@@ -404,9 +406,11 @@ const addCompetence = async (req, res, next) => {
     return next(error);
   }
   if (!guidanceExist) {
-    submittedForm.guidanceName = null;
+    submitedForm.guidanceName = null;
+    submitedForm.guidanceId = null;
   } else {
-    submittedForm.guidanceName = guidanceExist.name;
+    submitedForm.guidanceName = guidanceExist.name;
+    submitedForm.guidanceId = guidanceExist.id;
   }
 
   let hospitalExist;
@@ -422,9 +426,11 @@ const addCompetence = async (req, res, next) => {
     return next(error);
   }
   if (!hospitalExist) {
-    submittedForm.hospitalName = null;
+    submitedForm.hospitalName = null;
+    submitedForm.hospitalId = null;
   } else {
-    submittedForm.hospitalName = hospitalExist.name;
+    submitedForm.hospitalName = hospitalExist.name;
+    submitedForm.hospitalId = hospitalExist.id;
   }
 
   //check if lecturers exist
@@ -441,11 +447,11 @@ const addCompetence = async (req, res, next) => {
     return next(error);
   }
   if (!lecturerExist) {
-    submittedForm.lecturerName = null;
-    submittedForm.lecturerId = null;
+    submitedForm.lecturerName = null;
+    submitedForm.lecturerId = null;
   } else {
-    submittedForm.lecturerName = lecturerExist.displayName;
-    submittedForm.lecturerId = lecturerExist.userId;
+    submitedForm.lecturerName = lecturerExist.displayName;
+    submitedForm.lecturerId = lecturerExist.userId;
   }
 
   let data, isCreated;
@@ -453,16 +459,16 @@ const addCompetence = async (req, res, next) => {
     [data, isCreated] = await db.Competence.findOrCreate({
       where: {
         userId: id,
-        stationId: submittedForm.stationId,
+        stationId: submitedForm.stationId,
       },
-      defaults: submittedForm,
+      defaults: submitedForm,
     });
   } catch (error) {
     return next(error);
   }
   if (!isCreated && data) {
     try {
-      await data.update(submittedForm);
+      await data.update(submitedForm);
     } catch (error) {
       return next(error);
     }

@@ -114,12 +114,21 @@ const Competences = () => {
     if (station === "") return;
     setStationId(station);
 
-    existingCompetences.find((competence) => {
-      if (competence.stationId === station) {
-        const date = competence.createdAt.split("T")[0].split("-");
-        console.log(date);
-      }
-    });
+    const existingCompetence = existingCompetences.find(
+      (competence) => (competence.stationId = station)
+    );
+
+    if (existingCompetence) {
+      setValue("hospitalId", existingCompetence.hospitalId);
+      setValue("patientInitials", existingCompetence.patientInitials);
+      setValue("patientMedicalNumber", existingCompetence.patientMedicalNumber);
+      setValue("diseaseId", existingCompetence.diseaseId);
+      setValue("skillId", existingCompetence.skillId);
+      setValue("diseaseCompetence", existingCompetence.diseaseCompetence);
+      setValue("skillCompetence", existingCompetence.skillCompetence);
+      setValue("lecturerId", existingCompetence.lecturerId);
+      setValue("guidanceId", existingCompetence.guidanceId);
+    }
 
     axios
       .get(`${baseUrl}/disease-and-skill/${station}`, {
@@ -162,7 +171,7 @@ const Competences = () => {
         {stationId && stationId !== "empty" && (
           <>
             <div>
-              <label htmlFor="hospital">Nama Rumah Sakit/Puskesmas</label>
+              <label htmlFor="hospitalId">Nama Rumah Sakit/Puskesmas</label>
               <select
                 name="hospitalId"
                 id="hospitalId"
