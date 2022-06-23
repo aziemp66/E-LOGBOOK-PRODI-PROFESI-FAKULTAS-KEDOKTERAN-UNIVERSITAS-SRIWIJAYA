@@ -240,9 +240,6 @@ const addCompetence = async (req, res, next) => {
 
   let {
     stationId,
-    days,
-    months,
-    years,
     hospitalId,
     patientInitials,
     patientMedicalNumber,
@@ -254,15 +251,15 @@ const addCompetence = async (req, res, next) => {
     guidanceId,
   } = req.body;
 
-  //add 0 to the beginning of the number if it is less than 10
-  if (days < 10) days = `0${days}`;
-  if (months < 10) months = `0${months}`;
+  console.log(hospitalId);
+
+  let submittedForm = {
+    id: uuid(),
+    userId: id,
+  };
 
   const { error } = validation.addCompetenceValidation({
     stationId,
-    days,
-    months,
-    years,
     hospitalId,
     patientInitials,
     patientMedicalNumber,
@@ -274,6 +271,9 @@ const addCompetence = async (req, res, next) => {
     guidanceId,
   });
   if (error) return next(error.details[0]);
+
+  submittedForm.patientInitials = patientInitials;
+  submittedForm.patientMedicalNumber = patientMedicalNumber;
 
   //check if Student Profile exists
   let studentProfile;
@@ -313,20 +313,28 @@ const addCompetence = async (req, res, next) => {
     diseaseCompetence !== "2" &&
     diseaseCompetence !== "3A" &&
     diseaseCompetence !== "3B" &&
-    diseaseCompetence !== "4"
+    diseaseCompetence !== "4" &&
+    diseaseCompetence !== "" &&
+    diseaseCompetence
   ) {
     return next(new Error("Invalid disease competence"));
   }
+  submittedForm.diseaseCompetence =
+    !diseaseCompetence || diseaseCompetence === "" ? null : diseaseCompetence;
 
   //check if skillCompetence exists
   if (
     skillCompetence !== "1" &&
     skillCompetence !== "2" &&
     skillCompetence !== "3" &&
-    skillCompetence !== "4"
+    skillCompetence !== "4" &&
+    skillCompetence !== "" &&
+    skillCompetence
   ) {
     return next(new Error("Invalid skill competence"));
   }
+  submittedForm.skillCompetence =
+    !skillCompetence || skillCompetence === "" ? null : skillCompetence;
 
   //check if Student Competence station, disease and skill exists
   let stationExist;
@@ -342,141 +350,129 @@ const addCompetence = async (req, res, next) => {
   if (!stationExist) {
     return next(new Error("Station not found"));
   }
+  submittedForm.stationName = stationExist.name;
+  submittedForm.stationId = stationExist.id;
 
   let diseaseExist;
   try {
-    diseaseExist = await db.Disease.findOne({
-      where: {
-        id: diseaseId,
-        station: stationExist.id,
-      },
-    });
+    diseaseExist =
+      diseaseId &&
+      (await db.Disease.findOne({
+        where: {
+          id: diseaseId,
+          station: stationExist.id,
+        },
+      }));
   } catch (error) {
     return next(error);
   }
   if (!diseaseExist) {
-    return next(new Error("Disease not found"));
+    submittedForm.diseaseName = null;
+  } else {
+    submittedForm.diseaseName = diseaseExist.name;
   }
 
   let skillExist;
   try {
-    skillExist = await db.Skill.findOne({
-      where: {
-        id: skillId,
-        station: stationExist.id,
-      },
-    });
+    skillExist =
+      skillId &&
+      (await db.Skill.findOne({
+        where: {
+          id: skillId,
+          station: stationExist.id,
+        },
+      }));
   } catch (error) {
     return next(error);
   }
   if (!skillExist) {
-    return next(new Error("Skill not found"));
+    submittedForm.skillName = null;
+  } else {
+    submittedForm.skillName = skillExist.name;
   }
 
   let guidanceExist;
   try {
-    guidanceExist = await db.Guidance.findOne({
-      where: {
-        id: guidanceId,
-      },
-    });
+    guidanceExist =
+      guidanceId &&
+      (await db.Guidance.findOne({
+        where: {
+          id: guidanceId,
+        },
+      }));
   } catch (error) {
     return next(error);
   }
   if (!guidanceExist) {
-    return next(new Error("Guidance not found"));
+    submittedForm.guidanceName = null;
+  } else {
+    submittedForm.guidanceName = guidanceExist.name;
   }
 
   let hospitalExist;
   try {
-    hospitalExist = await db.Hospital.findOne({
-      where: {
-        id: hospitalId,
-      },
-    });
+    hospitalExist =
+      hospitalId &&
+      (await db.Hospital.findOne({
+        where: {
+          id: hospitalId,
+        },
+      }));
   } catch (error) {
     return next(error);
   }
   if (!hospitalExist) {
-    return next(new Error("Hospital not found"));
+    submittedForm.hospitalName = null;
+  } else {
+    submittedForm.hospitalName = hospitalExist.name;
   }
 
   //check if lecturers exist
   let lecturerExist;
   try {
-    lecturerExist = await db.user.findOne({
-      where: {
-        id: lecturerId,
-        roles: "lecturer",
-      },
-    });
+    lecturerExist =
+      lecturerId &&
+      (await db.LecturerProfile.findOne({
+        where: {
+          userId: lecturerId,
+        },
+      }));
   } catch (error) {
     return next(error);
   }
   if (!lecturerExist) {
-    return next(new Error("Lecturer not found"));
+    submittedForm.lecturerName = null;
+    submittedForm.lecturerId = null;
+  } else {
+    submittedForm.lecturerName = lecturerExist.displayName;
+    submittedForm.lecturerId = lecturerExist.userId;
   }
 
-  let studentCompetenceExist;
+  let data, isCreated;
   try {
-    studentCompetenceExist = await db.StudentCompetence.findOne({
+    [data, isCreated] = await db.Competence.findOrCreate({
       where: {
         userId: id,
-        stationId: stationExist.id,
+        stationId: submittedForm.stationId,
       },
+      defaults: submittedForm,
     });
   } catch (error) {
     return next(error);
   }
-  if (studentCompetenceExist) {
+  if (!isCreated && data) {
     try {
-      await db.Competence.update(
-        {
-          patientInitials,
-          patientMedicalNumber,
-          diseaseName: diseaseExist.name,
-          diseaseCompetence,
-          skillName: skillExist.name,
-          skillCompetence,
-          lecturerName: lecturerExist.name,
-          guidanceName: guidanceExist.name,
-          hospitalName: hospitalExist.name,
-        },
-        {
-          where: {
-            userId: stationExist.id,
-            stationId: stationExist.id,
-          },
-        }
-      );
-    } catch (error) {
-      return next(error);
-    }
-  } else {
-    try {
-      await db.Competence.create({
-        id: uuid(),
-        userId: id,
-        stationId: stationExist.id,
-        stationName: stationExist.name,
-        patientInitials,
-        patientMedicalNumber,
-        diseaseName: diseaseExist.name,
-        diseaseCompetence,
-        skillName: skillExist.name,
-        skillCompetence,
-        lecturerName: lecturerExist.name,
-        guidanceName: guidanceExist.name,
-        hospitalName: hospitalExist.name,
-      });
-
-      res.json({
-        message: "Student Competence registered successfully",
-      });
+      await data.update(submittedForm);
     } catch (error) {
       return next(error);
     }
   }
+
+  res.json({
+    message: `Student Competence ${
+      isCreated ? "Registered" : "Updated"
+    } Successfully`,
+  });
 };
 
 const updateProfilePicture = async (req, res, next) => {

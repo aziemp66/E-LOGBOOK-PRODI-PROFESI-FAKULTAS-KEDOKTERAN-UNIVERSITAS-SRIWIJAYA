@@ -14,9 +14,10 @@
   gap: 1rem;
 }
 .profileSection .profilePhoto img {
-  width: 150px;
-  height: 150px;
-  border-radius: 100%;
+  width: auto;
+  max-width: 250px;
+  height: auto;
+  max-height: 250px;
   object-fit: cover;
   object-position: center;
 }

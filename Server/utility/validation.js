@@ -103,19 +103,16 @@ const addStudentPresentionValidation = (data) => {
 
 const addCompetenceValidation = (data) => {
   const schema = Joi.object({
-    stationId: Joi.string().min(1).max(255),
-    days: Joi.number().min(1).max(31),
-    months: Joi.number().min(1).max(12),
-    years: Joi.number().min(1).max(9999),
-    hospitalId: Joi.string().min(1).max(255),
-    patientInitials: Joi.string().min(1).max(255),
-    patientMedicalNumber: Joi.string().min(1).max(255),
-    diseaseId: Joi.string().min(1).max(255),
-    diseaseCompetence: Joi.string().min(1).max(255),
-    skillId: Joi.string().min(1).max(255),
-    skillCompetence: Joi.string().min(1).max(255),
-    lecturerId: Joi.string().min(1).max(255),
-    guidanceId: Joi.string().min(1).max(255),
+    stationId: Joi.string().required(),
+    hospitalId: Joi.string().allow("", null),
+    patientInitials: Joi.string().allow("", null),
+    patientMedicalNumber: Joi.string().allow("", null),
+    diseaseId: Joi.string().allow("", null),
+    diseaseCompetence: Joi.string().allow("", null),
+    skillId: Joi.string().allow("", null),
+    skillCompetence: Joi.string().allow("", null),
+    lecturerId: Joi.string().allow("", null),
+    guidanceId: Joi.string().allow("", null),
   });
 
   return schema.validate(data);
