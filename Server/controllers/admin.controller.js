@@ -4,7 +4,7 @@ const validation = require("../utility/validation");
 const getAllUser = async (req, res, next) => {
   try {
     const users = await db.User.findAll({
-      attributes: ["id", "name", "email", "role"],
+      attributes: ["id", "username", "email", "roles"],
     });
     res.json(users);
   } catch (err) {
@@ -237,6 +237,294 @@ const addHospital = async (req, res, next) => {
   }
 };
 
+const updateStation = async (req, res, next) => {
+  const { id, name } = req.body;
+
+  const { error } = validation.updateStationValidation({ name });
+  if (error) return next(error.details[0]);
+
+  //check if station exist
+  let existingStation;
+  try {
+    existingStation = await db.Station.findOne({
+      where: {
+        id,
+      },
+    });
+  } catch (error) {
+    return next(error);
+  }
+  if (!existingStation) return next(new Error("Station does not exist"));
+
+  try {
+    existingStation.update(
+      {
+        name,
+      },
+      {
+        where: {
+          id,
+        },
+      }
+    );
+    res.json({
+      message: "Station updated successfully",
+    });
+  } catch (error) {
+    return next(error);
+  }
+};
+
+const updateDisease = async (req, res, next) => {
+  const { id, name } = req.body;
+
+  const { error } = validation.updateDiseaseValidation({
+    name,
+  });
+  if (error) return next(error.details[0]);
+
+  try {
+    await db.Disease.update(
+      { name },
+      {
+        where: {
+          id,
+        },
+      }
+    );
+    res.json({
+      message: "Disease updated successfully",
+    });
+  } catch (error) {
+    return next(error);
+  }
+};
+
+const updateSkill = async (req, res, next) => {
+  const { id, name } = req.body;
+
+  const { error } = validation.updateSkillValidation({
+    name,
+  });
+  if (error) return next(error.details[0]);
+
+  try {
+    await db.Skill.update(
+      { name },
+      {
+        where: {
+          id,
+        },
+      }
+    );
+    res.json({
+      message: "Skill updated successfully",
+    });
+  } catch (error) {
+    return next(error);
+  }
+};
+
+const updateGuidance = async (req, res, next) => {
+  const { id, name } = req.body;
+
+  const { error } = validation.updateGuidanceValidation({
+    name,
+  });
+  if (error) return next(error.details[0]);
+
+  try {
+    await db.Guidance.update(
+      { name },
+      {
+        where: {
+          id,
+        },
+      }
+    );
+    res.json({
+      message: "Guidance updated successfully",
+    });
+  } catch (error) {
+    return next(error);
+  }
+};
+
+const updateHospital = async (req, res, next) => {
+  const { id, name } = req.body;
+
+  const { error } = validation.updateHospitalValidation({
+    name,
+  });
+  if (error) return next(error.details[0]);
+
+  try {
+    await db.Hospital.update(
+      { name },
+      {
+        where: {
+          id,
+        },
+      }
+    );
+    res.json({
+      message: "Hospital updated successfully",
+    });
+  } catch (error) {
+    return next(error);
+  }
+};
+
+const deleteStation = async (req, res, next) => {
+  const { id } = req.body;
+
+  //check if station exist
+  let existingStation;
+  try {
+    existingStation = await db.Station.findOne({
+      where: {
+        id,
+      },
+    });
+  } catch (error) {
+    return next(error);
+  }
+  if (!existingStation) return next(new Error("Station does not exist"));
+
+  try {
+    await db.Station.destroy({
+      where: {
+        id,
+      },
+    });
+    res.json({
+      message: "Station deleted successfully",
+    });
+  } catch (error) {
+    return next(error);
+  }
+};
+
+const deleteDisease = async (req, res, next) => {
+  const { id } = req.body;
+
+  //check if disease exist
+  let existingDisease;
+  try {
+    existingDisease = await db.Disease.findOne({
+      where: {
+        id,
+      },
+    });
+  } catch (error) {
+    return next(error);
+  }
+  if (!existingDisease) return next(new Error("Disease does not exist"));
+
+  try {
+    await db.Disease.destroy({
+      where: {
+        id,
+      },
+    });
+    res.json({
+      message: "Disease deleted successfully",
+    });
+  } catch (error) {
+    return next(error);
+  }
+};
+
+const deleteSkill = async (req, res, next) => {
+  const { id } = req.body;
+
+  //check if skill exist
+  let existingSkill;
+  try {
+    existingSkill = await db.Skill.findOne({
+      where: {
+        id,
+      },
+    });
+  } catch (error) {
+    return next(error);
+  }
+  if (!existingSkill) return next(new Error("Skill does not exist"));
+
+  try {
+    await db.Skill.destroy({
+      where: {
+        id,
+      },
+    });
+    res.json({
+      message: "Skill deleted successfully",
+    });
+  } catch (error) {
+    return next(error);
+  }
+};
+
+const deleteGuidance = async (req, res, next) => {
+  const { id } = req.body;
+
+  //check if guidance exist
+  let existingGuidance;
+  try {
+    existingGuidance = await db.Guidance.findOne({
+      where: {
+        id,
+      },
+    });
+  } catch (error) {
+    return next(error);
+  }
+  if (!existingGuidance) return next(new Error("Guidance does not exist"));
+
+  try {
+    await db.Guidance.destroy({
+      where: {
+        id,
+      },
+    });
+    res.json({
+      message: "Guidance deleted successfully",
+    });
+  } catch (error) {
+    return next(error);
+  }
+};
+
+const deleteHospital = async (req, res, next) => {
+  const { id } = req.body;
+
+  //check if hospital exist
+  let existingHospital;
+  try {
+    existingHospital = await db.Hospital.findOne({
+      where: {
+        id,
+      },
+    });
+  } catch (error) {
+    return next(error);
+  }
+  if (!existingHospital) return next(new Error("Hospital does not exist"));
+
+  try {
+    await db.Hospital.destroy({
+      where: {
+        id,
+      },
+    });
+    res.json({
+      message: "Hospital deleted successfully",
+    });
+  } catch (error) {
+    return next(error);
+  }
+};
+
 const addOrUpdateStudentPresention = async (req, res, next) => {
   const { month, year, present, sick, excused, absent, studentId } = req.body;
 
@@ -365,6 +653,17 @@ module.exports = {
   addSkill,
   addGuidance,
   addHospital,
-  updateUserRoles,
   addOrUpdateStudentPresention,
+  updateUserRoles,
+  updateStation,
+  updateDisease,
+  updateSkill,
+  updateGuidance,
+  updateHospital,
+
+  deleteStation,
+  deleteDisease,
+  deleteSkill,
+  deleteGuidance,
+  deleteHospital,
 };

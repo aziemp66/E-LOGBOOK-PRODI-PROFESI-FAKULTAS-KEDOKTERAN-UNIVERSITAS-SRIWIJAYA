@@ -48,7 +48,7 @@ const addStationValidation = (data) => {
 const addDiseaseValidation = (data) => {
   const schema = Joi.object({
     name: Joi.string().min(1).max(255).required(),
-    stationId: Joi.string().min(1).max(255).required(),
+    stationId: Joi.string().required(),
   });
 
   return schema.validate(data);
@@ -57,7 +57,7 @@ const addDiseaseValidation = (data) => {
 const addSkillValidation = (data) => {
   const schema = Joi.object({
     name: Joi.string().min(1).max(255).required(),
-    stationId: Joi.string().min(1).max(255).required(),
+    stationId: Joi.string().required(),
   });
 
   return schema.validate(data);
@@ -118,6 +118,48 @@ const addCompetenceValidation = (data) => {
   return schema.validate(data);
 };
 
+const updateStationValidation = (data) => {
+  const schema = Joi.object({
+    name: Joi.string().min(1).max(255).required(),
+  });
+
+  return schema.validate(data);
+};
+
+const updateDiseaseValidation = (data) => {
+  const schema = Joi.object({
+    name: Joi.string().min(1).max(255).required(),
+    stationId: Joi.string().required(),
+  });
+
+  return schema.validate(data);
+};
+
+const updateSkillValidation = (data) => {
+  const schema = Joi.object({
+    name: Joi.string().min(1).max(255).required(),
+    stationId: Joi.string().required(),
+  });
+
+  return schema.validate(data);
+};
+
+const updateGuidanceValidation = (data) => {
+  const schema = Joi.object({
+    name: Joi.string().min(1).max(255).required(),
+  });
+
+  return schema.validate(data);
+};
+
+const updateHospitalValidation = (data) => {
+  const schema = Joi.object({
+    name: Joi.string().min(1).max(255).required(),
+  });
+
+  return schema.validate(data);
+};
+
 module.exports = {
   registerValidation,
   loginValidation,
@@ -130,4 +172,9 @@ module.exports = {
   updateUserRolesValidation,
   addStudentPresentionValidation,
   addCompetenceValidation,
+  updateStationValidation,
+  updateDiseaseValidation,
+  updateSkillValidation,
+  updateGuidanceValidation,
+  updateHospitalValidation,
 };
