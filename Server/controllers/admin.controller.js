@@ -102,6 +102,20 @@ const addDisease = async (req, res, next) => {
   }
   if (!existingStation) return next(new Error("Station does not exist"));
 
+  //check if there is a disease with the same name
+  let existingDisease;
+  try {
+    existingDisease = await db.Disease.findOne({
+      where: {
+        name,
+        station: stationId,
+      },
+    });
+  } catch (error) {
+    return next(error);
+  }
+  if (existingDisease) return next(new Error("Disease already exists"));
+
   try {
     await db.Disease.create({
       name,
@@ -120,6 +134,33 @@ const addSkill = async (req, res, next) => {
 
   const { error } = validation.addSkillValidation({ name, stationId });
   if (error) return next(error.details[0]);
+
+  //check if station exist
+  let existingStation;
+  try {
+    existingStation = await db.Station.findOne({
+      where: {
+        id: stationId,
+      },
+    });
+  } catch (error) {
+    return next(error);
+  }
+  if (!existingStation) return next(new Error("Station does not exist"));
+
+  //check if there is a skill with the same name
+  let existingSkill;
+  try {
+    existingSkill = await db.Skill.findOne({
+      where: {
+        name,
+        station: stationId,
+      },
+    });
+  } catch (error) {
+    return next(error);
+  }
+  if (existingSkill) return next(new Error("Skill already exists"));
 
   try {
     await db.Skill.create({
@@ -140,6 +181,19 @@ const addGuidance = async (req, res, next) => {
   const { error } = validation.addGuidanceValidation({ name });
   if (error) return next(error.details[0]);
 
+  //check if there is a guidance with the same name
+  let existingGuidance;
+  try {
+    existingGuidance = await db.Guidance.findOne({
+      where: {
+        name,
+      },
+    });
+  } catch (error) {
+    return next(error);
+  }
+  if (existingGuidance) return next(new Error("Guidance already exists"));
+
   try {
     await db.Guidance.create({
       name,
@@ -158,6 +212,19 @@ const addHospital = async (req, res, next) => {
   const { error } = validation.addHospitalValidation({ name });
   if (error) return next(error.details[0]);
 
+  //check if there is a hospital with the same name
+  let existingHospital;
+  try {
+    existingHospital = await db.Hospital.findOne({
+      where: {
+        name,
+      },
+    });
+  } catch (error) {
+    return next(error);
+  }
+  if (existingHospital) return next(new Error("Hospital already exists"));
+
   try {
     await db.Hospital.create({
       name,
@@ -170,7 +237,7 @@ const addHospital = async (req, res, next) => {
   }
 };
 
-const addStudentPresention = async (req, res, next) => {
+const addOrUpdateStudentPresention = async (req, res, next) => {
   const { month, year, present, sick, excused, absent, studentId } = req.body;
 
   if (sick + excused + absent + present > 31)
@@ -299,5 +366,5 @@ module.exports = {
   addGuidance,
   addHospital,
   updateUserRoles,
-  addStudentPresention,
+  addOrUpdateStudentPresention,
 };

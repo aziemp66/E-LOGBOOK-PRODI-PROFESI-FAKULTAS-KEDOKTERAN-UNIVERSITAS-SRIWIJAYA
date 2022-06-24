@@ -17,6 +17,6 @@ router.get("/user", adminController.getAllUser);
 
 router.patch("/user", adminController.updateUserRoles);
 
-router.post("/presention", adminController.addStudentPresention);
+router.put("/presention", adminController.addOrUpdateStudentPresention);
 
 module.exports = router;

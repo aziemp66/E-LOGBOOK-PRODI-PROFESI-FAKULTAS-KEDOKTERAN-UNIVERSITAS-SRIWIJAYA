@@ -70,7 +70,13 @@ const Competences = () => {
   }, []);
 
   const onSubmitHandler = (data) => {
-    console.log(data);
+    //trim the data
+    for (const key in data) {
+      if (data[key] instanceof String) {
+        data[key] = data[key].trim();
+      }
+    }
+
     const {
       hospitalId,
       patientInitials,

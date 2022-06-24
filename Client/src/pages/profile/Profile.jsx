@@ -84,7 +84,13 @@ const Profile = () => {
   };
 
   const onSubmitHandler = async (data) => {
-    console.log(data);
+    //trim data
+    for (const key in data) {
+      if (data[key] instanceof String) {
+        data[key] = data[key].trim();
+      }
+    }
+
     let response;
     try {
       response = await axios.patch(
