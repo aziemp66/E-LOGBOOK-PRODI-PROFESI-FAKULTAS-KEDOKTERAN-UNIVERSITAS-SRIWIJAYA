@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const adminController = require("../controllers/admin.controller");
 
-router.get("/", adminController.getAllInfo);
+router.get("/elogbok", adminController.getElogbookInfo);
 
 router.post("/station", adminController.addStation);
 
@@ -12,6 +12,8 @@ router.post("/skill", adminController.addSkill);
 router.post("/guidance", adminController.addGuidance);
 
 router.post("/hospital", adminController.addHospital);
+
+router.get("/user", adminController.getAllUser);
 
 router.patch("/user", adminController.updateUserRoles);
 

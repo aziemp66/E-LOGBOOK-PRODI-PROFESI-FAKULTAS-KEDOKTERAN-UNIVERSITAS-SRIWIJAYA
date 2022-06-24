@@ -21,7 +21,7 @@ const Admin = () => {
       <div className={styles["card-grid"]}>
         <div className={styles.card}>
           <h2>Administrasi E-Logbook</h2>
-          <Link to={"/admin/logbook"}>Click Here</Link>
+          <Link to={"/admin/elogbook"}>Click Here</Link>
         </div>
         <div className={styles.card}>
           <h2>Presensi Mahasiswa</h2>

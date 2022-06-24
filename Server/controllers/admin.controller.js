@@ -1,15 +1,18 @@
 const db = require("../models");
 const validation = require("../utility/validation");
 
-const getAllInfo = async (req, res, next) => {
-  let users;
+const getAllUser = async (req, res, next) => {
   try {
-    users = await db.User.findAll();
-  } catch (error) {
-    return next(error);
+    const users = await db.User.findAll({
+      attributes: ["id", "name", "email", "role"],
+    });
+    res.json(users);
+  } catch (err) {
+    next(err);
   }
-  if (!users) return next(error);
+};
 
+const getElogbookInfo = async (req, res, next) => {
   let stations;
   try {
     stations = await db.Station.findAll();
@@ -50,14 +53,6 @@ const getAllInfo = async (req, res, next) => {
   }
   if (!guidances) return next(new Error("Guidances not found"));
 
-  let presentions;
-  try {
-    presentions = await db.Presention.findAll();
-  } catch (error) {
-    return next(error);
-  }
-  if (!presentions) return next(new Error("Presentions not found"));
-
   res.json({
     users,
     diseases,
@@ -65,7 +60,6 @@ const getAllInfo = async (req, res, next) => {
     stations,
     hospitals,
     guidances,
-    presentions,
   });
 };
 
@@ -298,7 +292,8 @@ const updateUserRoles = async (req, res, next) => {
 };
 
 module.exports = {
-  getAllInfo,
+  getAllUser,
+  getElogbookInfo,
   addStation,
   addDisease,
   addSkill,
