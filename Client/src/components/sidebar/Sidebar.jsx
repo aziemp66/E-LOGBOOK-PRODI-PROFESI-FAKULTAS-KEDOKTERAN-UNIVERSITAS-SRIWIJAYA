@@ -94,7 +94,7 @@ const Sidebar = () => {
                         </Link>
                       </li>
                       <li>
-                        <Link to={"/admin/logbook"}>
+                        <Link to={"/admin/elogbook"}>
                           <img
                             src={rekapitulasiPenilaian}
                             alt="dashboard icon"
@@ -109,7 +109,7 @@ const Sidebar = () => {
                         </Link>
                       </li>
                       <li>
-                        <Link to={"/admin/students"}>
+                        <Link to={"/admin/accounts"}>
                           <img src={profile} alt="profile icon" />
                           <span>Administrasi Akun</span>
                         </Link>

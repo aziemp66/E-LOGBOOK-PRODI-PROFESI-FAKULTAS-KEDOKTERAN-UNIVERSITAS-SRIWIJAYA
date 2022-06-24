@@ -45,7 +45,10 @@ const Competences = () => {
 
   const [stationId, setStationId] = useState(null);
 
-  const baseUrl = "http://localhost:5000/api/student";
+  const baseUrl =
+    (import.meta.env.VITE_API_URL &&
+      `${import.meta.env.VITE_API_URL}/api/student`) ||
+    "http://localhost:5000/api/student";
 
   useEffect(() => {
     axios

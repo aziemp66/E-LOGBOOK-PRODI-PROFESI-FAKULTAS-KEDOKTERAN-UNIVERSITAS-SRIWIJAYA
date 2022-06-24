@@ -5,7 +5,7 @@ function auth(req, res, next) {
 
   //Token not found
   if (!token) {
-    return res.status(401).json({
+    return res.json({
       error: "Access denied. User not logged in",
     });
   }

@@ -54,7 +54,6 @@ const getElogbookInfo = async (req, res, next) => {
   if (!guidances) return next(new Error("Guidances not found"));
 
   res.json({
-    users,
     diseases,
     skills,
     stations,

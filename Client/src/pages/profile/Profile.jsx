@@ -37,8 +37,14 @@ const Profile = () => {
     setValue,
     formState: { errors },
   } = useForm();
-  const baseUrl = "http://localhost:5000/api/student";
-  const profileUrl = "http://localhost:5000/profile-pictures";
+  const baseUrl =
+    (import.meta.env.VITE_API_URL &&
+      `${import.meta.env.VITE_API_URL}/api/student`) ||
+    "http://localhost:5000/api/student";
+  const profileUrl =
+    (import.meta.env.VITE_API_URL &&
+      `${import.meta.env.VITE_API_URL}/profile-pictures`) ||
+    "http://localhost:5000/profile-pictures";
 
   const profilePictureChangeHandler = (e) => {
     console.log(e.target.files[0]);

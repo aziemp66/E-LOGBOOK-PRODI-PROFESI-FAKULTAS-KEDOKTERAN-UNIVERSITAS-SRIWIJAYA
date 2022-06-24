@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const adminController = require("../controllers/admin.controller");
 
-router.get("/elogbok", adminController.getElogbookInfo);
+router.get("/elogbook", adminController.getElogbookInfo);
 
 router.post("/station", adminController.addStation);
 
