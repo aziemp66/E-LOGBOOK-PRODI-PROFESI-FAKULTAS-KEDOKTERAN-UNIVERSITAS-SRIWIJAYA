@@ -1,34 +1,62 @@
 const db = require("../models");
 const validation = require("../utility/validation");
 
-const getAllDiseasesAndSkills = async (req, res, next) => {
-  const { stationId } = req.params;
+const getAllInfo = async (req, res, next) => {
+  let users;
+  try {
+    users = await db.User.findAll();
+  } catch (error) {
+    return next(error);
+  }
+  if (!users) return next(error);
+
+  let stations;
+  try {
+    stations = await db.Station.findAll();
+  } catch (error) {
+    return next(error);
+  }
+  if (!stations) return next(new Error("Stations not found"));
 
   let diseases;
   try {
-    diseases = await db.Disease.findAll({
-      where: {
-        station: stationId,
-      },
-    });
+    diseases = await db.Disease.findAll();
   } catch (error) {
     return next(error);
   }
+  if (!diseases) return next(new Error("Diseases not found"));
 
   let skills;
   try {
-    skills = await db.Skill.findAll({
-      where: {
-        station: stationId,
-      },
-    });
+    skills = await db.Skill.findAll();
   } catch (error) {
     return next(error);
   }
+  if (!skills) return next(new Error("Skills not found"));
+
+  let hospitals;
+  try {
+    hospitals = await db.Hospital.findAll();
+  } catch (error) {
+    return next(error);
+  }
+  if (!hospitals) return next(new Error("Hospitals not found"));
+
+  let guidances;
+  try {
+    guidances = await db.Guidance.findAll();
+  } catch (error) {
+    return next(error);
+  }
+  if (!guidances) return next(new Error("Guidances not found"));
 
   res.json({
+    users,
     diseases,
     skills,
+    stations,
+    hospitals,
+    guidances,
   });
 };
 
@@ -140,9 +168,66 @@ const addHospital = async (req, res, next) => {
   }
 };
 
+const addStudentPresention = async (req, res, next) => {
+  const { month, year, present, sick, excused, absent, studentId } = req.body;
+
+  if (sick + excused + absent + present > 31)
+    return next(new Error("Days are more than 31"));
+
+  const { error } = validation.addStudentPresentionValidation({
+    studentId,
+    month,
+    year,
+    present,
+    sick,
+    excused,
+    absent,
+  });
+  if (error) return next(error.details[0]);
+
+  let data, isCreated;
+  try {
+    [data, isCreated] = await db.Presention.findOrCreate({
+      where: {
+        studentId,
+        month,
+        year,
+      },
+      default: {
+        studentId,
+        month,
+        year,
+        present,
+        absent,
+        sick,
+        excused,
+      },
+    });
+  } catch (error) {
+    return next(error);
+  }
+  if (!isCreated && data) {
+    try {
+      await data.update({
+        present,
+        absent,
+        sick,
+        excused,
+      });
+    } catch (error) {
+      return next(error);
+    }
+  } else if (!data) {
+    return next(new Error("Can't Find or Create Competence"));
+  }
+
+  res.json({
+    message: `Presention successfully ${isCreated ? "Created" : "Updated"} `,
+  });
+};
+
 const updateUserRoles = async (req, res, next) => {
-  const { id: userId } = req.params;
-  const { role } = req.body;
+  const { role, id: userId } = req.body;
 
   const { error } = validation.updateUserRolesValidation({ role });
   if (error) return next(error.details[0]);
@@ -203,65 +288,8 @@ const updateUserRoles = async (req, res, next) => {
   });
 };
 
-const addStudentPresention = async (req, res, next) => {
-  const { studentId } = req.body;
-  const { month, year, present, sick, excused, absent } = req.body;
-
-  const { error } = validation.addStudentPresentionValidation({
-    studentId,
-    month,
-    year,
-    present,
-    sick,
-    excused,
-    absent,
-  });
-  if (error) return next(error.details[0]);
-
-  //check if there is already student presention this month and year
-  try {
-    const presentionExist = db.Presention.findOne({
-      where: {
-        studentId,
-        month,
-        year,
-      },
-    });
-    if (presentionExist)
-      return next(new Error("Presention already exist this month"));
-  } catch (error) {
-    return next(error);
-  }
-
-  try {
-    await db.Presention.create({
-      studentId,
-      month,
-      year,
-      present,
-      absent,
-      sick,
-      excused,
-    });
-    res.json({
-      message: "Presention Successfully Created",
-    });
-  } catch (error) {
-    return next(error);
-  }
-};
-
-const getAllUsers = async (req, res, next) => {
-  try {
-    const users = await db.User.findAll();
-    res.json(users);
-  } catch (error) {
-    return next(error);
-  }
-};
-
 module.exports = {
-  getAllDiseasesAndSkills,
+  getAllInfo,
   addStation,
   addDisease,
   addSkill,
@@ -269,5 +297,4 @@ module.exports = {
   addHospital,
   updateUserRoles,
   addStudentPresention,
-  getAllUsers,
 };

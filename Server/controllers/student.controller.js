@@ -472,6 +472,8 @@ const addCompetence = async (req, res, next) => {
     } catch (error) {
       return next(error);
     }
+  } else if (!data) {
+    return next(new Error("Can't Find or Create Competence"));
   }
 
   res.json({
