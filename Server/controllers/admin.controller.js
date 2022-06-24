@@ -640,26 +640,6 @@ const updateUserRoles = async (req, res, next) => {
     }
   }
 
-  //deleting old user profile if user was student or lecturer
-  if (
-    (existingUser.roles === "student" || existingUser.roles === "lecturer") &&
-    existingUser.roles !== role
-  ) {
-    const reverseRole =
-      existingUser.roles === "student" ? "Lecturer" : "Student";
-    const profiles = `${reverseRole}Profile`;
-
-    try {
-      await db[profiles].destroy({
-        where: {
-          userId: existingUser.id,
-        },
-      });
-    } catch (error) {
-      return next(error);
-    }
-  }
-
   res.json({
     message: "User role updated successfully",
   });
