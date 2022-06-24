@@ -50,6 +50,14 @@ const getAllInfo = async (req, res, next) => {
   }
   if (!guidances) return next(new Error("Guidances not found"));
 
+  let presentions;
+  try {
+    presentions = await db.Presention.findAll();
+  } catch (error) {
+    return next(error);
+  }
+  if (!presentions) return next(new Error("Presentions not found"));
+
   res.json({
     users,
     diseases,
@@ -57,6 +65,7 @@ const getAllInfo = async (req, res, next) => {
     stations,
     hospitals,
     guidances,
+    presentions,
   });
 };
 
