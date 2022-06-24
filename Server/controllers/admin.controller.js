@@ -631,9 +631,14 @@ const updateUserRoles = async (req, res, next) => {
     const profiles = `${capitalizeRole}Profile`;
 
     try {
-      await db[profiles].create({
-        userId: existingUser.id,
-        displayName: existingUser.username,
+      await db[profiles].findOrCreate({
+        where: {
+          userId: existingUser.id,
+        },
+        defaults: {
+          userId: existingUser.id,
+          displayName: existingUser.username,
+        },
       });
     } catch (error) {
       return next(error);
@@ -660,7 +665,6 @@ module.exports = {
   updateSkill,
   updateGuidance,
   updateHospital,
-
   deleteStation,
   deleteDisease,
   deleteSkill,
