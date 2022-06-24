@@ -6,6 +6,7 @@ import axios from "axios";
 
 const ElogbookAdmin = () => {
   const {
+    watch,
     register,
     handleSubmit,
     formState: { errors },
@@ -17,7 +18,9 @@ const ElogbookAdmin = () => {
   const [guidances, setGuidances] = useState(null);
   const [hospitals, setHospitals] = useState(null);
 
-  const [objectType, setObjectType] = useState(null);
+  const objectType = watch("objectType");
+
+  console.log(objectType);
 
   const baseUrl =
     (import.meta.env.API_URL && `${import.meta.env.API_URL}/api/admin`) ||
@@ -41,13 +44,12 @@ const ElogbookAdmin = () => {
       });
   }, []);
 
-  const addObject = (type, data) => {
-    axios
-      .post(`${baseUrl}/elogbook/${type}`, data, {
-        headers: {
-          "auth-token": localStorage.getItem("token"),
-        },
-      })
+  const ObjectRequestHandler = (restRequest, type, data) => {
+    axios[restRequest](`${baseUrl}/${type}`, data, {
+      headers: {
+        "auth-token": localStorage.getItem("token"),
+      },
+    })
       .then((res) => {
         console.log(res);
       })
@@ -56,7 +58,33 @@ const ElogbookAdmin = () => {
       });
   };
 
-  return <div className={styles.container}></div>;
+  return (
+    <div className={styles.container}>
+      <label htmlFor="objectType">Pilih Kategori</label>
+      <select id="objectType" {...register("objectType")}>
+        <option value="station">Stase</option>
+        <option value="disease">Penyakit</option>
+        <option value="skill">Keterampilan</option>
+        <option value="guidance">Metode Pembelajaran</option>
+        <option value="hospital">Rumah Sakit</option>
+      </select>
+      <div>
+        <h2>
+          Tambah, Edit atau Hapus{" "}
+          {(objectType === "station" && "Stase") ||
+            (objectType === "disease" && "Penyakit") ||
+            (objectType === "skill" && "Keterampilan") ||
+            (objectType === "guidance" && "Metode Pembelajaran") ||
+            (objectType === "hospital" && "Rumah Sakit")}
+        </h2>
+      </div>
+      <form
+        onSubmit={handleSubmit(
+          ObjectRequestHandler.bind(null, "post", objectType)
+        )}
+      ></form>
+    </div>
+  );
 };
 
 export default ElogbookAdmin;
