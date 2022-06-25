@@ -2,7 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useForm, useFormState } from "react-hook-form";
 import styles from "./ElogbookAdmin.module.css";
 
+import { DISEASE_COLUMNS } from "../../../components/tabels/Columns";
+
 import axios from "axios";
+import InfoTable from "../../../components/tabels/InfoTable";
 
 const ElogbookAdmin = () => {
   const {
@@ -11,6 +14,8 @@ const ElogbookAdmin = () => {
     handleSubmit,
     formState: { errors },
     control,
+    setValue,
+    getValues,
   } = useForm({
     defaultValues: {
       requestType: "post",
@@ -30,6 +35,7 @@ const ElogbookAdmin = () => {
   const baseUrl =
     (import.meta.env.API_URL && `${import.meta.env.API_URL}/api/admin`) ||
     "http://localhost:5000/api/admin";
+
   useEffect(() => {
     axios
       .get(`${baseUrl}/elogbook`, {
@@ -95,13 +101,16 @@ const ElogbookAdmin = () => {
           </h2>
           <form
             onSubmit={handleSubmit(
-              ObjectRequestHandler.bind(null, "post", objectType)
+              ObjectRequestHandler.bind(null, requestType, objectType)
             )}
           >
             <button>submit</button>
           </form>
         </div>
       )}
+      {/* 
+      TODO: https://stackoverflow.com/questions/34407495/how-do-i-pass-data-upwards-in-reactjs
+       */}
     </div>
   );
 };

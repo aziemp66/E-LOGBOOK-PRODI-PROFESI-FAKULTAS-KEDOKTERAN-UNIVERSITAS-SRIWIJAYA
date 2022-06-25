@@ -11,9 +11,9 @@ import DashBoard from "./pages/dashboard/DashBoard";
 import Profile from "./pages/profile/Profile";
 import Competences from "./pages/competences/Competences";
 import ScientificActivities from "./pages/scientificactivites/ScientificActivities";
-import ElogbookAdmin from "./pages/admin/elogbookadmin/elogbookAdmin";
-import AccountAdmin from "./pages/admin/accountadmin/accountAdmin";
-import StudentAdmin from "./pages/admin/studentAdmin/studentAdmin";
+import ElogbookAdmin from "./pages/admin/elogbookadmin/ElogbookAdmin";
+import AccountAdmin from "./pages/admin/accountadmin/AccountAdmin";
+import StudentAdmin from "./pages/admin/studentAdmin/StudentAdmin";
 
 import Sidebar from "./components/sidebar/Sidebar";
 import AuthContext from "./contexts/AuthContexts";
