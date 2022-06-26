@@ -1,13 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm, useFormState } from "react-hook-form";
 import styles from "./ElogbookAdmin.module.css";
-
-import { DISEASE_COLUMNS } from "../../../components/tabels/Columns";
 
 import axios from "axios";
 import InfoTable from "../../../components/tabels/InfoTable";
 
 const ElogbookAdmin = () => {
+  const [stations, setStations] = useState();
+  const [diseases, setDiseases] = useState();
+  const [skills, setSkills] = useState();
+  const [hospitals, setHospitals] = useState();
+  const [guidances, setGuidances] = useState();
+
   const {
     watch,
     register,
@@ -23,17 +27,12 @@ const ElogbookAdmin = () => {
   });
   const { dirtyFields } = useFormState({ control });
 
-  const [stations, setStations] = useState(null);
-  const [diseases, setDiseases] = useState(null);
-  const [skills, setSkills] = useState(null);
-  const [guidances, setGuidances] = useState(null);
-  const [hospitals, setHospitals] = useState(null);
-
   const objectType = watch("objectType");
   const requestType = watch("requestType");
 
   const baseUrl =
-    (import.meta.env.API_URL && `${import.meta.env.API_URL}/api/admin`) ||
+    (import.meta.env.VITE_API_URL &&
+      `${import.meta.env.VITE_API_URL}/api/admin`) ||
     "http://localhost:5000/api/admin";
 
   useEffect(() => {
@@ -47,8 +46,8 @@ const ElogbookAdmin = () => {
         setStations(res.data.stations);
         setDiseases(res.data.diseases);
         setSkills(res.data.skills);
-        setGuidances(res.data.guidances);
         setHospitals(res.data.hospitals);
+        setGuidances(res.data.guidances);
       })
       .catch((err) => {
         console.log(err);
@@ -68,6 +67,20 @@ const ElogbookAdmin = () => {
     })
       .then((res) => {
         console.log(res);
+
+        axios
+          .get(`${baseUrl}/elogbook`, {
+            headers: {
+              "auth-token": localStorage.getItem("token"),
+            },
+          })
+          .then((res) => {
+            setStations(res.data.stations);
+            setDiseases(res.data.diseases);
+            setSkills(res.data.skills);
+            setHospitals(res.data.hospitals);
+            setGuidances(res.data.guidances);
+          });
       })
       .catch((err) => {
         console.log(err);
@@ -106,6 +119,22 @@ const ElogbookAdmin = () => {
           >
             <button>submit</button>
           </form>
+        </div>
+      )}
+      {objectType && (
+        <div>
+          <form></form>
+          <InfoTable
+            stations={stations}
+            objectType={objectType}
+            objectData={
+              (objectType === "station" && stations) ||
+              (objectType === "disease" && diseases) ||
+              (objectType === "skill" && skills) ||
+              (objectType === "guidance" && guidances) ||
+              (objectType === "hospital" && hospitals)
+            }
+          />
         </div>
       )}
       {/* 

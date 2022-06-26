@@ -11,12 +11,49 @@ import styles from "./InfoTable.module.css";
 import { GlobalFilter } from "./GlobalFilter";
 import { ColumnFilter } from "./ColumnFilter";
 
-const InfoTable = ({ tableData, tableColumns, stationsData }) => {
-  console.log(tableData);
-  console.log(tableColumns);
-  console.log(stationsData);
-  const columns = useMemo(tableColumns.bind(null, stationsData), []);
-  const data = useMemo(() => tableData, []);
+import { format } from "date-fns";
+
+const InfoTable = ({ objectType, stations, objectData }) => {
+  const diseaseColumns = [
+    {
+      Header: "Id",
+      accessor: "id",
+      id: "id",
+    },
+    {
+      Header: "Nama",
+      accessor: "name",
+    },
+    {
+      Header: "Stase",
+      accessor: "station",
+      Cell: ({ value }) =>
+        stations.find((station) => station.id === +value).name,
+    },
+    {
+      Header: "Edit",
+      accessor: "id",
+      id: "edit",
+      Cell: ({ value }) => (
+        <button onClick={() => console.log(value)}>Edit</button>
+      ),
+    },
+    {
+      Header: "Waktu Dibuat",
+      accessor: "createdAt",
+      Cell: ({ value }) => format(new Date(value), "dd/MM/yyyy"),
+    },
+    {
+      Header: "Terakhir Diperbarui",
+      accessor: "updatedAt",
+      Cell: ({ value }) => format(new Date(value), "dd/MM/yyyy"),
+    },
+  ];
+
+  const columns = useMemo(() => {
+    if (objectType === "disease") return diseaseColumns;
+  }, []);
+  const data = useMemo(() => objectData, []);
 
   const defaultColumn = useMemo(() => {
     return {
@@ -54,8 +91,6 @@ const InfoTable = ({ tableData, tableColumns, stationsData }) => {
   );
 
   const { globalFilter, pageIndex } = state;
-
-  console.log(rows.map((row) => row.original));
 
   return (
     <>
