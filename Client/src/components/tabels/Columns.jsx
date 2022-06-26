@@ -1,15 +1,21 @@
 import { format } from "date-fns";
 
 export default (objectType, stations) => {
+  if (objectType === "station")
+    return [
+      {
+        Header: "Nama Stase",
+        accessor: "name",
+      },
+    ];
   if (objectType === "disease")
     return [
       {
-        Header: "Id",
-        accessor: "id",
-        id: "id",
+        Header: "No.",
+        Cell: ({ row }) => row.index + 1,
       },
       {
-        Header: "Nama",
+        Header: "Nama Penyakit",
         accessor: "name",
       },
       {
