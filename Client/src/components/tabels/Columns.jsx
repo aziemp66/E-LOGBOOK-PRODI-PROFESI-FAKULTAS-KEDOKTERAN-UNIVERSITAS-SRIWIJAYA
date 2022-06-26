@@ -31,6 +31,8 @@ export default (objectType, stations) => {
         Cell: ({ value }) => (
           <button onClick={() => console.log(value)}>Edit</button>
         ),
+        disableFilters: true,
+        disableSortBy: true,
       },
       {
         Header: "Hapus",
@@ -39,6 +41,8 @@ export default (objectType, stations) => {
         Cell: ({ value }) => (
           <button onClick={() => console.log(value)}>Hapus</button>
         ),
+        disableFilters: true,
+        disableSortBy: true,
       },
       {
         Header: "Waktu Dibuat",
