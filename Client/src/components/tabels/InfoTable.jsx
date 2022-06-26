@@ -39,6 +39,14 @@ const InfoTable = ({ objectType, stations, objectData }) => {
       ),
     },
     {
+      Header: "Hapus",
+      accessor: "id",
+      id: "delete",
+      Cell: ({ value }) => (
+        <button onClick={() => console.log(value)}>Hapus</button>
+      ),
+    },
+    {
       Header: "Waktu Dibuat",
       accessor: "createdAt",
       Cell: ({ value }) => format(new Date(value), "dd/MM/yyyy"),
