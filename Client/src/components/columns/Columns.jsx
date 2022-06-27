@@ -1,6 +1,8 @@
 import { format } from "date-fns";
 
-export default (objectType, stations) => {
+import styles from "./Columns.module.css";
+
+export default (objectType, objectData, stations, setValue) => {
   if (objectType === "station")
     return [
       {
@@ -28,9 +30,23 @@ export default (objectType, stations) => {
         Header: "Edit",
         accessor: "id",
         id: "edit",
-        Cell: ({ value }) => (
-          <button onClick={() => console.log(value)}>Edit</button>
-        ),
+        Cell: ({ value }) => {
+          const name = objectData.find((data) => data.id === +value).name;
+
+          return (
+            <button
+              onClick={() => {
+                setValue("id", value);
+                setValue("requestType", "patch");
+                setValue("name", name);
+              }}
+            >
+              <a href="#form" className={styles.link}>
+                Edit
+              </a>
+            </button>
+          );
+        },
         disableFilters: true,
         disableSortBy: true,
       },
@@ -39,7 +55,18 @@ export default (objectType, stations) => {
         accessor: "id",
         id: "delete",
         Cell: ({ value }) => (
-          <button onClick={() => console.log(value)}>Hapus</button>
+          <button
+            onClick={() => {
+              const name = objectData.find((data) => data.id === +value).name;
+              setValue("id", value);
+              setValue("requestType", "delete");
+              setValue("name", name);
+            }}
+          >
+            <a href="#form" className={styles.link}>
+              Hapus
+            </a>
+          </button>
         ),
         disableFilters: true,
         disableSortBy: true,

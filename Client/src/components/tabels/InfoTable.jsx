@@ -8,13 +8,16 @@ import {
 } from "react-table";
 
 import styles from "./InfoTable.module.css";
-import { GlobalFilter } from "./GlobalFilter";
+import { GlobalFilter } from "../globalfilter/GlobalFilter";
 import { ColumnFilter } from "./ColumnFilter";
 
-import COLUMNS from "./Columns";
+import COLUMNS from "../columns/Columns";
 
-const InfoTable = ({ objectType, stations, objectData }) => {
-  const columns = useMemo(() => COLUMNS(objectType, stations), []);
+const InfoTable = ({ objectType, stations, objectData, setValue }) => {
+  const columns = useMemo(
+    () => COLUMNS(objectType, objectData, stations, setValue),
+    []
+  );
   const data = useMemo(() => objectData, []);
 
   const defaultColumn = useMemo(() => {

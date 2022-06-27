@@ -12,19 +12,12 @@ const ElogbookAdmin = () => {
   const [hospitals, setHospitals] = useState();
   const [guidances, setGuidances] = useState();
 
-  const {
-    watch,
-    register,
-    handleSubmit,
-    formState: { errors },
-    control,
-    setValue,
-    getValues,
-  } = useForm({
-    defaultValues: {
-      requestType: "post",
-    },
-  });
+  const { watch, register, handleSubmit, control, setValue, getValues } =
+    useForm({
+      defaultValues: {
+        requestType: "post",
+      },
+    });
   const { dirtyFields } = useFormState({ control });
 
   const objectType = watch("objectType");
@@ -54,13 +47,26 @@ const ElogbookAdmin = () => {
       });
   }, []);
 
-  const ObjectRequestHandler = (restRequest, type, data) => {
+  const ObjectRequestHandler = (restRequest, objectType, data) => {
     console.log(restRequest);
-    console.log(type);
+    console.log(objectType);
     console.log(data);
     if (objectType === "" || !objectType) return;
+
+    const submittedData =
+      (restRequest === "post" &&
+      (objectType === "disease" || objectType !== "skill")
+        ? { name: data.name, stationId: data.stationId }
+        : { name: data.name }) ||
+      (restRequest === "patch" && {
+        id: data.id,
+        name: data.name,
+        station: data.station,
+      }) ||
+      (restRequest === "delete" && { id: data.id });
+
     console.log("here");
-    axios[restRequest](`${baseUrl}/${type}`, data, {
+    axios[restRequest](`${baseUrl}/${type}`, submittedData, {
       headers: {
         "auth-token": localStorage.getItem("token"),
       },
@@ -89,7 +95,6 @@ const ElogbookAdmin = () => {
 
   return (
     <div className={styles.container}>
-      <a href="#test">Test</a>
       <label htmlFor="objectType">Pilih Kategori</label>
       <select id="objectType" {...register("objectType")}>
         {!dirtyFields.objectType && <option value={""}>Pilih Kategori</option>}
@@ -101,7 +106,7 @@ const ElogbookAdmin = () => {
       </select>
 
       {objectType && (
-        <div>
+        <div className={styles["form-container"]}>
           <h2>
             {(requestType === "post" && "Tambah") ||
               (requestType === "patch" && "Edit") ||
@@ -116,17 +121,62 @@ const ElogbookAdmin = () => {
             onSubmit={handleSubmit(
               ObjectRequestHandler.bind(null, requestType, objectType)
             )}
+            id="form"
+            className={styles.form}
           >
-            <button>submit</button>
+            <input hidden type="text" {...register("id")} />
+
+            {(objectType === "disease" || objectType === "skill") &&
+              (requestType === "post" || requestType === "patch") && (
+                <>
+                  <div className={styles["input-container"]}>
+                    <label htmlFor="name">Nama</label>
+                    <input type="text" id="name" {...register("name")} />
+                  </div>
+                  <div className={styles["input-container"]}>
+                    <label htmlFor="stationId">Stase</label>
+                    <select id="stationId" {...register("station")}>
+                      {!dirtyFields.stationId && (
+                        <option value={""}>Pilih Stase</option>
+                      )}
+                      {stations &&
+                        stations.map((station) => (
+                          <option key={station.id} value={station.id}>
+                            {station.name}
+                          </option>
+                        ))}
+                    </select>
+                  </div>
+                </>
+              )}
+            {requestType === "delete" ? (
+              <div className={styles["form-button"]}>
+                <p>Apakah Anda Yakin Ingin Menghapus {getValues("name")}</p>
+                <input hidden type="text" {...register("id")} />
+                <div className={styles["button-container"]}>
+                  <button className={styles["button-green"]}>Ya</button>
+                  <button
+                    className={styles["button-red"]}
+                    onClick={() => setValue("requestType", "post")}
+                  >
+                    Tidak
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <div className={styles["button-container"]}>
+                <button className={styles["button-green"]}>Submit</button>
+              </div>
+            )}
           </form>
         </div>
       )}
       {objectType && (
         <div>
-          <form></form>
           <InfoTable
             stations={stations}
             objectType={objectType}
+            setValue={setValue}
             objectData={
               (objectType === "station" && stations) ||
               (objectType === "disease" && diseases) ||
@@ -138,7 +188,7 @@ const ElogbookAdmin = () => {
         </div>
       )}
       {/* 
-      TODO: https://stackoverflow.com/questions/34407495/how-do-i-pass-data-upwards-in-reactjs
+      TODO: Download as excel file
        */}
     </div>
   );
