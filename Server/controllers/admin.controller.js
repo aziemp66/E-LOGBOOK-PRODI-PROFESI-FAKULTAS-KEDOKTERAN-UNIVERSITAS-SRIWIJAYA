@@ -4,7 +4,14 @@ const validation = require("../utility/validation");
 const getAllUser = async (req, res, next) => {
   try {
     const users = await db.User.findAll({
-      attributes: ["id", "username", "email", "roles"],
+      attributes: [
+        "id",
+        "username",
+        "email",
+        "roles",
+        "createdAt",
+        "updatedAt",
+      ],
     });
     res.json(users);
   } catch (err) {

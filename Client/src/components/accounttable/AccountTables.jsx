@@ -1,4 +1,9 @@
 import React, { useMemo } from "react";
+
+import styles from "./AccountTables.module.css";
+
+import COLUMNS from "../columns/AccountColumns";
+
 import {
   useTable,
   useSortBy,
@@ -7,18 +12,12 @@ import {
   usePagination,
 } from "react-table";
 
-import styles from "./InfoTabels.module.css";
 import { GlobalFilter } from "../globalfilter/GlobalFilter";
 import { ColumnFilter } from "../columnfilter/ColumnFilter";
 
-import COLUMNS from "../columns/InfoColumns";
-
-const InfoTable = ({ objectType, stations, objectData, setValue }) => {
-  const columns = useMemo(
-    () => COLUMNS(objectType, objectData, stations, setValue),
-    []
-  );
-  const data = useMemo(() => objectData, []);
+const AccountTables = ({ accountData }) => {
+  const columns = useMemo(() => COLUMNS, []);
+  const data = useMemo(() => accountData, []);
 
   const defaultColumn = useMemo(() => {
     return {
@@ -176,4 +175,4 @@ const InfoTable = ({ objectType, stations, objectData, setValue }) => {
   );
 };
 
-export default InfoTable;
+export default AccountTables;
