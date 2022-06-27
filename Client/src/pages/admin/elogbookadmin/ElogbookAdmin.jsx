@@ -11,6 +11,7 @@ const ElogbookAdmin = () => {
   const [skills, setSkills] = useState();
   const [hospitals, setHospitals] = useState();
   const [guidances, setGuidances] = useState();
+  const [isLoading, setIsLoading] = useState(false);
 
   const { watch, register, handleSubmit, control, setValue, getValues } =
     useForm({
@@ -29,6 +30,7 @@ const ElogbookAdmin = () => {
     "http://localhost:5000/api/admin";
 
   useEffect(() => {
+    setIsLoading(true);
     axios
       .get(`${baseUrl}/elogbook`, {
         headers: {
@@ -41,55 +43,75 @@ const ElogbookAdmin = () => {
         setSkills(res.data.skills);
         setHospitals(res.data.hospitals);
         setGuidances(res.data.guidances);
+        setIsLoading(false);
       })
       .catch((err) => {
         console.log(err);
+        setIsLoading(false);
       });
   }, []);
 
-  const ObjectRequestHandler = (restRequest, objectType, data) => {
-    console.log(restRequest);
+  const ObjectRequestHandler = (data) => {
+    setIsLoading(true);
+    console.log(requestType);
     console.log(objectType);
     console.log(data);
     if (objectType === "" || !objectType) return;
 
-    const submittedData =
-      (restRequest === "post" &&
-      (objectType === "disease" || objectType !== "skill")
-        ? { name: data.name, stationId: data.stationId }
-        : { name: data.name }) ||
-      (restRequest === "patch" && {
-        id: data.id,
-        name: data.name,
-        station: data.station,
-      }) ||
-      (restRequest === "delete" && { id: data.id });
+    let submittedData = null;
 
-    console.log("here");
-    axios[restRequest](`${baseUrl}/${type}`, submittedData, {
-      headers: {
-        "auth-token": localStorage.getItem("token"),
-      },
-    })
-      .then((res) => {
-        console.log(res);
+    if (requestType === "post") {
+      submittedData =
+        objectType === "disease" || objectType === "skill"
+          ? { name: data.name, station: data.station }
+          : { name: data.name };
+    } else if (requestType === "patch") {
+      submittedData =
+        objectType === "disease" || objectType === "skill"
+          ? { id: data.id, name: data.name, station: data.station }
+          : { id: data.id, name: data.name };
+    } else if (requestType === "delete") {
+      submittedData = {
+        headers: {
+          "auth-token": localStorage.getItem("token"),
+        },
+      };
+    }
 
-        axios
-          .get(`${baseUrl}/elogbook`, {
+    axios[requestType](
+      `${baseUrl}/${objectType}${
+        requestType === "delete" ? `/${data.id}` : ""
+      }`,
+      submittedData,
+      !(requestType === "delete")
+        ? {
             headers: {
               "auth-token": localStorage.getItem("token"),
             },
-          })
-          .then((res) => {
-            setStations(res.data.stations);
-            setDiseases(res.data.diseases);
-            setSkills(res.data.skills);
-            setHospitals(res.data.hospitals);
-            setGuidances(res.data.guidances);
-          });
+          }
+        : null
+    )
+      .then((res) => {
+        console.log(res);
+        return axios.get(`${baseUrl}/elogbook`, {
+          headers: {
+            "auth-token": localStorage.getItem("token"),
+          },
+        });
+      })
+      .then((res) => {
+        console.log(res);
+        setStations(res.data.stations);
+        setDiseases(res.data.diseases);
+        setSkills(res.data.skills);
+        setHospitals(res.data.hospitals);
+        setGuidances(res.data.guidances);
+        setIsLoading(false);
+        setValue("requestType", "post");
       })
       .catch((err) => {
         console.log(err);
+        setIsLoading(false);
       });
   };
 
@@ -118,21 +140,24 @@ const ElogbookAdmin = () => {
               (objectType === "hospital" && "Rumah Sakit")}
           </h2>
           <form
-            onSubmit={handleSubmit(
-              ObjectRequestHandler.bind(null, requestType, objectType)
-            )}
+            onSubmit={handleSubmit(ObjectRequestHandler)}
             id="form"
             className={styles.form}
           >
             <input hidden type="text" {...register("id")} />
 
+            {(requestType === "post" || requestType === "patch") && (
+              <>
+                <div className={styles["input-container"]}>
+                  <label htmlFor="name">Nama</label>
+                  <input type="text" id="name" {...register("name")} />
+                </div>
+              </>
+            )}
+
             {(objectType === "disease" || objectType === "skill") &&
-              (requestType === "post" || requestType === "patch") && (
+              requestType !== "delete" && (
                 <>
-                  <div className={styles["input-container"]}>
-                    <label htmlFor="name">Nama</label>
-                    <input type="text" id="name" {...register("name")} />
-                  </div>
                   <div className={styles["input-container"]}>
                     <label htmlFor="stationId">Stase</label>
                     <select id="stationId" {...register("station")}>
@@ -154,10 +179,13 @@ const ElogbookAdmin = () => {
                 <p>Apakah Anda Yakin Ingin Menghapus {getValues("name")}</p>
                 <input hidden type="text" {...register("id")} />
                 <div className={styles["button-container"]}>
-                  <button className={styles["button-green"]}>Ya</button>
+                  <button className={styles["button-green"]} type="submit">
+                    Ya
+                  </button>
                   <button
                     className={styles["button-red"]}
                     onClick={() => setValue("requestType", "post")}
+                    type="reset"
                   >
                     Tidak
                   </button>
@@ -171,22 +199,28 @@ const ElogbookAdmin = () => {
           </form>
         </div>
       )}
-      {objectType && (
-        <div>
-          <InfoTable
-            stations={stations}
-            objectType={objectType}
-            setValue={setValue}
-            objectData={
-              (objectType === "station" && stations) ||
-              (objectType === "disease" && diseases) ||
-              (objectType === "skill" && skills) ||
-              (objectType === "guidance" && guidances) ||
-              (objectType === "hospital" && hospitals)
-            }
-          />
-        </div>
-      )}
+      {objectType ? (
+        !isLoading ? (
+          <div>
+            <InfoTable
+              stations={stations}
+              objectType={objectType}
+              setValue={setValue}
+              objectData={
+                (objectType === "station" && stations) ||
+                (objectType === "disease" && diseases) ||
+                (objectType === "skill" && skills) ||
+                (objectType === "guidance" && guidances) ||
+                (objectType === "hospital" && hospitals)
+              }
+            />
+          </div>
+        ) : (
+          <>
+            <p>Loading ...</p>
+          </>
+        )
+      ) : null}
       {/* 
       TODO: Download as excel file
        */}

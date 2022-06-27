@@ -13,25 +13,25 @@ router.post("/disease", adminController.addDisease);
 
 router.patch("/disease", adminController.updateDisease);
 
-router.delete("/disease", adminController.deleteDisease);
+router.delete("/disease/:id", adminController.deleteDisease);
 
 router.post("/skill", adminController.addSkill);
 
 router.patch("/skill", adminController.updateSkill);
 
-router.delete("/skill", adminController.deleteSkill);
+router.delete("/skill/:id", adminController.deleteSkill);
 
 router.post("/guidance", adminController.addGuidance);
 
 router.patch("/guidance", adminController.updateGuidance);
 
-router.delete("/guidance", adminController.deleteGuidance);
+router.delete("/guidance/:id", adminController.deleteGuidance);
 
 router.post("/hospital", adminController.addHospital);
 
 router.patch("/hospital", adminController.updateHospital);
 
-router.delete("/hospital", adminController.deleteHospital);
+router.delete("/hospital/:id", adminController.deleteHospital);
 
 router.get("/user", adminController.getAllUser);
 

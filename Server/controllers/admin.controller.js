@@ -81,7 +81,7 @@ const addStation = async (req, res, next) => {
 };
 
 const addDisease = async (req, res, next) => {
-  const { name, stationId } = req.body;
+  const { name, station: stationId } = req.body;
 
   const { error } = validation.addDiseaseValidation({
     name,
@@ -130,7 +130,7 @@ const addDisease = async (req, res, next) => {
 };
 
 const addSkill = async (req, res, next) => {
-  const { name, stationId } = req.body;
+  const { name, station: stationId } = req.body;
 
   const { error } = validation.addSkillValidation({ name, stationId });
   if (error) return next(error.details[0]);
@@ -276,16 +276,17 @@ const updateStation = async (req, res, next) => {
 };
 
 const updateDisease = async (req, res, next) => {
-  const { id, name } = req.body;
+  const { id, name, station } = req.body;
 
   const { error } = validation.updateDiseaseValidation({
     name,
+    station,
   });
   if (error) return next(error.details[0]);
 
   try {
     await db.Disease.update(
-      { name },
+      { name, station },
       {
         where: {
           id,
@@ -301,16 +302,17 @@ const updateDisease = async (req, res, next) => {
 };
 
 const updateSkill = async (req, res, next) => {
-  const { id, name } = req.body;
+  const { id, name, station } = req.body;
 
   const { error } = validation.updateSkillValidation({
     name,
+    station,
   });
   if (error) return next(error.details[0]);
 
   try {
     await db.Skill.update(
-      { name },
+      { name, station },
       {
         where: {
           id,
@@ -376,7 +378,7 @@ const updateHospital = async (req, res, next) => {
 };
 
 const deleteStation = async (req, res, next) => {
-  const { id } = req.body;
+  const { id } = req.params;
 
   //check if station exist
   let existingStation;
@@ -406,7 +408,7 @@ const deleteStation = async (req, res, next) => {
 };
 
 const deleteDisease = async (req, res, next) => {
-  const { id } = req.body;
+  const { id } = req.params;
 
   //check if disease exist
   let existingDisease;
@@ -436,7 +438,7 @@ const deleteDisease = async (req, res, next) => {
 };
 
 const deleteSkill = async (req, res, next) => {
-  const { id } = req.body;
+  const { id } = req.params;
 
   //check if skill exist
   let existingSkill;
@@ -466,7 +468,7 @@ const deleteSkill = async (req, res, next) => {
 };
 
 const deleteGuidance = async (req, res, next) => {
-  const { id } = req.body;
+  const { id } = req.params;
 
   //check if guidance exist
   let existingGuidance;
@@ -496,7 +498,7 @@ const deleteGuidance = async (req, res, next) => {
 };
 
 const deleteHospital = async (req, res, next) => {
-  const { id } = req.body;
+  const { id } = req.params;
 
   //check if hospital exist
   let existingHospital;

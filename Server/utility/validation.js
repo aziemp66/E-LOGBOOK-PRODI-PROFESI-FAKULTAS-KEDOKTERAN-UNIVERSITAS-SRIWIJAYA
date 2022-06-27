@@ -129,7 +129,7 @@ const updateStationValidation = (data) => {
 const updateDiseaseValidation = (data) => {
   const schema = Joi.object({
     name: Joi.string().min(1).max(255).required(),
-    stationId: Joi.string().required(),
+    station: Joi.string().required(),
   });
 
   return schema.validate(data);
@@ -138,7 +138,7 @@ const updateDiseaseValidation = (data) => {
 const updateSkillValidation = (data) => {
   const schema = Joi.object({
     name: Joi.string().min(1).max(255).required(),
-    stationId: Joi.string().required(),
+    station: Joi.string().required(),
   });
 
   return schema.validate(data);

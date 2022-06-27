@@ -9,7 +9,7 @@ import {
 
 import styles from "./InfoTable.module.css";
 import { GlobalFilter } from "../globalfilter/GlobalFilter";
-import { ColumnFilter } from "./ColumnFilter";
+import { ColumnFilter } from "../columnfilter/ColumnFilter";
 
 import COLUMNS from "../columns/Columns";
 
