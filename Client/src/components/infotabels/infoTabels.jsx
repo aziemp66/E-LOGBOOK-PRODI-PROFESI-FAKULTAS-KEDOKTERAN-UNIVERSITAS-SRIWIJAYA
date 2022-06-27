@@ -7,7 +7,7 @@ import {
   usePagination,
 } from "react-table";
 
-import styles from "./InfoTable.module.css";
+import styles from "./InfoTabels.module.css";
 import { GlobalFilter } from "../globalfilter/GlobalFilter";
 import { ColumnFilter } from "../columnfilter/ColumnFilter";
 
@@ -39,7 +39,6 @@ const InfoTable = ({ objectType, stations, objectData, setValue }) => {
     pageCount,
     gotoPage,
     setPageSize,
-    rows,
     prepareRow,
     state,
     setGlobalFilter,

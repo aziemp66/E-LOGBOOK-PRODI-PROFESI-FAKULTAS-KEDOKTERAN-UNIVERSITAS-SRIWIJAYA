@@ -3,7 +3,7 @@ import { useForm, useFormState } from "react-hook-form";
 import styles from "./ElogbookAdmin.module.css";
 
 import axios from "axios";
-import InfoTable from "../../../components/tabels/InfoTable";
+import InfoTable from "../../../components/infotabels/infoTabels";
 
 const ElogbookAdmin = () => {
   const [stations, setStations] = useState();
