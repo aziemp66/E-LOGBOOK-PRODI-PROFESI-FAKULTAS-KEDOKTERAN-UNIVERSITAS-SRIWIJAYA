@@ -15,8 +15,8 @@ import {
 import { GlobalFilter } from "../globalfilter/GlobalFilter";
 import { ColumnFilter } from "../columnfilter/ColumnFilter";
 
-const AccountTables = ({ accountData }) => {
-  const columns = useMemo(() => COLUMNS, []);
+const AccountTables = ({ accountData, objectData, setValue }) => {
+  const columns = useMemo(() => COLUMNS(objectData, setValue), []);
   const data = useMemo(() => accountData, []);
 
   const defaultColumn = useMemo(() => {

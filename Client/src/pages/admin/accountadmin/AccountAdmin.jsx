@@ -2,9 +2,14 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import styles from "./AccountAdmin.module.css";
 import AccountTables from "../../../components/accounttable/AccountTables";
+import { useForm } from "react-hook-form";
 const AccountAdmin = () => {
   const [users, setUsers] = useState();
   const [isLoading, setIsLoading] = useState();
+
+  const { watch, register, handleSubmit, setValue, getValues } = useForm();
+
+  const requestType = watch("requestType");
 
   const baseUrl =
     (import.meta.env.VITE_API_URL &&
@@ -28,10 +33,38 @@ const AccountAdmin = () => {
       });
   }, []);
 
+  const request = (data) => {};
+
   return (
     <div className={styles.container}>
       <h2>All User</h2>
-      {!isLoading && users && <AccountTables accountData={users} />}
+
+      <form className={styles.form} id="form" onSubmit={handleSubmit(request)}>
+        {requestType === "patch" && (
+          <>
+            <h2>Update User {getValues("username")}</h2>
+
+            <input type="text" hidden {...register("id")} />
+
+            <div className={styles["form-input"]}>
+              <label htmlFor="role">Role</label>
+              <select id="role">
+                <option value="admin">Admin</option>
+                <option value="student">Mahasiswa</option>
+                <option value="lecturer">Dosen</option>
+                <option value="supervisor">Kodik</option>
+              </select>
+            </div>
+          </>
+        )}
+      </form>
+      {!isLoading && users && (
+        <AccountTables
+          objectData={users}
+          setValue={setValue}
+          accountData={users}
+        />
+      )}
     </div>
   );
 };

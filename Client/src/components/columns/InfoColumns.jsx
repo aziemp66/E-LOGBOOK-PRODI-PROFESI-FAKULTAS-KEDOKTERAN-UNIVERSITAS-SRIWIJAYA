@@ -1,6 +1,6 @@
 import { format } from "date-fns";
 
-import styles from "./InfoColumns.module.css";
+import styles from "./Columns.module.css";
 
 export default (objectType, objectData, stations, setValue) => {
   if (objectType === "station")
