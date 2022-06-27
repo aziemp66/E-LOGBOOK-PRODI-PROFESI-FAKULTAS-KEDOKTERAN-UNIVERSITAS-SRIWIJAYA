@@ -117,15 +117,19 @@ const ElogbookAdmin = () => {
 
   return (
     <div className={styles.container}>
-      <label htmlFor="objectType">Pilih Kategori</label>
-      <select id="objectType" {...register("objectType")}>
-        {!dirtyFields.objectType && <option value={""}>Pilih Kategori</option>}
-        <option value="station">Stase</option>
-        <option value="disease">Penyakit</option>
-        <option value="skill">Keterampilan</option>
-        <option value="guidance">Metode Pembelajaran</option>
-        <option value="hospital">Rumah Sakit</option>
-      </select>
+      <div className={styles["object-change-input"]}>
+        <label htmlFor="objectType">Pilih Kategori</label>
+        <select id="objectType" {...register("objectType")}>
+          {!dirtyFields.objectType && (
+            <option value={""}>Pilih Kategori</option>
+          )}
+          <option value="station">Stase</option>
+          <option value="disease">Penyakit</option>
+          <option value="skill">Keterampilan</option>
+          <option value="guidance">Metode Pembelajaran</option>
+          <option value="hospital">Rumah Sakit</option>
+        </select>
+      </div>
 
       {objectType && (
         <div className={styles["form-container"]}>
@@ -148,7 +152,7 @@ const ElogbookAdmin = () => {
 
             {(requestType === "post" || requestType === "patch") && (
               <>
-                <div className={styles["input-container"]}>
+                <div className={styles["form-input"]}>
                   <label htmlFor="name">Nama</label>
                   <input type="text" id="name" {...register("name")} />
                 </div>
@@ -158,7 +162,7 @@ const ElogbookAdmin = () => {
             {(objectType === "disease" || objectType === "skill") &&
               requestType !== "delete" && (
                 <>
-                  <div className={styles["input-container"]}>
+                  <div className={styles["form-input"]}>
                     <label htmlFor="stationId">Stase</label>
                     <select id="stationId" {...register("station")}>
                       {!dirtyFields.stationId && (

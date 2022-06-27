@@ -58,7 +58,7 @@ const InfoTable = ({ objectType, stations, objectData, setValue }) => {
   const { globalFilter, pageIndex } = state;
 
   return (
-    <>
+    <div className={styles.container}>
       <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
       <table {...getTableProps()} className={styles.table}>
         <thead>
@@ -103,7 +103,7 @@ const InfoTable = ({ objectType, stations, objectData, setValue }) => {
           })}
         </tbody>
       </table>
-      <div>
+      <div className={styles["pagination-container"]}>
         <span>
           Page{" "}
           <strong>
@@ -113,17 +113,19 @@ const InfoTable = ({ objectType, stations, objectData, setValue }) => {
         <button
           onClick={() => gotoPage(0)}
           disabled={!canPreviousPage}
+          className={styles["pagination-button"]}
         >{`<<`}</button>
         <button
           onClick={() => {
             previousPage();
           }}
           disabled={!canPreviousPage}
+          className={styles["pagination-button"]}
         >
           Previous
         </button>
-        <span>
-          | Go to page:
+        <div className={styles["goto-input"]}>
+          | Go to page :
           <input
             type="number"
             name="pageIndex"
@@ -138,18 +140,21 @@ const InfoTable = ({ objectType, stations, objectData, setValue }) => {
             }}
             style={{ width: "50px" }}
           />
-        </span>
-        <select
-          name="pageSize"
-          id="pageSize"
-          onChange={(e) => setPageSize(Number(e.target.value))}
-        >
-          {[10, 20, 30, 40, 50].map((pageSize) => (
-            <option key={pageSize} value={pageSize}>
-              {pageSize}
-            </option>
-          ))}
-        </select>
+        </div>
+        <div className={styles["pagination-input"]}>
+          <label htmlFor="shownTable">Jumlah ditampilkan</label>
+          <select
+            name="pageSize"
+            id="pageSize"
+            onChange={(e) => setPageSize(Number(e.target.value))}
+          >
+            {[10, 20, 30, 40, 50].map((pageSize) => (
+              <option key={pageSize} value={pageSize}>
+                {pageSize}
+              </option>
+            ))}
+          </select>
+        </div>
         <button
           onClick={() => {
             nextPage();
@@ -167,7 +172,7 @@ const InfoTable = ({ objectType, stations, objectData, setValue }) => {
           {`>>`}
         </button>
       </div>
-    </>
+    </div>
   );
 };
 

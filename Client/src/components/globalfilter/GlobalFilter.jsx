@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useAsyncDebounce } from "react-table";
-import "regenerator-runtime/runtime";
+
+import styles from "./GlobalFilter.module.css";
 
 export const GlobalFilter = (props) => {
   const { filter, setFilter } = props;
@@ -11,8 +12,8 @@ export const GlobalFilter = (props) => {
   }, 400);
 
   return (
-    <span>
-      Search :{" "}
+    <div className={styles.container}>
+      <span>Search : </span>
       <input
         value={value || ""}
         onChange={(e) => {
@@ -21,6 +22,6 @@ export const GlobalFilter = (props) => {
         }}
         placeholder="Type to filter..."
       />
-    </span>
+    </div>
   );
 };

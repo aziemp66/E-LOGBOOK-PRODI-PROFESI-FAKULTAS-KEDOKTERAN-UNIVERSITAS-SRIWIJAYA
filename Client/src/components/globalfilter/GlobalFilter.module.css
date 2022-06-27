@@ -1,0 +1,20 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  width: 20%;
+  margin: 0 auto;
+}
+.container span {
+  font-size: 1.2rem;
+}
+.container input {
+  font: inherit;
+  padding: 0.5rem 1rem;
+  border-radius: 50px;
+  width: 100%;
+  border: 2px solid rgb(143, 186, 95);
+}

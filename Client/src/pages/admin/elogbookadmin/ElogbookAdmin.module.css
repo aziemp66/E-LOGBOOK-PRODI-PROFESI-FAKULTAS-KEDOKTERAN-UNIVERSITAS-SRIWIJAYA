@@ -7,11 +7,28 @@
   padding-top: 5rem;
   gap: 3rem;
 }
+.object-change-input {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  width: 90%;
+  margin: 0 auto;
+}
+.object-change-input select {
+  font: inherit;
+  padding: 0.5rem 1rem;
+  border-radius: 50px;
+  width: 100%;
+  border: 2px solid rgb(143, 186, 95);
+}
 .form-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: 100%;
 }
 .form {
   margin: 0 auto;
@@ -21,10 +38,30 @@
   justify-content: center;
   align-items: center;
 }
-.input-container {
+.form-input {
   display: flex;
-  width: 100%;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  width: 100%;
+}
+.form-input label {
+  font-size: 1.2rem;
+}
+.form-input input {
+  font: inherit;
+  padding: 0.5rem 1rem;
+  border-radius: 50px;
+  width: 100%;
+  border: 2px solid rgb(143, 186, 95);
+}
+.form-input select {
+  font: inherit;
+  padding: 0.5rem 1rem;
+  border-radius: 50px;
+  width: 100%;
+  border: 2px solid rgb(143, 186, 95);
 }
 .form-button {
   margin: 0 auto;
