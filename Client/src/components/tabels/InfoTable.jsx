@@ -11,7 +11,7 @@ import styles from "./InfoTable.module.css";
 import { GlobalFilter } from "../globalfilter/GlobalFilter";
 import { ColumnFilter } from "../columnfilter/ColumnFilter";
 
-import COLUMNS from "../columns/Columns";
+import COLUMNS from "../columns/InfoColumns";
 
 const InfoTable = ({ objectType, stations, objectData, setValue }) => {
   const columns = useMemo(
@@ -141,20 +141,7 @@ const InfoTable = ({ objectType, stations, objectData, setValue }) => {
             style={{ width: "50px" }}
           />
         </div>
-        <div className={styles["pagination-input"]}>
-          <label htmlFor="shownTable">Jumlah ditampilkan</label>
-          <select
-            name="pageSize"
-            id="pageSize"
-            onChange={(e) => setPageSize(Number(e.target.value))}
-          >
-            {[10, 20, 30, 40, 50].map((pageSize) => (
-              <option key={pageSize} value={pageSize}>
-                {pageSize}
-              </option>
-            ))}
-          </select>
-        </div>
+
         <button
           onClick={() => {
             nextPage();
@@ -171,6 +158,20 @@ const InfoTable = ({ objectType, stations, objectData, setValue }) => {
         >
           {`>>`}
         </button>
+        <div className={styles["pagination-input"]}>
+          <label htmlFor="shownTable">Jumlah ditampilkan</label>
+          <select
+            name="pageSize"
+            id="pageSize"
+            onChange={(e) => setPageSize(Number(e.target.value))}
+          >
+            {[10, 20, 30, 40, 50].map((pageSize) => (
+              <option key={pageSize} value={pageSize}>
+                {pageSize}
+              </option>
+            ))}
+          </select>
+        </div>
       </div>
     </div>
   );

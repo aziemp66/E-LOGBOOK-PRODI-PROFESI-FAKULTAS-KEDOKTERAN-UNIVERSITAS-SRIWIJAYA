@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useAsyncDebounce } from "react-table";
+import "regenerator-runtime/runtime";
 
 import styles from "./GlobalFilter.module.css";
 

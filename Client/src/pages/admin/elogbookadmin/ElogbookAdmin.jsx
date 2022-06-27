@@ -119,7 +119,17 @@ const ElogbookAdmin = () => {
     <div className={styles.container}>
       <div className={styles["object-change-input"]}>
         <label htmlFor="objectType">Pilih Kategori</label>
-        <select id="objectType" {...register("objectType")}>
+        <select
+          id="objectType"
+          onChange={(e) => {
+            setIsLoading(true);
+            setValue("objectType", e.target.value);
+            setValue("requestType", "post");
+            setInterval(() => {
+              setIsLoading(false);
+            }, 500);
+          }}
+        >
           {!dirtyFields.objectType && (
             <option value={""}>Pilih Kategori</option>
           )}
