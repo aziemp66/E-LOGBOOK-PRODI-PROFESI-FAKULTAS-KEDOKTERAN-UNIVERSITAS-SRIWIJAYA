@@ -89,13 +89,10 @@ const updateUserRolesValidation = (data) => {
 
 const addStudentPresentionValidation = (data) => {
   const schema = Joi.object({
-    studentId: Joi.string().min(1).max(255).required(),
-    month: Joi.number().min(1).max(12).required(),
-    year: Joi.number().min(1).max(9999).required(),
-    present: Joi.number().min(1).max(31).required(),
-    absent: Joi.number().min(1).max(31).required(),
-    sick: Joi.number().min(1).max(31).required(),
-    excused: Joi.number().min(1).max(31).required(),
+    present: Joi.number().required(),
+    absent: Joi.number().required(),
+    sick: Joi.number().required(),
+    excused: Joi.number().required(),
   });
 
   return schema.validate(data);

@@ -535,65 +535,21 @@ const deleteHospital = async (req, res, next) => {
 };
 
 const addOrUpdateStudentPresention = async (req, res, next) => {
-  const { month, year, present, sick, excused, absent, studentId } = req.body;
-
-  if (sick + excused + absent + present > 31)
-    return next(new Error("Days are more than 31"));
+  const { stationId, present, sick, excused, absent, studentId } = req.body;
 
   const { error } = validation.addStudentPresentionValidation({
-    studentId,
-    month,
-    year,
     present,
     sick,
     excused,
     absent,
   });
   if (error) return next(error.details[0]);
-
-  let data, isCreated;
-  try {
-    [data, isCreated] = await db.Presention.findOrCreate({
-      where: {
-        studentId,
-        month,
-        year,
-      },
-      default: {
-        studentId,
-        month,
-        year,
-        present,
-        absent,
-        sick,
-        excused,
-      },
-    });
-  } catch (error) {
-    return next(error);
-  }
-  if (!isCreated && data) {
-    try {
-      await data.update({
-        present,
-        absent,
-        sick,
-        excused,
-      });
-    } catch (error) {
-      return next(error);
-    }
-  } else if (!data) {
-    return next(new Error("Can't Find or Create Competence"));
-  }
-
-  res.json({
-    message: `Presention successfully ${isCreated ? "Created" : "Updated"} `,
-  });
 };
 
 const updateUserRoles = async (req, res, next) => {
   const { role, id: userId } = req.body;
+
+  if (role === "admin") return next(new Error("You're not Authorized"));
 
   const { error } = validation.updateUserRolesValidation({ role });
   if (error) return next(error.details[0]);
@@ -611,12 +567,10 @@ const updateUserRoles = async (req, res, next) => {
   }
   if (!existingUser) return next(new Error("User does not exist"));
 
-  if (
-    role !== "admin" &&
-    role !== "student" &&
-    role !== "lecturer" &&
-    role !== "supervisor"
-  )
+  if (existingUser.role === "admin")
+    return next(new Error("You're not Authorized"));
+
+  if (role !== "student" && role !== "lecturer" && role !== "supervisor")
     return next(new Error("Invalid role"));
 
   try {
