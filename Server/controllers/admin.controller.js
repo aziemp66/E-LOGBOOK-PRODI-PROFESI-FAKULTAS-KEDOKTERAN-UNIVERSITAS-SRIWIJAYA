@@ -544,6 +544,71 @@ const addOrUpdateStudentPresention = async (req, res, next) => {
     absent,
   });
   if (error) return next(error.details[0]);
+
+  //check if student exist
+  let existingStudent;
+  try {
+    existingStudent = await db.User.findOne({
+      where: {
+        id: studentId,
+        roles: "student",
+      },
+    });
+  } catch (error) {
+    return next(error);
+  }
+  if (!existingStudent) return next(new Error("Student does not exist"));
+
+  //check if station exist
+  let existingStation;
+  try {
+    existingStation = await db.Station.findOne({
+      where: {
+        id: stationId,
+      },
+    });
+  } catch (error) {
+    return next(error);
+  }
+  if (!existingStation) return next(new Error("Station does not exist"));
+
+  let existingCompetence;
+  try {
+    existingCompetence = await db.StudentPresention.findOne({
+      where: {
+        stationId: stationId,
+        userId: studentId,
+      },
+    });
+  } catch (error) {
+    return next(error);
+  }
+  if (!existingCompetence)
+    return next(new Error("Student Competence does not exist"));
+
+  try {
+    const [data, isCreated] = await db.Presention.findOrCreate({
+      where: {
+        stationId,
+        studentId,
+      },
+      defaults: {
+        studentId,
+        stationId,
+        present,
+        sick,
+        excused,
+        absent,
+      },
+    });
+    if (!isCreated && data)
+      await data.update({ present, sick, excused, absent });
+    res.json({
+      message: "Student Competence updated successfully",
+    });
+  } catch (error) {
+    return next(error);
+  }
 };
 
 const updateUserRoles = async (req, res, next) => {
