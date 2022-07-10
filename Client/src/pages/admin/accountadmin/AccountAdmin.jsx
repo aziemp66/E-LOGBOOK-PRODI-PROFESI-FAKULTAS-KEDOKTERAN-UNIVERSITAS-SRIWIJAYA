@@ -3,6 +3,9 @@ import axios from "axios";
 import styles from "./AccountAdmin.module.css";
 import AccountTables from "../../../components/accounttable/AccountTables";
 import { useForm } from "react-hook-form";
+
+const jwtDecode = require("jwt-decode");
+
 const AccountAdmin = () => {
   const [users, setUsers] = useState();
   const [isLoading, setIsLoading] = useState();
@@ -25,7 +28,17 @@ const AccountAdmin = () => {
         },
       })
       .then((res) => {
-        setUsers(res.data);
+        if (
+          localStorage.getItem("token") &&
+          !jwtDecode(localStorage.getItem("token")).role.includes("master")
+        ) {
+          filteredUser = res.data.filter(
+            (user) => user.role !== "master" && user.role !== "admin"
+          );
+          setUsers(filteredUser);
+        } else {
+          setUsers(res.data);
+        }
         setIsLoading(false);
       })
       .catch((err) => {
