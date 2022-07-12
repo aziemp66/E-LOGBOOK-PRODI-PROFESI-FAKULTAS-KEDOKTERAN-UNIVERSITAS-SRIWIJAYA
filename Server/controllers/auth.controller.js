@@ -6,7 +6,8 @@ const validation = require("../utility/validation");
 const generateToken = require("../utility/generateToken");
 
 const userRegister = async (req, res, next) => {
-  const { username, email, password, confirmPassword } = req.body;
+  const { username, email, password, confirmPassword, firstName, lastName } =
+    req.body;
 
   //check if password and confirm password match
   if (password !== confirmPassword)
@@ -54,6 +55,8 @@ const userRegister = async (req, res, next) => {
   try {
     studentProfile = await db.StudentProfile.create({
       userId: user.id,
+      firstName,
+      lastName,
     });
   } catch (error) {
     return next(error);

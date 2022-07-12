@@ -19,7 +19,9 @@ const Register = () => {
       e.target.email.value,
       e.target.username.value,
       e.target.password.value,
-      e.target.confirmPassword.value
+      e.target.confirmPassword.value,
+      e.target.firstName.value,
+      e.target.lastName.value
     );
     if (response.error) return setIsError(response.error);
 
@@ -42,19 +44,37 @@ const Register = () => {
             <h3>Sign Up</h3>
           </div>
           <div>
-            <label htmlFor="email">Email</label>
+            <label htmlFor="email" className={styles.required}>
+              Email
+            </label>
             <input type="email" id="email" name="email" />
           </div>
           <div>
-            <label htmlFor="username">Username</label>
+            <label htmlFor="username" className={styles.required}>
+              Username
+            </label>
             <input type="text" id="username" name="username" />
           </div>
           <div>
-            <label htmlFor="password">Password</label>
+            <label htmlFor="firstName" className={styles.required}>
+              First Name
+            </label>
+            <input type="text" name="firstName" id="firstName" />
+          </div>
+          <div>
+            <label htmlFor="lastName">Last Name</label>
+            <input type="text" name="lastName" id="lastName" />
+          </div>
+          <div>
+            <label htmlFor="password" className={styles.required}>
+              Password
+            </label>
             <input type="password" id="password" name="password" />
           </div>
           <div>
-            <label htmlFor="confirmPassword">Confirm Password</label>
+            <label htmlFor="confirmPassword" className={styles.required}>
+              Confirm Password
+            </label>
             <input
               type="password"
               id="confirmPassword"
@@ -80,6 +100,9 @@ const Register = () => {
             <p>
               Already have an account? <Link to={"/login"}>Log in</Link>
             </p>
+          </div>
+          <div>
+            <strong className={styles.note}>* = required fields</strong>
           </div>
         </form>
       </Fade>
