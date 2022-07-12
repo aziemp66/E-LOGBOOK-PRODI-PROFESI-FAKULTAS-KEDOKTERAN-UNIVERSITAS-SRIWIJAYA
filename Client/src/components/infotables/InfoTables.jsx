@@ -14,6 +14,14 @@ import { ColumnFilter } from "../columnfilter/ColumnFilter";
 import COLUMNS from "../columns/InfoColumns";
 
 const InfoTable = ({ objectType, stations, objectData, setValue }) => {
+  if (!objectData || objectData.length === 0)
+    return (
+      <>
+        <p className={styles.fallback}>
+          There are no {objectType}s available, start adding one
+        </p>
+      </>
+    );
   const columns = useMemo(
     () => COLUMNS(objectType, objectData, stations, setValue),
     []

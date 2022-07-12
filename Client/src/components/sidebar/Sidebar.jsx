@@ -51,7 +51,7 @@ const Sidebar = () => {
               </div>
               <div className={styles["sidebar-body"]}>
                 <ul className={styles["nav-list"]}>
-                  {authCtx.userData.role === "student" && (
+                  {authCtx.userData.role.includes("student") && (
                     <>
                       <li>
                         <Link to={"/dashboard"}>
@@ -85,7 +85,7 @@ const Sidebar = () => {
                       </li>
                     </>
                   )}
-                  {authCtx.userData.role === "admin" && (
+                  {authCtx.userData.role.includes("admin") && (
                     <>
                       <li>
                         <Link to={"/admin"}>

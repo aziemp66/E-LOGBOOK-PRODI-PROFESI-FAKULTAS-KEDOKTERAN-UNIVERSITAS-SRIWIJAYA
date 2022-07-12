@@ -614,7 +614,8 @@ const addOrUpdateStudentPresention = async (req, res, next) => {
 const updateUserRoles = async (req, res, next) => {
   const { role, id: userId } = req.body;
 
-  if (role === "admin") return next(new Error("You're not Authorized"));
+  if (role === "admin" && !req.user.roles.includes("master"))
+    return next(new Error("You're not Authorized"));
 
   const { error } = validation.updateUserRolesValidation({ role });
   if (error) return next(error.details[0]);

@@ -108,6 +108,7 @@ const ElogbookAdmin = () => {
         setGuidances(res.data.guidances);
         setIsLoading(false);
         setValue("requestType", "post");
+        setValue("name", "");
       })
       .catch((err) => {
         console.log(err);
@@ -127,7 +128,7 @@ const ElogbookAdmin = () => {
             setValue("requestType", "post");
             setInterval(() => {
               setIsLoading(false);
-            }, 500);
+            }, 1000);
           }}
         >
           {!dirtyFields.objectType && (
@@ -231,7 +232,7 @@ const ElogbookAdmin = () => {
           </div>
         ) : (
           <>
-            <p>Loading ...</p>
+            <p className={styles.fallback}>Loading ...</p>
           </>
         )
       ) : null}

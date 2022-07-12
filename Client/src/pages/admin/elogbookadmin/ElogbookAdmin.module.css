@@ -7,6 +7,9 @@
   padding-top: 5rem;
   gap: 3rem;
 }
+.fallback {
+  text-align: center;
+}
 .object-change-input {
   display: flex;
   flex-direction: column;

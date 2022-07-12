@@ -39,6 +39,7 @@ export default (objectData, setValue) => {
                 objectData.find((data) => data.id === +value).roles
               );
             }}
+            className={styles.button}
           >
             <a href="#form" className={styles.link}>
               Edit

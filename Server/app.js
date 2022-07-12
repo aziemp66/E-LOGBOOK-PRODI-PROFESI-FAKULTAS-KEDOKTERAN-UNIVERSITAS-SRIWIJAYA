@@ -15,7 +15,6 @@ const studentRoutes = require("./router/student.routes");
 const adminRoutes = require("./router/admin.routes");
 const supervisorRoutes = require("./router/supervisor.routes");
 const lecturerRoutes = require("./router/lecturer.routes");
-const masterRoutes = require("./router/master.routes");
 
 const PORT = process.env.PORT || 5000;
 
@@ -45,12 +44,6 @@ app.use(
 );
 
 app.use("/api/admin", verifyRolesMiddleware.bind(null, "admin"), adminRoutes);
-
-app.use(
-  "/api/master",
-  verifyRolesMiddleware.bind(null, "master"),
-  masterRoutes
-);
 
 app.use(
   "/api/supervisor",

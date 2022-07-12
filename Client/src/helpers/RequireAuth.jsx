@@ -11,7 +11,7 @@ const RequireAuth = ({ role }) => {
   }
 
   const isAuthenticated =
-    user && user.role === role && user.exp * 1000 > Date.now();
+    user && user.role.includes(role) && user.exp * 1000 > Date.now();
 
   return isAuthenticated ? <Outlet /> : <Error401 />;
 };
