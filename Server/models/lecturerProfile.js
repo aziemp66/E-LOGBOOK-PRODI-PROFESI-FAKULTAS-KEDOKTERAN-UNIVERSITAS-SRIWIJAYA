@@ -6,9 +6,13 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       unique: true,
     },
-    displayName: {
+    firstName: {
       type: DataTypes.STRING,
       allowNull: false,
+    },
+    lastName: {
+      type: DataTypes.STRING,
+      allowNull: true,
     },
   });
   return lecturerProfile;

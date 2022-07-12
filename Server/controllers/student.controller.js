@@ -450,7 +450,9 @@ const addCompetence = async (req, res, next) => {
     submitedForm.lecturerName = null;
     submitedForm.lecturerId = null;
   } else {
-    submitedForm.lecturerName = lecturerExist.displayName;
+    submitedForm.lecturerName = `${lecturerExist.firstName} ${
+      lecturerExist.lastName || ""
+    }`;
     submitedForm.lecturerId = lecturerExist.userId;
   }
 

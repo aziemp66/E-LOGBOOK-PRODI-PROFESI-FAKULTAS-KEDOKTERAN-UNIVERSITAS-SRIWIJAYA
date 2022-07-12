@@ -658,6 +658,21 @@ const updateUserRoles = async (req, res, next) => {
     const capitalizeRole = role.charAt(0).toUpperCase() + role.slice(1);
     const profiles = `${capitalizeRole}Profile`;
 
+    const existingUserRole = existingUser.roles;
+    if (existingUserRole === "student") {
+      existingUser.profile = await db.StudentProfile.findOne({
+        where: {
+          userId: existingUser.id,
+        },
+      });
+    } else if (existingUserRole === "lecturer") {
+      existingUser.profile = await db.LecturerProfile.findOne({
+        where: {
+          userId: existingUser.id,
+        },
+      });
+    }
+
     try {
       await db[profiles].findOrCreate({
         where: {
@@ -665,7 +680,11 @@ const updateUserRoles = async (req, res, next) => {
         },
         defaults: {
           userId: existingUser.id,
-          displayName: existingUser.username,
+          firstName:
+            (existingUser.profile && existingUser.profile.firstName) ||
+            existingUser.username,
+          lastName:
+            (existingUser.profile && existingUser.profile.lastName) || null,
         },
       });
     } catch (error) {

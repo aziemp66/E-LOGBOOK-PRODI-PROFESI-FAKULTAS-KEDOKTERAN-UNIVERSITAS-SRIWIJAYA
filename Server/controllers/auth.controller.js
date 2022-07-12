@@ -17,6 +17,8 @@ const userRegister = async (req, res, next) => {
     username,
     email,
     password,
+    firstName,
+    lastName,
   });
   if (error) return next(error.details[0]);
 

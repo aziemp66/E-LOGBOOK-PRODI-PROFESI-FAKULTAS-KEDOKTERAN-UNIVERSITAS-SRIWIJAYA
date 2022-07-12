@@ -355,7 +355,7 @@ const Competences = () => {
                 {lecturers &&
                   lecturers.map((lecturer) => (
                     <option key={lecturer.userId} value={lecturer.userId}>
-                      {lecturer.displayName}
+                      {lecturer.firstName}
                     </option>
                   ))}
               </select>

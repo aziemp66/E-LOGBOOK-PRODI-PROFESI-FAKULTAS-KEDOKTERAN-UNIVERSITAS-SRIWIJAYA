@@ -3,9 +3,9 @@ const db = require("../models");
 const updateUserRole = async (req, res, next) => {
   const { userId, role } = req.body;
 
-  let user;
+  let existingUser;
   try {
-    user = await db.User.find({
+    existingUser = await db.User.find({
       where: {
         id: userId,
       },
@@ -13,7 +13,7 @@ const updateUserRole = async (req, res, next) => {
   } catch (error) {
     return next(error);
   }
-  if (!user) {
+  if (!existingUser) {
     return next(new Error("User not found"));
   }
 
@@ -34,14 +34,33 @@ const updateUserRole = async (req, res, next) => {
     const capitalizeRole = role.charAt(0).toUpperCase() + role.slice(1);
     const profiles = `${capitalizeRole}Profile`;
 
+    const existingUserRole = existingUser.roles;
+    if (existingUserRole === "student") {
+      existingUser.profile = await db.StudentProfile.findOne({
+        where: {
+          userId: existingUser.id,
+        },
+      });
+    } else if (existingUserRole === "lecturer") {
+      existingUser.profile = await db.LecturerProfile.findOne({
+        where: {
+          userId: existingUser.id,
+        },
+      });
+    }
+
     try {
       await db[profiles].findOrCreate({
         where: {
-          userId: user.id,
+          userId: existingUser.id,
         },
         defaults: {
-          userId: user.id,
-          displayName: user.username,
+          userId: existingUser.id,
+          firstName:
+            (existingUser.profile && existingUser.profile.firstName) ||
+            existingUser.username,
+          lastName:
+            (existingUser.profile && existingUser.profile.lastName) || null,
         },
       });
     } catch (error) {

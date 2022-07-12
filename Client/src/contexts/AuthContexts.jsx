@@ -5,7 +5,14 @@ import axios from "axios";
 const AuthContext = React.createContext({
   userData: {},
   userDataHandler: () => {},
-  register: (email, username, password, confirmPassword) => {},
+  register: (
+    email,
+    username,
+    password,
+    confirmPassword,
+    firstName,
+    lastName
+  ) => {},
   login: (username, password) => {},
   logout: () => {},
 });
@@ -15,20 +22,29 @@ const BASE_URL = "http://localhost:5000/api/auth";
 export const AuthProvider = (props) => {
   const [userData, setUserData] = useState(null);
 
-  const register = async (email, username, password, confirmPassword) => {
+  const register = async (
+    email,
+    username,
+    password,
+    confirmPassword,
+    firstName,
+    lastName
+  ) => {
     try {
       const response = await axios.post(`${BASE_URL}/register`, {
         email,
         username,
         password,
         confirmPassword,
+        firstName,
+        lastName,
       });
       if (response.data.error) {
         console.log(response.data.error);
         return { error: response.data.error };
       }
     } catch (error) {
-      return { error: response.data.error };
+      return error;
     }
 
     return {
@@ -48,9 +64,7 @@ export const AuthProvider = (props) => {
         return { error: response.data.error };
       }
     } catch (error) {
-      return {
-        error: response.data.error,
-      };
+      return error;
     }
 
     localStorage.setItem("token", response.data.accessToken);

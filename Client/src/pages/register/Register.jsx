@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import AuthContext from "../../contexts/AuthContexts";
 
 import styles from "./Register.module.css";
@@ -8,6 +9,7 @@ import { Fade } from "react-reveal";
 import { Link } from "react-router-dom";
 
 const Register = () => {
+  const navigate = useNavigate();
   const authCtx = useContext(AuthContext);
   const [isError, setIsError] = useState(null);
   const [isMessage, setIsMessage] = useState(null);
@@ -23,9 +25,11 @@ const Register = () => {
       e.target.firstName.value,
       e.target.lastName.value
     );
+    console.log(response);
     if (response.error) return setIsError(response.error);
 
     setIsMessage(response.message);
+    setIsError(null);
     setTimeout(() => {
       navigate("/login");
     }, 1000);
