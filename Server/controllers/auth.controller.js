@@ -3,6 +3,7 @@ const uuid = require("uuid").v4;
 const bcrypt = require("bcrypt");
 
 const validation = require("../utility/validation");
+const emailSender = require("../utility/node-mailer");
 const generateToken = require("../utility/generateToken");
 
 const userRegister = async (req, res, next) => {
@@ -101,7 +102,81 @@ const userLogin = async (req, res, next) => {
   });
 };
 
+const forgotPassword = async (req, res, next) => {
+  const { email } = req.body;
+
+  let user;
+  try {
+    user = await db.User.findOne({ email });
+  } catch (err) {
+    return next(err);
+  }
+  if (!user) return next(new Error("User not found"));
+
+  const resetPasswordToken = resetPassword.generateLink(
+    { email: user.email, password: user.password },
+    `${process.env.JWT_SECRET}${user.password}`
+  );
+  const resetPasswordLink = `${process.env.FRONTEND_URL}/reset-password?id=${user._id}&token=${resetPasswordToken}`;
+
+  try {
+    emailSender({
+      to: user.email,
+      subject: "Reset Password",
+      html: `<p>Click <a href="${resetPasswordLink}">here</a> to reset your password</p>`,
+      text: `Click here to reset your password: ${resetPasswordLink}`,
+    });
+  } catch (error) {
+    return next(error);
+  }
+
+  res.json({ message: "Reset Password Link has been sent to your email" });
+};
+
+const resetUserPassword = async (req, res, next) => {
+  const { password, confirmPassword } = req.body;
+  const { id, token } = req.query;
+
+  const { error } = validation.passwordChangeValidation({
+    password,
+    confirmPassword,
+  });
+  if (error) return next(error.details[0]);
+
+  let user;
+  try {
+    user = await db.User.findOne({ id: id });
+  } catch (err) {
+    return next(err);
+  }
+  if (!user) return next(new Error("User not found"));
+
+  let isVerified;
+  try {
+    isVerified = resetPassword.verifyLink(
+      token,
+      `${process.env.JWT_SECRET}${user.password}`
+    );
+  } catch (err) {
+    return next(err);
+  }
+  if (!isVerified) return next(new Error("Link is invalid"));
+
+  const salt = await bcrypt.genSalt(10);
+  const hashedPassword = await bcrypt.hash(password, salt);
+  user.password = hashedPassword;
+
+  try {
+    await user.save();
+    res.json({ message: "Password changed successfully" });
+  } catch (err) {
+    return next(err);
+  }
+};
+
 module.exports = {
   userRegister,
   userLogin,
+  forgotPassword,
+  resetUserPassword,
 };
