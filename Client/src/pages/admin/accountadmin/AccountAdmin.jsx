@@ -51,7 +51,7 @@ const AccountAdmin = () => {
 
   return (
     <div className={styles.container}>
-      <h2>All User</h2>
+      <h2 className={styles.title}>User Administration</h2>
 
       <form className={styles.form} id="form" onSubmit={handleSubmit(request)}>
         {requestType === "patch" && (
