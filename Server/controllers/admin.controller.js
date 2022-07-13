@@ -534,6 +534,18 @@ const deleteHospital = async (req, res, next) => {
   }
 };
 
+const getAllStudentPresention = async (req, res, next) => {
+  let studentPresention;
+  try {
+    studentPresention = await db.Presention.findAll({});
+  } catch (error) {
+    return next(error);
+  }
+  if (!studentPresention) return next(new Error("No student presention"));
+
+  res.json(studentPresention);
+};
+
 const addOrUpdateStudentPresention = async (req, res, next) => {
   const { stationId, present, sick, excused, absent, studentId } = req.body;
 
@@ -572,9 +584,9 @@ const addOrUpdateStudentPresention = async (req, res, next) => {
   }
   if (!existingStation) return next(new Error("Station does not exist"));
 
-  let existingCompetence;
+  let existingPresention;
   try {
-    existingCompetence = await db.StudentPresention.findOne({
+    existingPresention = await db.StudentPresention.findOne({
       where: {
         stationId: stationId,
         userId: studentId,
@@ -583,8 +595,8 @@ const addOrUpdateStudentPresention = async (req, res, next) => {
   } catch (error) {
     return next(error);
   }
-  if (!existingCompetence)
-    return next(new Error("Student Competence does not exist"));
+  if (!existingPresention)
+    return next(new Error("Student Presention does not exist"));
 
   try {
     const [data, isCreated] = await db.Presention.findOrCreate({
@@ -604,7 +616,66 @@ const addOrUpdateStudentPresention = async (req, res, next) => {
     if (!isCreated && data)
       await data.update({ present, sick, excused, absent });
     res.json({
-      message: "Student Competence updated successfully",
+      message: "Student Presention updated successfully",
+    });
+  } catch (error) {
+    return next(error);
+  }
+};
+
+const deleteStudentPresention = async (req, res, next) => {
+  const { stationId, studentId } = req.body;
+
+  //check if student exist
+  let existingStudent;
+  try {
+    existingStudent = await db.User.findOne({
+      where: {
+        id: studentId,
+        roles: "student",
+      },
+    });
+  } catch (error) {
+    return next(error);
+  }
+  if (!existingStudent) return next(new Error("Student does not exist"));
+
+  //check if station exist
+  let existingStation;
+  try {
+    existingStation = await db.Station.findOne({
+      where: {
+        id: stationId,
+      },
+    });
+  } catch (error) {
+    return next(error);
+  }
+  if (!existingStation) return next(new Error("Station does not exist"));
+
+  let existingPresention;
+  try {
+    existingPresention = await db.Presention.findOne({
+      where: {
+        stationId: stationId,
+        userId: studentId,
+      },
+    });
+  } catch (error) {
+    return next(error);
+  }
+  if (!existingPresention)
+    return next(new Error("Student Presention does not exist"));
+
+  try {
+    await db.StudentPresention.destroy({
+      where: {
+        stationId: stationId,
+        userId: studentId,
+      },
+    });
+    res.json({
+      message: "Student Presention deleted successfully",
     });
   } catch (error) {
     return next(error);
@@ -614,7 +685,7 @@ const addOrUpdateStudentPresention = async (req, res, next) => {
 const updateUserRoles = async (req, res, next) => {
   const { role, id: userId } = req.body;
 
-  if (role === "admin" && !req.user.roles.includes("master"))
+  if (role === "admin" && !req.user.role.includes("master"))
     return next(new Error("You're not Authorized"));
 
   const { error } = validation.updateUserRolesValidation({ role });
@@ -638,7 +709,12 @@ const updateUserRoles = async (req, res, next) => {
   if (existingUser.role === "admin")
     return next(new Error("You're not Authorized"));
 
-  if (role !== "student" && role !== "lecturer" && role !== "supervisor")
+  if (
+    role !== "student" &&
+    role !== "lecturer" &&
+    role !== "supervisor" &&
+    role !== "admin"
+  )
     return next(new Error("Invalid role"));
 
   try {
@@ -709,6 +785,7 @@ module.exports = {
   addGuidance,
   addHospital,
   addOrUpdateStudentPresention,
+  deleteStudentPresention,
   updateUserRoles,
   updateStation,
   updateDisease,

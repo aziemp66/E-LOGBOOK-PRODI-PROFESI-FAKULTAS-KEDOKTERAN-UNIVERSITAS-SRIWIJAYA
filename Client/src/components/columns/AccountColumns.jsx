@@ -3,6 +3,7 @@ import { format } from "date-fns";
 import styles from "./Columns.module.css";
 
 export default (objectData, setValue) => {
+  console.log(objectData);
   return [
     {
       Header: "No.",
@@ -32,11 +33,11 @@ export default (objectData, setValue) => {
               setValue("requestType", "patch");
               setValue(
                 "username",
-                objectData.find((data) => data.id === +value).username
+                objectData.find((data) => data.id === value).username
               );
               setValue(
                 "role",
-                objectData.find((data) => data.id === +value).roles
+                objectData.find((data) => data.id === value).roles
               );
             }}
             className={styles.button}

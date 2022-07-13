@@ -47,7 +47,31 @@ const AccountAdmin = () => {
       });
   }, []);
 
-  const request = (data) => {};
+  const request = (data) => {
+    setIsLoading(true);
+    console.log(getValues("username"));
+    axios[requestType](`${baseUrl}/user`, data, {
+      headers: {
+        "auth-token": localStorage.getItem("token"),
+      },
+    })
+      .then((res) => {
+        console.log(res);
+        return axios.get(`${baseUrl}/user`, {
+          headers: {
+            "auth-token": localStorage.getItem("token"),
+          },
+        });
+      })
+      .then((res) => {
+        setUsers(res.data);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        setIsLoading(false);
+      });
+  };
 
   return (
     <div className={styles.container}>
@@ -58,26 +82,31 @@ const AccountAdmin = () => {
           <>
             <h2>Update User {getValues("username")}</h2>
 
+            <input type="text" hidden {...register("username")} />
             <input type="text" hidden {...register("id")} />
 
             <div className={styles["form-input"]}>
               <label htmlFor="role">Role</label>
-              <select id="role">
+              <select id="role" {...register("role")}>
                 <option value="admin">Admin</option>
                 <option value="student">Mahasiswa</option>
                 <option value="lecturer">Dosen</option>
-                <option value="supervisor">Kodik</option>
+                <option value="supervisor">Supervisor</option>
               </select>
             </div>
+
+            <button type="submit" className={styles["button-green"]}>
+              Update
+            </button>
           </>
         )}
       </form>
-      {!isLoading && users && (
-        <AccountTables
-          objectData={users}
-          setValue={setValue}
-          accountData={users}
-        />
+      {users && !isLoading ? (
+        <AccountTables setValue={setValue} accountData={users} />
+      ) : (
+        <>
+          <p className={styles.fallback}>Loading...</p>
+        </>
       )}
     </div>
   );

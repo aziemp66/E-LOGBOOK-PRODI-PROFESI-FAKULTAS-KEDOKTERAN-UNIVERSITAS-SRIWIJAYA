@@ -39,4 +39,6 @@ router.patch("/user", adminController.updateUserRoles);
 
 router.put("/presention", adminController.addOrUpdateStudentPresention);
 
+router.delete("/presention", adminController.deleteStudentPresention);
+
 module.exports = router;
