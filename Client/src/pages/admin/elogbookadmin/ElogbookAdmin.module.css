@@ -74,11 +74,21 @@
   justify-content: center;
   align-items: center;
 }
+.green {
+  color: #03884e;
+}
+.red {
+  color: #e80000;
+}
+.yellow {
+  color: #f9b200;
+}
 .button-container {
   display: flex;
   width: 500px;
   justify-content: center;
   align-items: center;
+  gap: 1rem;
 }
 .button-green {
   color: white;

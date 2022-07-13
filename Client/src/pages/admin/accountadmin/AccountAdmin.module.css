@@ -79,6 +79,7 @@
   width: 500px;
   justify-content: center;
   align-items: center;
+  gap: 1rem;
 }
 .button-green {
   color: white;

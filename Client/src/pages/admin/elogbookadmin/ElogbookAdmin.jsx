@@ -19,7 +19,7 @@ const ElogbookAdmin = () => {
         requestType: "post",
       },
     });
-  const { dirtyFields } = useFormState({ control });
+  const [dirtyFields, setDirtyFields] = useState({});
 
   const objectType = watch("objectType");
   const requestType = watch("requestType");
@@ -123,6 +123,11 @@ const ElogbookAdmin = () => {
         <select
           id="objectType"
           onChange={(e) => {
+            setDirtyFields((prev) => {
+              prev.objectType = true;
+              return prev;
+            });
+            if (e.target.value === "" || !e.target.value) return;
             setIsLoading(true);
             setValue("objectType", e.target.value);
             setValue("requestType", "post");
@@ -144,7 +149,13 @@ const ElogbookAdmin = () => {
 
       {objectType && (
         <div className={styles["form-container"]}>
-          <h2>
+          <h2
+            className={
+              (requestType === "post" && styles.green) ||
+              (requestType === "patch" && styles.yellow) ||
+              (requestType === "delete" && styles.red)
+            }
+          >
             {(requestType === "post" && "Tambah") ||
               (requestType === "patch" && "Edit") ||
               (requestType === "delete" && "Hapus")}{" "}
@@ -175,7 +186,16 @@ const ElogbookAdmin = () => {
                 <>
                   <div className={styles["form-input"]}>
                     <label htmlFor="stationId">Stase</label>
-                    <select id="stationId" {...register("station")}>
+                    <select
+                      id="stationId"
+                      {...register("station")}
+                      onChange={() => {
+                        setDirtyFields((prev) => {
+                          prev.stationId = true;
+                          return prev;
+                        });
+                      }}
+                    >
                       {!dirtyFields.stationId && (
                         <option value={""}>Pilih Stase</option>
                       )}
