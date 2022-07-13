@@ -4,7 +4,7 @@ import styles from "./AccountAdmin.module.css";
 import AccountTables from "../../../components/accounttable/AccountTables";
 import { useForm } from "react-hook-form";
 
-const jwtDecode = require("jwt-decode");
+import jwtDecode from "jwt-decode";
 
 const AccountAdmin = () => {
   const [users, setUsers] = useState();
@@ -33,7 +33,8 @@ const AccountAdmin = () => {
           !jwtDecode(localStorage.getItem("token")).role.includes("master")
         ) {
           filteredUser = res.data.filter(
-            (user) => user.role !== "master" && user.role !== "admin"
+            (user) =>
+              !user.role.includes("master") && user.role.includes("admin")
           );
           setUsers(filteredUser);
         } else {

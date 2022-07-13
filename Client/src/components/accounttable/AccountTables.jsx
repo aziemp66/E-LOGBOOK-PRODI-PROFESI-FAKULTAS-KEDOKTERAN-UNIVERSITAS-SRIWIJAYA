@@ -8,22 +8,14 @@ import {
   useTable,
   useSortBy,
   useGlobalFilter,
-  useFilters,
   usePagination,
 } from "react-table";
 
 import { GlobalFilter } from "../globalfilter/GlobalFilter";
-import { ColumnFilter } from "../columnfilter/ColumnFilter";
 
 const AccountTables = ({ accountData, objectData, setValue }) => {
   const columns = useMemo(() => COLUMNS(objectData, setValue), []);
   const data = useMemo(() => accountData, []);
-
-  const defaultColumn = useMemo(() => {
-    return {
-      Filter: ColumnFilter,
-    };
-  });
 
   const {
     getTableProps,
@@ -45,9 +37,7 @@ const AccountTables = ({ accountData, objectData, setValue }) => {
     {
       columns,
       data,
-      defaultColumn,
     },
-    useFilters,
     useGlobalFilter,
     useSortBy,
     usePagination
@@ -75,9 +65,6 @@ const AccountTables = ({ accountData, objectData, setValue }) => {
                             ? " 🔽"
                             : " 🔼"
                           : ""}
-                      </div>
-                      <div>
-                        {column.canFilter ? column.render("Filter") : null}
                       </div>
                     </th>
                   );

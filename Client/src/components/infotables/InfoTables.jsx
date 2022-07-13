@@ -3,13 +3,11 @@ import {
   useTable,
   useSortBy,
   useGlobalFilter,
-  useFilters,
   usePagination,
 } from "react-table";
 
 import styles from "./InfoTables.module.css";
 import { GlobalFilter } from "../globalfilter/GlobalFilter";
-import { ColumnFilter } from "../columnfilter/ColumnFilter";
 
 import COLUMNS from "../columns/InfoColumns";
 
@@ -27,12 +25,6 @@ const InfoTable = ({ objectType, stations, objectData, setValue }) => {
     []
   );
   const data = useMemo(() => objectData, []);
-
-  const defaultColumn = useMemo(() => {
-    return {
-      Filter: ColumnFilter,
-    };
-  });
 
   const {
     getTableProps,
@@ -54,9 +46,7 @@ const InfoTable = ({ objectType, stations, objectData, setValue }) => {
     {
       columns,
       data,
-      defaultColumn,
     },
-    useFilters,
     useGlobalFilter,
     useSortBy,
     usePagination
@@ -84,9 +74,6 @@ const InfoTable = ({ objectType, stations, objectData, setValue }) => {
                             ? " 🔽"
                             : " 🔼"
                           : ""}
-                      </div>
-                      <div>
-                        {column.canFilter ? column.render("Filter") : null}
                       </div>
                     </th>
                   );

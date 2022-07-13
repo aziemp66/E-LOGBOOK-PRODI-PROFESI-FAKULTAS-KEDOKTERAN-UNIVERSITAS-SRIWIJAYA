@@ -33,6 +33,9 @@ const Login = (props) => {
             case "admin":
               navigate("/admin");
               break;
+            case "master admin":
+              navigate("/admin");
+              break;
             case "lecturer":
               navigate("/lecturer");
               break;

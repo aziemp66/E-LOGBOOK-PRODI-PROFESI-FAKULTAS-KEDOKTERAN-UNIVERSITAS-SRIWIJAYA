@@ -632,6 +632,8 @@ const updateUserRoles = async (req, res, next) => {
     return next(error);
   }
   if (!existingUser) return next(new Error("User does not exist"));
+  if (existingUser.id === req.user.id)
+    return next(new Error("You can't change your own role"));
 
   if (existingUser.role === "admin")
     return next(new Error("You're not Authorized"));
