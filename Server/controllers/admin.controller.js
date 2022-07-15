@@ -537,11 +537,43 @@ const deleteHospital = async (req, res, next) => {
 const getAllStudentPresention = async (req, res, next) => {
   let studentPresention;
   try {
-    studentPresention = await db.Presention.findAll({});
+    studentPresention = await db.Presention.findAll();
   } catch (error) {
     return next(error);
   }
   if (!studentPresention) return next(new Error("No student presention"));
+
+  let stations;
+  try {
+    stations = await db.Station.findAll();
+  } catch (error) {
+    return next(error);
+  }
+  if (!stations) return next(new Error("No stations"));
+
+  let studentProfiles;
+  try {
+    studentProfiles = await db.StudentProfile.findAll();
+  } catch (error) {
+    return next(error);
+  }
+  if (!studentProfiles) return next(new Error("No student profiles"));
+
+  studentPresention.forEach((presention) => {
+    stations.forEach((station) => {
+      if (presention.stationId === station.id) {
+        presention.station = station.name;
+      }
+    });
+  });
+
+  studentPresention.forEach((presention) => {
+    studentProfiles.forEach((studentProfile) => {
+      if (presention.studentId === studentProfile.userId) {
+        presention.studentProfile = studentProfile.name;
+      }
+    });
+  });
 
   res.json(studentPresention);
 };
