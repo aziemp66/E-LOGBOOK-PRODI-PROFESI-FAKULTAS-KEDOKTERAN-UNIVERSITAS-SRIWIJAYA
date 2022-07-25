@@ -551,17 +551,38 @@ const getPresentions = async (req, res, next) => {
   }
   if (!stations) return next(new Error("No stations"));
 
-  const allStationIdTurnedToName = presentions.map((presention) => {
-    const station = stations.find(
-      (station) => station.id === presention.station
-    );
-    return {
-      ...presention,
-      station: station.name,
-    };
+  res.json({
+    presentions,
+    stations,
   });
+};
 
-  res.json(allStationIdTurnedToName);
+const updatePresention = async (req, res, next) => {
+  const { id, present, sick, excused, absent } = req.body;
+
+  const { error } = validation.patchPresentionValidation({
+    present,
+    sick,
+    excused,
+    absent,
+  });
+  if (error) return next(error.details[0]);
+
+  try {
+    await db.Presention.update(
+      { present, sick, excused, absent },
+      {
+        where: {
+          id,
+        },
+      }
+    );
+    res.json({
+      message: "Presention updated successfully",
+    });
+  } catch (error) {
+    return next(error);
+  }
 };
 
 const updateUserRoles = async (req, res, next) => {
@@ -677,4 +698,6 @@ module.exports = {
   deleteSkill,
   deleteGuidance,
   deleteHospital,
+  getPresentions,
+  updatePresention,
 };

@@ -159,6 +159,17 @@ const updateHospitalValidation = (data) => {
   return schema.validate(data);
 };
 
+const patchPresentionValidation = (data) => {
+  const schema = Joi.object({
+    present: Joi.number().min(0).required(),
+    absent: Joi.number().min(0).required(),
+    sick: Joi.number().min(0).required(),
+    excused: Joi.number().min(0).required(),
+  });
+
+  return schema.validate(data);
+};
+
 module.exports = {
   registerValidation,
   loginValidation,
@@ -176,4 +187,5 @@ module.exports = {
   updateSkillValidation,
   updateGuidanceValidation,
   updateHospitalValidation,
+  patchPresentionValidation,
 };
