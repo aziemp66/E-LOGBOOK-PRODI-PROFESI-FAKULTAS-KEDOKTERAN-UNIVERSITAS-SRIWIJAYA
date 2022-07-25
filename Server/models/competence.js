@@ -77,10 +77,6 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       defaultValue: false,
     },
-    date: {
-      type: DataTypes.DATE,
-      allowNull: false,
-    },
   });
   return Competence;
 };

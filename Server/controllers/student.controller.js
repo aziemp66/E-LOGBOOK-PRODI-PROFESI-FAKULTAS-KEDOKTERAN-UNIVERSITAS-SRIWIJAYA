@@ -64,6 +64,8 @@ const updateProfile = async (req, res, next) => {
   //convert date to YYYY-MM-DD
   const dateOfBirth = `${years}-${months}-${days}`;
 
+  console.log(dateOfBirth);
+
   //check if Student Profile exists
   let studentProfile;
   try {
