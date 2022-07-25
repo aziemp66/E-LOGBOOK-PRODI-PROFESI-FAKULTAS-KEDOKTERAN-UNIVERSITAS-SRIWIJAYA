@@ -7,8 +7,9 @@ import jwtDecode from "jwt-decode";
 import styles from "./StudentAdmin.module.css";
 
 const studentAdmin = () => {
-  const [users, setUsers] = useState();
   const [isLoading, setIsLoading] = useState();
+  const [presentions, setPresentions] = useState([]);
+  const [stations, setStations] = useState([]);
 
   const { watch, register, handleSubmit, setValue, getValues } = useForm();
 
@@ -21,25 +22,16 @@ const studentAdmin = () => {
 
   useEffect(() => {
     setIsLoading(true);
+
     axios
-      .get(`${baseUrl}/user`, {
+      .get(`${baseUrl}/presentions`, {
         headers: {
           "auth-token": localStorage.getItem("token"),
         },
       })
       .then((res) => {
-        if (
-          localStorage.getItem("token") &&
-          !jwtDecode(localStorage.getItem("token")).role.includes("master")
-        ) {
-          filteredUser = res.data.filter(
-            (user) =>
-              !user.role.includes("master") && user.role.includes("admin")
-          );
-          setUsers(filteredUser);
-        } else {
-          setUsers(res.data);
-        }
+        setPresentions(res.data.presentions);
+        setStations(res.data.stations);
         setIsLoading(false);
       })
       .catch((err) => {
@@ -47,7 +39,31 @@ const studentAdmin = () => {
       });
   }, []);
 
-  const request = (data) => {};
+  const request = (data) => {
+    setIsLoading(true);
+
+    axios[requestType](`${baseUrl}/presentions`, data, {
+      headers: {
+        "auth-token": localStorage.getItem("token"),
+      },
+    })
+      .then((res) => {
+        console.log(res);
+        return axios.get(`${baseUrl}/presentions`, {
+          headers: {
+            "auth-token": localStorage.getItem("token"),
+          },
+        });
+      })
+      .then((res) => {
+        setPresentions(res.data.presentions);
+        setStations(res.data.stations);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <div className={styles.container}>
@@ -58,26 +74,19 @@ const studentAdmin = () => {
           <>
             <h2>Update User {getValues("username")}</h2>
 
-            <input type="text" hidden {...register("id")} />
-
             <div className={styles["form-input"]}>
               <label htmlFor="role">Role</label>
-              <select id="role">
-                <option value="admin">Admin</option>
-                <option value="student">Mahasiswa</option>
-                <option value="lecturer">Dosen</option>
-                <option value="supervisor">Kodik</option>
-              </select>
+              <input type="number" />
             </div>
           </>
         )}
       </form>
-      {!isLoading && users && (
-        <AccountTables
-          objectData={users}
-          setValue={setValue}
-          accountData={users}
-        />
+      {isLoading ? (
+        <>
+          <p>Loading...</p>
+        </>
+      ) : (
+        <></>
       )}
     </div>
   );

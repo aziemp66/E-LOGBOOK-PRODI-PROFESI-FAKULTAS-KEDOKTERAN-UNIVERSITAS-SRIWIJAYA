@@ -39,6 +39,6 @@ router.patch("/user", adminController.updateUserRoles);
 
 router.get("/presentions", adminController.getPresentions);
 
-router.patch("/presentions", adminController.updatePresentions);
+router.patch("/presentions", adminController.updatePresention);
 
 module.exports = router;

@@ -82,9 +82,6 @@ const AccountAdmin = () => {
           <>
             <h2>Update User {getValues("username")}</h2>
 
-            <input type="text" hidden {...register("username")} />
-            <input type="text" hidden {...register("id")} />
-
             <div className={styles["form-input"]}>
               <label htmlFor="role">Role</label>
               <select id="role" {...register("role")}>
