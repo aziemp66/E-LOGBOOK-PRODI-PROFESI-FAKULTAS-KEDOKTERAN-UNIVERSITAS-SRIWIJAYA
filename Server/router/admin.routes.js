@@ -7,7 +7,7 @@ router.post("/station", adminController.addStation);
 
 router.patch("/station", adminController.updateStation);
 
-router.delete("/station", adminController.deleteStation);
+router.delete("/station/:id", adminController.deleteStation);
 
 router.post("/disease", adminController.addDisease);
 
@@ -36,6 +36,8 @@ router.delete("/hospital/:id", adminController.deleteHospital);
 router.get("/user", adminController.getAllUser);
 
 router.patch("/user", adminController.updateUserRoles);
+
+router.get("/presention", adminController.getAllStudentPresention);
 
 router.put("/presention", adminController.addOrUpdateStudentPresention);
 

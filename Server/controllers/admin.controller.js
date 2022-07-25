@@ -816,6 +816,7 @@ module.exports = {
   addSkill,
   addGuidance,
   addHospital,
+  getAllStudentPresention,
   addOrUpdateStudentPresention,
   deleteStudentPresention,
   updateUserRoles,

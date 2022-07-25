@@ -14,6 +14,53 @@ export default (objectType, objectData, stations, setValue) => {
         accessor: "name",
       },
       {
+        Header: "Edit",
+        accessor: "id",
+        id: "edit",
+        Cell: ({ value }) => {
+          const name = objectData.find((data) => data.id === +value).name;
+
+          return (
+            <button
+              onClick={() => {
+                setValue("id", value);
+                setValue("requestType", "patch");
+                setValue("name", name);
+              }}
+              className={styles.button}
+            >
+              <a href="#form" className={styles.link}>
+                Edit
+              </a>
+            </button>
+          );
+        },
+        disableFilters: true,
+        disableSortBy: true,
+      },
+      {
+        Header: "Hapus",
+        accessor: "id",
+        id: "delete",
+        Cell: ({ value }) => (
+          <button
+            onClick={() => {
+              const name = objectData.find((data) => data.id === +value).name;
+              setValue("id", value);
+              setValue("requestType", "delete");
+              setValue("name", name);
+            }}
+            className={styles.button}
+          >
+            <a href="#form" className={styles.link}>
+              Hapus
+            </a>
+          </button>
+        ),
+        disableFilters: true,
+        disableSortBy: true,
+      },
+      {
         Header: "Waktu Dibuat",
         accessor: "createdAt",
         Cell: ({ value }) => format(new Date(value), "dd/MM/yyyy"),
