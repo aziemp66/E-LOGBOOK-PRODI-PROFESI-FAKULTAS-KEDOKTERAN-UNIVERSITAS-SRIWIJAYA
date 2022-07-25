@@ -534,14 +534,14 @@ const deleteHospital = async (req, res, next) => {
   }
 };
 
-const getAllStudentPresention = async (req, res, next) => {
-  let studentPresention;
+const getPresentions = async (req, res, next) => {
+  let presentions;
   try {
-    studentPresention = await db.Presention.findAll();
+    presentions = await db.Presention.findAll();
   } catch (error) {
     return next(error);
   }
-  if (!studentPresention) return next(new Error("No student presention"));
+  if (!presentions) return next(new Error("No presentions"));
 
   let stations;
   try {
@@ -551,167 +551,17 @@ const getAllStudentPresention = async (req, res, next) => {
   }
   if (!stations) return next(new Error("No stations"));
 
-  let studentProfiles;
-  try {
-    studentProfiles = await db.StudentProfile.findAll();
-  } catch (error) {
-    return next(error);
-  }
-  if (!studentProfiles) return next(new Error("No student profiles"));
-
-  studentPresention.forEach((presention) => {
-    stations.forEach((station) => {
-      if (presention.stationId === station.id) {
-        presention.station = station.name;
-      }
-    });
+  const allStationIdTurnedToName = presentions.map((presention) => {
+    const station = stations.find(
+      (station) => station.id === presention.station
+    );
+    return {
+      ...presention,
+      station: station.name,
+    };
   });
 
-  studentPresention.forEach((presention) => {
-    studentProfiles.forEach((studentProfile) => {
-      if (presention.studentId === studentProfile.userId) {
-        presention.studentProfile = studentProfile.name;
-      }
-    });
-  });
-
-  res.json(studentPresention);
-};
-
-const addOrUpdateStudentPresention = async (req, res, next) => {
-  const { stationId, present, sick, excused, absent, studentId } = req.body;
-
-  const { error } = validation.addStudentPresentionValidation({
-    present,
-    sick,
-    excused,
-    absent,
-  });
-  if (error) return next(error.details[0]);
-
-  //check if student exist
-  let existingStudent;
-  try {
-    existingStudent = await db.User.findOne({
-      where: {
-        id: studentId,
-        roles: "student",
-      },
-    });
-  } catch (error) {
-    return next(error);
-  }
-  if (!existingStudent) return next(new Error("Student does not exist"));
-
-  //check if station exist
-  let existingStation;
-  try {
-    existingStation = await db.Station.findOne({
-      where: {
-        id: stationId,
-      },
-    });
-  } catch (error) {
-    return next(error);
-  }
-  if (!existingStation) return next(new Error("Station does not exist"));
-
-  let existingPresention;
-  try {
-    existingPresention = await db.StudentPresention.findOne({
-      where: {
-        stationId: stationId,
-        userId: studentId,
-      },
-    });
-  } catch (error) {
-    return next(error);
-  }
-  if (!existingPresention)
-    return next(new Error("Student Presention does not exist"));
-
-  try {
-    const [data, isCreated] = await db.Presention.findOrCreate({
-      where: {
-        stationId,
-        studentId,
-      },
-      defaults: {
-        studentId,
-        stationId,
-        present,
-        sick,
-        excused,
-        absent,
-      },
-    });
-    if (!isCreated && data)
-      await data.update({ present, sick, excused, absent });
-    res.json({
-      message: "Student Presention updated successfully",
-    });
-  } catch (error) {
-    return next(error);
-  }
-};
-
-const deleteStudentPresention = async (req, res, next) => {
-  const { stationId, studentId } = req.body;
-
-  //check if student exist
-  let existingStudent;
-  try {
-    existingStudent = await db.User.findOne({
-      where: {
-        id: studentId,
-        roles: "student",
-      },
-    });
-  } catch (error) {
-    return next(error);
-  }
-  if (!existingStudent) return next(new Error("Student does not exist"));
-
-  //check if station exist
-  let existingStation;
-  try {
-    existingStation = await db.Station.findOne({
-      where: {
-        id: stationId,
-      },
-    });
-  } catch (error) {
-    return next(error);
-  }
-  if (!existingStation) return next(new Error("Station does not exist"));
-
-  let existingPresention;
-  try {
-    existingPresention = await db.Presention.findOne({
-      where: {
-        stationId: stationId,
-        userId: studentId,
-      },
-    });
-  } catch (error) {
-    return next(error);
-  }
-  if (!existingPresention)
-    return next(new Error("Student Presention does not exist"));
-
-  try {
-    await db.StudentPresention.destroy({
-      where: {
-        stationId: stationId,
-        userId: studentId,
-      },
-    });
-    res.json({
-      message: "Student Presention deleted successfully",
-    });
-  } catch (error) {
-    return next(error);
-  }
+  res.json(allStationIdTurnedToName);
 };
 
 const updateUserRoles = async (req, res, next) => {
@@ -816,9 +666,6 @@ module.exports = {
   addSkill,
   addGuidance,
   addHospital,
-  getAllStudentPresention,
-  addOrUpdateStudentPresention,
-  deleteStudentPresention,
   updateUserRoles,
   updateStation,
   updateDisease,

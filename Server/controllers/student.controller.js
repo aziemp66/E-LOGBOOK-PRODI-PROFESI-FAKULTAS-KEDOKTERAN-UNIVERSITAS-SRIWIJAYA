@@ -476,7 +476,12 @@ const addCompetence = async (req, res, next) => {
     } catch (error) {
       return next(error);
     }
-  } else if (!data) {
+  } else if (isCreated && data) {
+    await db.Presention.create({
+      studentId: id,
+      presentionId: data.id,
+    });
+  } else {
     return next(new Error("Can't Find or Create Competence"));
   }
 

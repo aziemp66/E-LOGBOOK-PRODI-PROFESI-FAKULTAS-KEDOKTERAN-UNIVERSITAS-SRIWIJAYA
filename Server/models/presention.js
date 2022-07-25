@@ -10,25 +10,29 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    stationId: {
+    presentionId: {
       type: DataTypes.STRING,
       allowNull: false,
     },
     present: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      defaultValue: 0,
     },
     absent: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      defaultValue: 0,
     },
     sick: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      defaultValue: 0,
     },
     excused: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      defaultValue: 0,
     },
   });
   return Presention;
