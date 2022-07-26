@@ -9,7 +9,6 @@ import styles from "./StudentAdmin.module.css";
 const studentAdmin = () => {
   const [isLoading, setIsLoading] = useState();
   const [presentions, setPresentions] = useState([]);
-  const [stations, setStations] = useState([]);
 
   const { watch, register, handleSubmit, setValue, getValues } = useForm();
 
@@ -30,8 +29,8 @@ const studentAdmin = () => {
         },
       })
       .then((res) => {
-        setPresentions(res.data.presentions);
-        setStations(res.data.stations);
+        console.log(res);
+        setPresentions(res.data);
         setIsLoading(false);
       })
       .catch((err) => {
@@ -56,8 +55,8 @@ const studentAdmin = () => {
         });
       })
       .then((res) => {
-        setPresentions(res.data.presentions);
-        setStations(res.data.stations);
+        console.log(res);
+        setPresentions(res.data);
         setIsLoading(false);
       })
       .catch((err) => {

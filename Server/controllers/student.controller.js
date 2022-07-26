@@ -479,7 +479,7 @@ const addCompetence = async (req, res, next) => {
   } else if (isCreated && data) {
     await db.Presention.create({
       studentId: id,
-      presentionId: data.id,
+      competenceId: data.id,
     });
   } else {
     return next(new Error("Can't Find or Create Competence"));

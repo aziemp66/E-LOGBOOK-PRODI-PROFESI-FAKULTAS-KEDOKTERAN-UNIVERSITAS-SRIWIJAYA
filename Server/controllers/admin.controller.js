@@ -543,17 +543,50 @@ const getPresentions = async (req, res, next) => {
   }
   if (!presentions) return next(new Error("No presentions"));
 
-  let stations;
+  let studentCompetences;
   try {
-    stations = await db.Station.findAll();
+    studentCompetences = await db.Competence.findAll();
   } catch (error) {
     return next(error);
   }
-  if (!stations) return next(new Error("No stations"));
+  if (!studentCompetences) return next(new Error("No Student Competences"));
+
+  let students;
+  try {
+    students = await db.StudentProfile.findAll();
+  } catch (error) {
+    return next(error);
+  }
+  if (!students) return next(new Error("No students"));
+
+  //change stationId to station name and student Id to student name and nim
+  const updatedPresention = presentions.map((presention) => {
+    let stationName;
+    let studentName;
+    let studentNumber;
+    studentCompetences.forEach((studentCompetence) => {
+      if (presention.competenceId === studentCompetence.id) {
+        stationName = studentCompetence.stationName;
+      }
+    });
+
+    students.forEach((student) => {
+      if (presention.studentId === student.userId) {
+        studentName = `${student.firstName} ${student.lastName}`;
+        studentNumber = student.studentNumber;
+      }
+    });
+
+    return {
+      ...presention.dataValues,
+      stationName,
+      studentName,
+      studentNumber,
+    };
+  });
 
   res.json({
-    presentions,
-    stations,
+    updatedPresention,
   });
 };
 
