@@ -116,6 +116,16 @@ const Sidebar = () => {
                       </li>
                     </>
                   )}
+                  {authCtx.userData.role.includes("lecturer") && (
+                    <>
+                      <li>
+                        <Link to={"/lecturer"}>
+                          <img src={profile} alt="profile icon" />
+                          <span>Administrasi Siswa</span>
+                        </Link>
+                      </li>
+                    </>
+                  )}
                   <li>
                     <p onClick={onLogoutHandler}>
                       <img src={logout} alt="logout icon" />

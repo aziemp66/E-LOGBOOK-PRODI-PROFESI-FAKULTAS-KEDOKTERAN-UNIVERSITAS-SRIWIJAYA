@@ -14,6 +14,7 @@ import ScientificActivities from "./pages/scientificactivites/ScientificActiviti
 import ElogbookAdmin from "./pages/admin/elogbookadmin/ElogbookAdmin";
 import AccountAdmin from "./pages/admin/accountadmin/AccountAdmin";
 import StudentAdmin from "./pages/admin/studentAdmin/StudentAdmin";
+import LecturerCompetence from "./pages/lecturer/Competence";
 
 import Sidebar from "./components/sidebar/Sidebar";
 import AuthContext from "./contexts/AuthContexts";
@@ -48,6 +49,9 @@ const App = () => {
           <Route path="/admin/elogbook" element={<ElogbookAdmin />} />
           <Route path="/admin/accounts" element={<AccountAdmin />} />
           <Route path="/admin/students" element={<StudentAdmin />} />
+        </Route>
+        <Route path="/lecturer" element={<RequireAuth role="lecturer" />}>
+          <Route path="/lecturer" element={<LecturerCompetence />} />
         </Route>
       </Routes>
     </div>
