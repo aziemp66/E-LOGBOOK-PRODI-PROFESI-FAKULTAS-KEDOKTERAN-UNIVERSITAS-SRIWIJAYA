@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import AccountTables from "../../../components/accounttable/AccountTables";
+import StudentTable from "../../../components/studenttables/StudentTables";
 import { useForm } from "react-hook-form";
 import jwtDecode from "jwt-decode";
 
@@ -30,7 +30,7 @@ const studentAdmin = () => {
       })
       .then((res) => {
         console.log(res);
-        setPresentions(res.data);
+        setPresentions(res.data.updatedPresention);
         setIsLoading(false);
       })
       .catch((err) => {
@@ -56,8 +56,10 @@ const studentAdmin = () => {
       })
       .then((res) => {
         console.log(res);
-        setPresentions(res.data);
+        setPresentions(res.data.updatedPresention);
         setIsLoading(false);
+        setValue("requestType", null);
+        setValue("id", null);
       })
       .catch((err) => {
         console.log(err);
@@ -71,11 +73,32 @@ const studentAdmin = () => {
       <form className={styles.form} id="form" onSubmit={handleSubmit(request)}>
         {requestType === "patch" && (
           <>
-            <h2>Update User {getValues("username")}</h2>
+            <h2>Update Presensi</h2>
+
+            <input type="text" hidden {...register("id")} />
 
             <div className={styles["form-input"]}>
-              <label htmlFor="role">Role</label>
-              <input type="number" />
+              <label htmlFor="role">Jumlah Hadir</label>
+              <input type="number" {...register("present")} />
+            </div>
+
+            <div className={styles["form-input"]}>
+              <label htmlFor="role">Jumlah Alfa</label>
+              <input type="number" {...register("absent")} />
+            </div>
+
+            <div className={styles["form-input"]}>
+              <label htmlFor="role">Jumlah Sakit</label>
+              <input type="number" {...register("sick")} />
+            </div>
+
+            <div className={styles["form-input"]}>
+              <label htmlFor="role">Jumlah Izin</label>
+              <input type="number" {...register("excused")} />
+            </div>
+
+            <div className={styles["button-container"]}>
+              <button className={styles["button-green"]}>Submit</button>
             </div>
           </>
         )}
@@ -85,7 +108,9 @@ const studentAdmin = () => {
           <p>Loading...</p>
         </>
       ) : (
-        <></>
+        <div>
+          <StudentTable objectData={presentions} setValue={setValue} />
+        </div>
       )}
     </div>
   );

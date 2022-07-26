@@ -170,6 +170,7 @@ const ElogbookAdmin = () => {
             id="form"
             className={styles.form}
           >
+            <input hidden type="text" {...register("id")} />
             {(requestType === "post" || requestType === "patch") && (
               <>
                 <div className={styles["form-input"]}>
@@ -209,6 +210,7 @@ const ElogbookAdmin = () => {
               )}
             {requestType === "delete" ? (
               <div className={styles["form-button"]}>
+                <input hidden type="text" {...register("id")} />
                 <p>Apakah Anda Yakin Ingin Menghapus {getValues("name")}</p>
                 <div className={styles["button-container"]}>
                   <button className={styles["button-green"]} type="submit">
