@@ -17,7 +17,32 @@ const getLecturerCompetencesData = async (req, res, next) => {
     return next(new Error("No competences found"));
   }
 
-  res.json(competences);
+  let studentProfiles;
+  try {
+    studentProfiles = await db.StudentProfile.findAll();
+  } catch (error) {
+    return next(error);
+  }
+  if (!studentProfiles) {
+    return next(new Error("No student profiles found"));
+  }
+
+  const updatedCompetences = competences.map((competence) => {
+    let studentName;
+
+    studentProfiles.forEach((studentProfile) => {
+      if (studentProfile.userId === competence.userId) {
+        studentName = `${studentProfile.firstName} ${studentProfile.lastName}`;
+      }
+    });
+
+    return {
+      ...competence.dataValues,
+      studentName,
+    };
+  });
+
+  res.json(updatedCompetences);
 };
 
 const verifyStudentCompetences = async (req, res, next) => {
