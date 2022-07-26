@@ -12,6 +12,7 @@ import WelcomeCard from "../../components/welcomecard/WelcomeCard";
 import PresentionCard from "../../components/presentioncard/PresentionCard";
 import ProgressCard from "../../components/progresscard/ProgressCard";
 import TotalProgressCard from "../../components/totalprogresscard/TotalProgressCard";
+import axios from "axios";
 
 const present = 26;
 const sick = 2;
@@ -20,6 +21,33 @@ const absent = 2;
 
 const DashBoard = () => {
   const authCtx = useContext(AuthContext);
+  const baseUrl =
+    (import.meta.env.VITE_API_URL &&
+      `${import.meta.env.VITE_API_URL}/api/student`) ||
+    "http://localhost:5000/api/student";
+
+  const [isLoading, setIsLoading] = useState(true);
+  const [competences, setCompetences] = useState();
+
+  useEffect(() => {
+    setIsLoading(true);
+
+    axios
+      .get(`${baseUrl}/competence`, {
+        headers: {
+          "auth-token": localStorage.getItem("token"),
+        },
+      })
+      .then((res) => {
+        setCompetences(res.data.existingCompetences);
+        setInterval(() => {
+          setIsLoading(false);
+        }, 500);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   return (
     <div className={styles.page}>
@@ -36,39 +64,30 @@ const DashBoard = () => {
             />
           </Fade>
           <ul className={styles.progressList}>
-            <Fade left>
-              <ProgressCard
-                title={"Tuberkolosis"}
-                stase={"Penyakit Dalam"}
-                skillCompetences={"4"}
-                diseasesCompetences={"3B"}
-                percentage={75}
-                className={styles.progressCard}
-              />
-            </Fade>
-            <Fade right>
-              <ProgressCard
-                title={"Leukimia"}
-                stase={"Bedah"}
-                skillCompetences={"3"}
-                diseasesCompetences={"3A"}
-                percentage={75}
-                className={styles.progressCard}
-              />
-            </Fade>
+            {isLoading ? (
+              <p>Loading...</p>
+            ) : (
+              competences &&
+              competences.map((competence, index) => {
+                return (
+                  <Fade
+                    left={index % 2 == 0}
+                    right={index % 2 == 1}
+                    key={index}
+                  >
+                    <ProgressCard
+                      title={competence.diseaseName}
+                      stase={competence.stationName}
+                      skillCompetences={competence.skillCompetence}
+                      diseasesCompetences={competence.diseaseCompetence}
+                      isVerified={competence.verified}
+                      className={styles.progressCard}
+                    />
+                  </Fade>
+                );
+              })
+            )}
           </ul>
-          <Fade bottom>
-            <div className={styles.totalProgress}>
-              <TotalProgressCard
-                title={"Total Capaian Penyakit"}
-                percentage={75}
-              />
-              <TotalProgressCard
-                title={"Capaian Keterampilan Klinik"}
-                percentage={40}
-              />
-            </div>
-          </Fade>
         </div>
         <Fade right>
           <PresentionCard

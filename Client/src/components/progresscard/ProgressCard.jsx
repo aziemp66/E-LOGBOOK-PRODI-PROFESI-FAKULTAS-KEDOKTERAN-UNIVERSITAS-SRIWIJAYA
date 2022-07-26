@@ -5,8 +5,27 @@ import styles from "./ProgressCard.module.css";
 import CircularProgressBar from "../ui/circularprogressbar/CircularProgressBar";
 
 const ProgressCard = (props) => {
-  const { percentage, stase, skillCompetences, diseasesCompetences, title } =
+  const { stase, skillCompetences, diseasesCompetences, title, isVerified } =
     props;
+
+  let total = 0;
+  let progress = 0;
+
+  [stase, skillCompetences, diseasesCompetences, title, isVerified].map(
+    (value) => {
+      total++;
+      console.log(total);
+
+      if (value) {
+        progress++;
+      }
+    }
+  );
+  //percentage is equal to floor of progress / total * 100
+  // console.log(progress, total);
+  const percentage = Math.floor((progress / total) * 100);
+  // console.log(percentage);
+
   return (
     <div className={styles.card}>
       <div className={styles.title}>
@@ -26,9 +45,7 @@ const ProgressCard = (props) => {
           <p>Kompetensi Keterampilan : Level {skillCompetences}</p>
         </div>
         <div>
-          <p>
-            Status : <span>Terverifikasi</span>
-          </p>
+          <p>Status : {isVerified ? "Terverifikasi" : "Belum Terverifikasi"}</p>
         </div>
       </div>
     </div>
