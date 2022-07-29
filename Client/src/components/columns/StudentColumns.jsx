@@ -19,7 +19,7 @@ export default (setValue) => {
       accessor: "studentNumber",
     },
     {
-      Header: "Nama Stase",
+      Header: "Stase",
       accessor: "stationName",
     },
     {
