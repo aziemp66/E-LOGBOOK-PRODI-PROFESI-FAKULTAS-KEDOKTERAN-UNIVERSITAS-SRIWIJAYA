@@ -27,7 +27,7 @@ export default (setValue) => {
       accessor: "diseaseCompetence",
     },
     {
-      Header: "Nama Ketrampilan",
+      Header: "Nama Keterampilan",
       accessor: "skillName",
     },
     {
