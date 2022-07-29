@@ -19,6 +19,7 @@
   width: 90%;
   margin: 0 auto;
   overflow-x: scroll;
+  display: block;
 }
 
 .table thead tr th > * {

@@ -29,16 +29,19 @@ const getLecturerCompetencesData = async (req, res, next) => {
 
   const updatedCompetences = competences.map((competence) => {
     let studentName;
+    let studentNumber;
 
     studentProfiles.forEach((studentProfile) => {
       if (studentProfile.userId === competence.userId) {
         studentName = `${studentProfile.firstName} ${studentProfile.lastName}`;
+        studentNumber = studentProfile.studentNumber;
       }
     });
 
     return {
       ...competence.dataValues,
       studentName,
+      studentNumber,
     };
   });
 

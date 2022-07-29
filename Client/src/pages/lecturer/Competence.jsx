@@ -1,12 +1,17 @@
 import React from "react";
+import { useForm } from "react-hook-form";
 
 import axios from "axios";
+
+import CompetenceTable from "../../components/competencetables/CompetencesTable";
 
 import { useEffect, useState } from "react";
 
 const Competence = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [competences, setCompetences] = useState();
+
+  const { register, handleSubmit, errors, setValue } = useForm();
 
   const baseUrl =
     (import.meta.env.API_URL && `${import.meta.env.API_URL}/api/lecturer`) ||
@@ -30,7 +35,15 @@ const Competence = () => {
       });
   }, []);
 
-  return <div>Presention</div>;
+  return (
+    <div>
+      {!isLoading && competences ? (
+        <CompetenceTable objectData={competences} setValue={setValue} />
+      ) : (
+        <div>Loading...</div>
+      )}
+    </div>
+  );
 };
 
 export default Competence;

@@ -1,5 +1,7 @@
 import React from "react";
 
+import styles from "./Columns.module.css";
+
 export default (setValue) => {
   return [
     {
@@ -9,6 +11,29 @@ export default (setValue) => {
     {
       Header: "Nama Siswa",
       accessor: "studentName",
+      Cell: ({ value }) => {
+        return <p className={styles.name}>{value}</p>;
+      },
+    },
+    {
+      Header: "Edit",
+      accessor: "id",
+      id: "edit",
+      Cell: ({ value }) => {
+        return (
+          <button
+            onClick={() => {
+              setValue("id", value);
+              setValue("requestType", "patch");
+            }}
+            className={styles.button}
+          >
+            <a href="#form" className={styles.link}>
+              Edit
+            </a>
+          </button>
+        );
+      },
     },
     {
       Header: "NIM",
@@ -55,26 +80,6 @@ export default (setValue) => {
       accessor: "verified",
       Cell: ({ value }) => {
         return value ? "Terverifikasi" : "Belum Terverifikasi";
-      },
-    },
-    {
-      Header: "Edit",
-      accessor: "id",
-      id: "edit",
-      Cell: ({ value }) => {
-        return (
-          <button
-            onClick={() => {
-              setValue("id", value);
-              setValue("requestType", "patch");
-            }}
-            className={styles.button}
-          >
-            <a href="#form" className={styles.link}>
-              Edit
-            </a>
-          </button>
-        );
       },
     },
   ];

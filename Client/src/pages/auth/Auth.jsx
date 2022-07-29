@@ -23,7 +23,7 @@ const Auth = () => {
         </div>
         <ul className={styles.auth}>
           {authCtx.userData ? (
-            (authCtx.userData.role === "student" && (
+            (authCtx.userData.role.includes("student") && (
               <>
                 <li>
                   <h2>Masuk ke Dashboard</h2>
@@ -35,7 +35,7 @@ const Auth = () => {
                 </li>
               </>
             )) ||
-            (authCtx.userData.role === "admin" && (
+            (authCtx.userData.role.includes("admin") && (
               <>
                 <li>
                   <h2>Masuk ke Dashboard Admin</h2>

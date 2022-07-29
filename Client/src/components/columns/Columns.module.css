@@ -4,3 +4,6 @@
 .button {
   min-width: 100px;
 }
+.name {
+  min-width: 150px;
+}
