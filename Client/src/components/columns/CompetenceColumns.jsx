@@ -16,6 +16,17 @@ export default (setValue) => {
       },
     },
     {
+      Header: "Status Verifikasi",
+      accessor: "verified",
+      Cell: ({ value }) => {
+        return value ? (
+          <p style={{ color: "green" }}>Terverifikasi</p>
+        ) : (
+          <p style={{ color: "red" }}>Belum Terverifikasi</p>
+        );
+      },
+    },
+    {
       Header: "Edit",
       accessor: "id",
       id: "edit",
@@ -24,7 +35,8 @@ export default (setValue) => {
           <button
             onClick={() => {
               setValue("id", value);
-              setValue("requestType", "patch");
+              setValue("requestType", "post");
+              console.log(value);
             }}
             className={styles.button}
           >
@@ -74,13 +86,6 @@ export default (setValue) => {
     {
       Header: "Nama Rumah Sakit",
       accessor: "hospitalName",
-    },
-    {
-      Header: "Status Verifikasi",
-      accessor: "verified",
-      Cell: ({ value }) => {
-        return value ? "Terverifikasi" : "Belum Terverifikasi";
-      },
     },
   ];
 };

@@ -13,8 +13,8 @@ import {
 
 import { GlobalFilter } from "../globalfilter/GlobalFilter";
 
-const AccountTables = ({ objectData, setValue }) => {
-  const columns = useMemo(() => COLUMNS(objectData, setValue), []);
+const CompetencesTable = ({ objectData, setValue }) => {
+  const columns = useMemo(() => COLUMNS(setValue), []);
   const data = useMemo(() => objectData, []);
 
   const {
@@ -162,4 +162,4 @@ const AccountTables = ({ objectData, setValue }) => {
   );
 };
 
-export default AccountTables;
+export default CompetencesTable;

@@ -49,11 +49,11 @@ const getLecturerCompetencesData = async (req, res, next) => {
 };
 
 const verifyStudentCompetences = async (req, res, next) => {
-  const { competencesId } = req.body;
+  const { competencesId, isVerified } = req.body;
 
   let competences;
   try {
-    competences = await db.Competences.find({
+    competences = await db.Competence.findOne({
       where: {
         id: competencesId,
       },
@@ -68,7 +68,7 @@ const verifyStudentCompetences = async (req, res, next) => {
   //verify competences
   try {
     await competences.update({
-      verified: true,
+      verified: isVerified,
     });
   } catch (error) {
     return next(error);
