@@ -126,6 +126,37 @@ const Sidebar = () => {
                       </li>
                     </>
                   )}
+                  {authCtx.userData.role.includes("supervisor") && (
+                    <>
+                      <li>
+                        <Link to={"/supervisor"}>
+                          <img src={dashBoard} alt="dashboard icon" />
+                          <span>Dashboard Supervisor</span>
+                        </Link>
+                      </li>
+                      <li>
+                        <Link to={"/supervisor/elogbook"}>
+                          <img
+                            src={rekapitulasiPenilaian}
+                            alt="dashboard icon"
+                          />
+                          <span>Administrasi E-Logbook</span>
+                        </Link>
+                      </li>
+                      <li>
+                        <Link to={"/supervisor/students"}>
+                          <img src={helpDesk} alt="profile icon" />
+                          <span>Administrasi Mahasiswa</span>
+                        </Link>
+                      </li>
+                      <li>
+                        <Link to={"/supervisor/accounts"}>
+                          <img src={profile} alt="profile icon" />
+                          <span>Administrasi Akun</span>
+                        </Link>
+                      </li>
+                    </>
+                  )}
                   <li>
                     <p onClick={onLogoutHandler}>
                       <img src={logout} alt="logout icon" />

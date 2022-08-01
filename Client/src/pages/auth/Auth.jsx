@@ -42,6 +42,22 @@ const Auth = () => {
                   <Link to={"/admin"}>Admin Dashboard</Link>
                 </li>
               </>
+            )) ||
+            (authCtx.userData.role.includes("lecturer") && (
+              <>
+                <li>
+                  <h2>Masuk ke Dashboard Dosen</h2>
+                  <Link to={"/lecturer"}>Student Administration</Link>
+                </li>
+              </>
+            )) ||
+            (authCtx.userData.role.includes("supervisor") && (
+              <>
+                <li>
+                  <h2>Masuk ke Dashboard Supervisor</h2>
+                  <Link to={"/supervisor"}>Supervisor Dashboard</Link>
+                </li>
+              </>
             ))
           ) : (
             <>

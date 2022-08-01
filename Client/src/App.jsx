@@ -50,7 +50,7 @@ const App = () => {
           <Route path="/admin/accounts" element={<AccountAdmin />} />
           <Route path="/admin/students" element={<StudentAdmin />} />
         </Route>
-        <Route path="/lecturer" element={<RequireAuth role="lecturer" />}>
+        <Route element={<RequireAuth role="lecturer" />}>
           <Route path="/lecturer" element={<LecturerVerification />} />
         </Route>
       </Routes>
