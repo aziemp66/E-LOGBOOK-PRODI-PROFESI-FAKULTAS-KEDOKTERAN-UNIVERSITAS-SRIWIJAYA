@@ -144,6 +144,16 @@ const getCompetencesData = async (req, res, next) => {
     return next(new Error("No student profiles found"));
   }
 
+  let lecturerProfiles;
+  try {
+    lecturerProfiles = await db.LecturerProfile.findAll();
+  } catch (error) {
+    return next(error);
+  }
+  if (!lecturerProfiles) {
+    return next(new Error("No lecturer profiles found"));
+  }
+
   const updatedCompetences = competences.map((competence) => {
     let studentName;
     let studentNumber;

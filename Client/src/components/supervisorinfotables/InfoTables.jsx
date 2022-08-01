@@ -6,21 +6,24 @@ import {
   usePagination,
 } from "react-table";
 
-import styles from "./StudentTables.module.css";
+import styles from "./InfoTables.module.css";
 import { GlobalFilter } from "../globalfilter/GlobalFilter";
 
-import COLUMNS from "../columns/SupervisorStudentColumns";
+import COLUMNS from "../columns/SupervisorInfoColumns";
 
-const InfoTable = ({ objectData, setValue }) => {
+const InfoTable = ({ objectType, stations, objectData, setValue }) => {
   if (!objectData || objectData.length === 0)
     return (
       <>
         <p className={styles.fallback}>
-          There are no Presentions available, start adding one
+          There are no {objectType}s available, start adding one
         </p>
       </>
     );
-  const columns = useMemo(() => COLUMNS(setValue), []);
+  const columns = useMemo(
+    () => COLUMNS(objectType, objectData, stations, setValue),
+    []
+  );
   const data = useMemo(() => objectData, []);
 
   const {

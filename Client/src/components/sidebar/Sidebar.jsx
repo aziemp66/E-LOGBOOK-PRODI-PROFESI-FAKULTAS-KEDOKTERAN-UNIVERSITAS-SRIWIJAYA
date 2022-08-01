@@ -140,19 +140,25 @@ const Sidebar = () => {
                             src={rekapitulasiPenilaian}
                             alt="dashboard icon"
                           />
-                          <span>Administrasi E-Logbook</span>
+                          <span>Supervisi E-Logbook</span>
                         </Link>
                       </li>
                       <li>
                         <Link to={"/supervisor/students"}>
                           <img src={helpDesk} alt="profile icon" />
-                          <span>Administrasi Mahasiswa</span>
+                          <span>Supervisi Mahasiswa</span>
                         </Link>
                       </li>
                       <li>
                         <Link to={"/supervisor/accounts"}>
                           <img src={profile} alt="profile icon" />
-                          <span>Administrasi Akun</span>
+                          <span>Supervisi Akun</span>
+                        </Link>
+                      </li>
+                      <li>
+                        <Link to={"/supervisor/competence"}>
+                          <img src={dokumenTerkait} alt="profile icon" />
+                          <span>Supervisi Kompetensi</span>
                         </Link>
                       </li>
                     </>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import styles from "./AccountAdmin.module.css";
-import AccountTables from "../../../components/accounttable/AccountTables";
+import AccountTables from "../../../components/supervisoraccounttable/AccountTables";
 import { useForm } from "react-hook-form";
 
 import jwtDecode from "jwt-decode";

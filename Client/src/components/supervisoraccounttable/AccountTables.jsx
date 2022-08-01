@@ -1,4 +1,9 @@
 import React, { useMemo } from "react";
+
+import styles from "./AccountTables.module.css";
+
+import COLUMNS from "../columns/SupervisorAccountColumns";
+
 import {
   useTable,
   useSortBy,
@@ -6,22 +11,11 @@ import {
   usePagination,
 } from "react-table";
 
-import styles from "./StudentTables.module.css";
 import { GlobalFilter } from "../globalfilter/GlobalFilter";
 
-import COLUMNS from "../columns/SupervisorStudentColumns";
-
-const InfoTable = ({ objectData, setValue }) => {
-  if (!objectData || objectData.length === 0)
-    return (
-      <>
-        <p className={styles.fallback}>
-          There are no Presentions available, start adding one
-        </p>
-      </>
-    );
-  const columns = useMemo(() => COLUMNS(setValue), []);
-  const data = useMemo(() => objectData, []);
+const AccountTables = ({ accountData, setValue }) => {
+  const columns = useMemo(() => COLUMNS(accountData, setValue), []);
+  const data = useMemo(() => accountData, []);
 
   const {
     getTableProps,
@@ -168,4 +162,4 @@ const InfoTable = ({ objectData, setValue }) => {
   );
 };
 
-export default InfoTable;
+export default AccountTables;

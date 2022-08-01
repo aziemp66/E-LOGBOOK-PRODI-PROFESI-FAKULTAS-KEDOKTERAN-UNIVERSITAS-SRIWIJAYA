@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 
-import styles from "./Admin.module.css";
+import styles from "./Supervisor.module.css";
 
 import AuthContext from "../../contexts/AuthContexts";
 
@@ -20,7 +20,7 @@ const Admin = () => {
       </div>
       <div className={styles["card-grid"]}>
         <div className={styles.card}>
-          <h2>Administrasi E-Logbook</h2>
+          <h2>Supervisi E-Logbook</h2>
           <Link to={"/supervisor/elogbook"}>Click Here</Link>
         </div>
         <div className={styles.card}>
@@ -28,8 +28,12 @@ const Admin = () => {
           <Link to={"/supervisor/students"}>Click Here</Link>
         </div>
         <div className={styles.card}>
-          <h2>Administrasi Akun</h2>
+          <h2>Supervisi Akun</h2>
           <Link to={"/supervisor/accounts"}>Click Here</Link>
+        </div>
+        <div>
+          <h2>Supervisi Kompetensi</h2>
+          <Link to={"/supervisor/competence"}>Click Here</Link>
         </div>
       </div>
     </div>

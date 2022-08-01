@@ -27,27 +27,6 @@ export default (setValue) => {
       },
     },
     {
-      Header: "Edit",
-      accessor: "id",
-      id: "edit",
-      Cell: ({ value }) => {
-        return (
-          <button
-            onClick={() => {
-              setValue("id", value);
-              setValue("requestType", "post");
-              console.log(value);
-            }}
-            className={styles.button}
-          >
-            <a href="#form" className={styles.link}>
-              Edit
-            </a>
-          </button>
-        );
-      },
-    },
-    {
       Header: "NIM",
       accessor: "studentNumber",
     },

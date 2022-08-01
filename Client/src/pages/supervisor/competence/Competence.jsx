@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 
 import axios from "axios";
 
-import CompetenceTable from "../../components/competencetables/CompetencesTable";
+import CompetenceTable from "../../../components/supervisorcompetencetables/CompetencesTable";
 
 import { useEffect, useState } from "react";
 
@@ -75,35 +75,6 @@ const Competence = () => {
 
   return (
     <div className={styles.page}>
-      <form
-        className={styles.form}
-        id="form"
-        onSubmit={handleSubmit(onSubmitHandler)}
-      >
-        {requestType === "post" && (
-          <>
-            <h2>Verifikasi Kompetensi Rotasi</h2>
-
-            <input type="text" hidden {...register("id")} />
-
-            <div className={styles["form-input"]}>
-              <label htmlFor="role">Status Verifikasi</label>
-              <select
-                name="isVerified"
-                id="isVerified"
-                {...register("isVerified")}
-              >
-                <option value={true}>Terverifikasi</option>
-                <option value={false}>Tidak Terverifikasi</option>
-              </select>
-            </div>
-
-            <div className={styles["button-container"]}>
-              <button className={styles["button-green"]}>Submit</button>
-            </div>
-          </>
-        )}
-      </form>
       {!isLoading && competences ? (
         <CompetenceTable objectData={competences} setValue={setValue} />
       ) : (
