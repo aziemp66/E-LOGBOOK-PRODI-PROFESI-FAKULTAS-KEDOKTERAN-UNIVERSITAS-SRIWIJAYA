@@ -15,6 +15,11 @@ import ElogbookAdmin from "./pages/admin/elogbookadmin/ElogbookAdmin";
 import AccountAdmin from "./pages/admin/accountadmin/AccountAdmin";
 import StudentAdmin from "./pages/admin/studentAdmin/StudentAdmin";
 import LecturerVerification from "./pages/lecturer/LecturerVerification";
+import Supervisor from "./pages/supervisor/Supervisor";
+import SupervisorElogbook from "./pages/supervisor/elogbookadmin/ElogbookAdmin";
+import SupervisorAccount from "./pages/supervisor/accountadmin/AccountAdmin";
+import SupervisorStudent from "./pages/supervisor/studentAdmin/StudentAdmin";
+import SupervisorCompetence from "./pages/supervisor/competence/Competence";
 
 import Sidebar from "./components/sidebar/Sidebar";
 import AuthContext from "./contexts/AuthContexts";
@@ -52,6 +57,16 @@ const App = () => {
         </Route>
         <Route element={<RequireAuth role="lecturer" />}>
           <Route path="/lecturer" element={<LecturerVerification />} />
+        </Route>
+        <Route element={<RequireAuth role="supervisor" />}>
+          <Route path="/supervisor" element={<Supervisor />} />
+          <Route path="/supervisor/elogbook" element={<SupervisorElogbook />} />
+          <Route path="/supervisor/accounts" element={<SupervisorAccount />} />
+          <Route path="/supervisor/students" element={<SupervisorStudent />} />
+          <Route
+            path="/supervisor/competence"
+            element={<SupervisorCompetence />}
+          />
         </Route>
       </Routes>
     </div>
