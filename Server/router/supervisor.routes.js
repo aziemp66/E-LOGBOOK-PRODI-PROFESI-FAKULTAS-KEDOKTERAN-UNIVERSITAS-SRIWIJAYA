@@ -1,10 +1,12 @@
 const router = require("express").Router();
 const supervisorController = require("../controllers/supervisor.controller");
 
-router.get("/students", supervisorController.getStudents);
+router.get("/elogbook", supervisorController.getElogbookInfo);
 
-router.get("/competences", supervisorController.getCompetences);
+router.get("/user", supervisorController.getAllUser);
 
-router.get("/lecturers", supervisorController.getLecturers);
+router.get("/presentions", supervisorController.getPresentions);
+
+router.get("/competence", supervisorController.getCompetencesData);
 
 module.exports = router;
