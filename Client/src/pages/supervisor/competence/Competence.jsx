@@ -20,8 +20,8 @@ const Competence = () => {
   const requestType = watch("requestType");
 
   const baseUrl =
-    (import.meta.env.API_URL && `${import.meta.env.API_URL}/api/lecturer`) ||
-    "http://localhost:5000/api/lecturer";
+    (import.meta.env.API_URL && `${import.meta.env.API_URL}/api/supervisor`) ||
+    "http://localhost:5000/api/supervisor";
 
   useEffect(() => {
     setIsLoading(true);

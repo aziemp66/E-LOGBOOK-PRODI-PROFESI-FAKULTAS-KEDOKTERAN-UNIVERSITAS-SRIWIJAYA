@@ -54,6 +54,9 @@ export default (setValue) => {
     {
       Header: "Nama Dosen",
       accessor: "lecturerName",
+      Cell: ({ value }) => {
+        return <p className={styles.name}>{value}</p>;
+      },
     },
     {
       Header: "Nama Stase",

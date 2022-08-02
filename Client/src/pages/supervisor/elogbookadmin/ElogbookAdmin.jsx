@@ -26,8 +26,8 @@ const ElogbookAdmin = () => {
 
   const baseUrl =
     (import.meta.env.VITE_API_URL &&
-      `${import.meta.env.VITE_API_URL}/api/admin`) ||
-    "http://localhost:5000/api/admin";
+      `${import.meta.env.VITE_API_URL}/api/supervisor`) ||
+    "http://localhost:5000/api/supervisor";
 
   useEffect(() => {
     setIsLoading(true);

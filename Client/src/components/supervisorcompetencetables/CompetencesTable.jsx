@@ -2,7 +2,7 @@ import React, { useMemo } from "react";
 
 import styles from "./CompetencesTable.module.css";
 
-import COLUMNS from "../columns/SupervisorCompetenceColumns";
+import COLUMNS from "../columns/SupervisorCompetenceColumns ";
 
 import {
   useTable,

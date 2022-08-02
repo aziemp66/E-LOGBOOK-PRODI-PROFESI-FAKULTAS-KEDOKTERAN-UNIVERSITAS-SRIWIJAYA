@@ -12,11 +12,12 @@
 }
 .card-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 2fr 2fr;
   gap: 1rem;
   margin: 0 auto;
   justify-content: center;
   align-items: center;
+  padding-bottom: 5rem;
 }
 .card {
   display: flex;

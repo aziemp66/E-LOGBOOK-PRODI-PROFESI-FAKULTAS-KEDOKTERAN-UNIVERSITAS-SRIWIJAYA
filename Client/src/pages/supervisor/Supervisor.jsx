@@ -31,7 +31,7 @@ const Admin = () => {
           <h2>Supervisi Akun</h2>
           <Link to={"/supervisor/accounts"}>Click Here</Link>
         </div>
-        <div>
+        <div className={styles.card}>
           <h2>Supervisi Kompetensi</h2>
           <Link to={"/supervisor/competence"}>Click Here</Link>
         </div>

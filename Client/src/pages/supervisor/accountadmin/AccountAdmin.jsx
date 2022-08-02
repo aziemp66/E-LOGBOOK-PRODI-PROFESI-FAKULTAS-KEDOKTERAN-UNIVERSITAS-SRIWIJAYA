@@ -16,8 +16,8 @@ const AccountAdmin = () => {
 
   const baseUrl =
     (import.meta.env.VITE_API_URL &&
-      `${import.meta.env.VITE_API_URL}/api/admin`) ||
-    "http://localhost:5000/api/admin";
+      `${import.meta.env.VITE_API_URL}/api/supervisor`) ||
+    "http://localhost:5000/api/supervisor";
 
   useEffect(() => {
     setIsLoading(true);
@@ -28,18 +28,10 @@ const AccountAdmin = () => {
         },
       })
       .then((res) => {
-        if (
-          localStorage.getItem("token") &&
-          !jwtDecode(localStorage.getItem("token")).role.includes("master")
-        ) {
-          filteredUser = res.data.filter(
-            (user) =>
-              !user.role.includes("master") && user.role.includes("admin")
-          );
-          setUsers(filteredUser);
-        } else {
-          setUsers(res.data);
-        }
+        console.log(res);
+
+        setUsers(res.data);
+
         setIsLoading(false);
       })
       .catch((err) => {
@@ -75,32 +67,8 @@ const AccountAdmin = () => {
 
   return (
     <div className={styles.container}>
-      <h2 className={styles.title}>User Administration</h2>
+      <h2 className={styles.title}>Supervising User</h2>
 
-      <form className={styles.form} id="form" onSubmit={handleSubmit(request)}>
-        {requestType === "patch" && (
-          <>
-            <h2>Update User {getValues("username")}</h2>
-
-            <input type="text" hidden {...register("username")} />
-            <input type="text" hidden {...register("id")} />
-
-            <div className={styles["form-input"]}>
-              <label htmlFor="role">Role</label>
-              <select id="role" {...register("role")}>
-                <option value="admin">Admin</option>
-                <option value="student">Mahasiswa</option>
-                <option value="lecturer">Dosen</option>
-                <option value="supervisor">Supervisor</option>
-              </select>
-            </div>
-
-            <button type="submit" className={styles["button-green"]}>
-              Update
-            </button>
-          </>
-        )}
-      </form>
       {users && !isLoading ? (
         <AccountTables setValue={setValue} accountData={users} />
       ) : (
