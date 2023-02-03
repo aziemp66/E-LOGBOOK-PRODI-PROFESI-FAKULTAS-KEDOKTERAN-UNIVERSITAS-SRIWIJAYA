@@ -1,22 +1,25 @@
 require("dotenv").config();
 const nodemailer = require("nodemailer");
 
-// create reusable transporter object using the default SMTP transport
-let transporter = nodemailer.createTransport({
-  service: "hotmail",
-  name: "smtp.office365.com",
-  port: 587,
-  secure: false, // true for 465, false for other ports
-  auth: {
-    user: process.env.EMAIL_USER, // generated email address
-    pass: process.env.EMAIL_PASS, // generated password
-  },
-});
-
 // setup email data with unicode symbols
 const sendMail = async (content) => {
+  const email = process.env.EMAIL_USER;
+  const password = process.env.EMAIL_PASSWORD;
+
+  // create reusable transporter object using the default SMTP transport
+  let transporter = nodemailer.createTransport({
+    service: "hotmail",
+    name: "smtp.office365.com",
+    port: 587,
+    secure: false, // true for 465, false for other ports
+    auth: {
+      user: email, // generated email address
+      pass: password, // generated password
+    },
+  });
+
   await transporter.sendMail({
-    from: process.env.EMAIL_USER,
+    from: email,
     ...content,
   });
 };

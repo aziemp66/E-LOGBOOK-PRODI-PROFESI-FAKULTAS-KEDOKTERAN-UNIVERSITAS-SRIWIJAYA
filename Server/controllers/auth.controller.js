@@ -91,6 +91,8 @@ const userLogin = async (req, res, next) => {
   if (!validPassword)
     return next(new Error("Username or password is incorrect"));
 
+  if (!user.isVerified) return next(new Error("User is not verified"));
+
   const accessToken = generateToken({
     id: user.id,
     username: user.username,
