@@ -264,6 +264,40 @@ const resetUserPassword = async (req, res, next) => {
   }
 };
 
+const changePassword = async (req, res, next) => {
+  const { oldPassword, newPassword, confirmPassword } = req.body;
+
+  const { error } = validation.passwordChangeValidation({
+    password: newPassword,
+    confirmPassword,
+  });
+
+  if (error) return next(error.details[0]);
+
+  const user = await db.User.findOne({
+    where: {
+      id: req.user.id,
+    },
+  });
+
+  const validPassword = await bcrypt.compare(oldPassword, user.password);
+
+  if (!validPassword) return next(new Error("Old password is incorrect"));
+
+  const salt = await bcrypt.genSalt(10);
+
+  const hashedPassword = await bcrypt.hash(newPassword, salt);
+
+  user.password = hashedPassword;
+
+  try {
+    await user.save();
+    res.json({ message: "Password changed successfully" });
+  } catch (err) {
+    return next(err);
+  }
+};
+
 module.exports = {
   userRegister,
   userLogin,
@@ -271,4 +305,5 @@ module.exports = {
   resetUserPassword,
   userVerify,
   userResendVerification,
+  changePassword,
 };
