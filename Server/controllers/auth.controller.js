@@ -5,6 +5,7 @@ const bcrypt = require("bcrypt");
 const validation = require("../utility/validation");
 const emailSender = require("../utility/node-mailer");
 const generateToken = require("../utility/generateToken");
+const resetPassword = require("../utility/generate-reset-password-link");
 
 const userRegister = async (req, res, next) => {
   const { username, email, password, confirmPassword, firstName, lastName } =
@@ -66,6 +67,18 @@ const userRegister = async (req, res, next) => {
   }
   if (!studentProfile) return next(new Error("Student profile not created"));
 
+  const token = generateToken({
+    id: user.id,
+  });
+
+  emailSender({
+    to: email,
+    subject: "Verifikasi Akun E-logbook anda",
+    html: `<h1>Verifikasi akun anda</h1>
+    <p>Klik Tombol di Bawah Untuk Memverifikasi</p>
+    <a href="${process.env.FRONTEND_URL}/verify?token${token}">Verifikasi</a>`,
+  });
+
   res.json({
     message: "User created successfully",
   });
@@ -101,6 +114,81 @@ const userLogin = async (req, res, next) => {
 
   res.json({
     accessToken,
+  });
+};
+
+const userVerify = async (req, res, next) => {
+  const { token } = req.body;
+
+  let verified;
+  try {
+    verified = jwt.verify(token, process.env.JWT_SECRET);
+  } catch (error) {
+    return next(error);
+  }
+
+  let user;
+  try {
+    user = await db.User.find({
+      where: {
+        id: verified.id,
+      },
+    });
+  } catch (error) {
+    return next(error);
+  }
+  if (!user) return next(new Error("User not found"));
+
+  try {
+    user = await db.User.update(
+      {
+        isVerified: true,
+      },
+      {
+        where: {
+          id: user.id,
+        },
+      }
+    );
+  } catch (error) {
+    return next(error);
+  }
+  if (!user) return next(new Error("User not verified"));
+
+  res.json({
+    message: "User verified successfully",
+  });
+};
+
+const userResendVerification = async (req, res, next) => {
+  const { email } = req.body;
+
+  let user;
+  try {
+    user = await db.User.findOne({
+      where: {
+        email,
+      },
+    });
+  } catch (error) {
+    return next(error);
+  }
+  if (!user) return next(new Error("User not found"));
+
+  const token = generateToken({
+    id: user.id,
+  });
+
+  emailSender({
+    to: email,
+    subject: "Verifikasi Akun E-logbook anda",
+    html: `<h1>Verifikasi akun anda</h1>
+    <p>Klik Tombol di Bawah Untuk Memverifikasi</p>
+    <a href="${process.env.FRONTEND_URL}/verify?token${token}">Verifikasi</a>`,
+  });
+
+  res.json({
+    message: "Email verification sent",
   });
 };
 
@@ -181,4 +269,6 @@ module.exports = {
   userLogin,
   forgotPassword,
   resetUserPassword,
+  userVerify,
+  userResendVerification,
 };
