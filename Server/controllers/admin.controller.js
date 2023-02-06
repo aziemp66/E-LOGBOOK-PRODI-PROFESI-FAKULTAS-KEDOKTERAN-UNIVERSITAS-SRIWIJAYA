@@ -653,6 +653,13 @@ const updateUserRoles = async (req, res, next) => {
   )
     return next(new Error("Invalid role"));
 
+  if (
+    role !== "student" &&
+    !existingUser.email.split("@")[1].includes(process.env.STAFF_EMAIL_DOMAIN)
+  ) {
+    return next(new Error("Invalid Lecturer Email"));
+  }
+
   try {
     await db.User.update(
       {
