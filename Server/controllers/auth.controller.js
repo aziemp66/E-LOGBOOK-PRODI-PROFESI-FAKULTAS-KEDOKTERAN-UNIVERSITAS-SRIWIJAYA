@@ -11,9 +11,7 @@ const userRegister = async (req, res, next) => {
   const { username, email, password, confirmPassword, firstName, lastName } =
     req.body;
 
-  if (
-    !existingUser.email.split("@")[1].includes(process.env.STUDENT_EMAIL_DOMAIN)
-  ) {
+  if (!email.split("@")[1].includes(process.env.STUDENT_EMAIL_DOMAIN)) {
     return next(new Error("Email domain is not valid"));
   }
 
