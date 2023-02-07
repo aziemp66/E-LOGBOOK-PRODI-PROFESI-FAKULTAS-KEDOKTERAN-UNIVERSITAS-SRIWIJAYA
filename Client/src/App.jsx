@@ -25,6 +25,7 @@ import Sidebar from "./components/sidebar/Sidebar";
 import AuthContext from "./contexts/AuthContexts";
 
 import RequireAuth from "./helpers/RequireAuth";
+import VerifyEmail from "./pages/verifyEmail/VerifyEmail";
 
 const App = () => {
   const authCtx = useContext(AuthContext);
@@ -40,6 +41,7 @@ const App = () => {
         <Route path="/" element={<Auth />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/verify" element={<VerifyEmail />} />
         <Route element={<RequireAuth role="student" />}>
           <Route path="/dashboard" element={<DashBoard />} />
           <Route path="/profile" element={<Profile />} />
