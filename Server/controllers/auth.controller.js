@@ -234,8 +234,8 @@ const resetUserPassword = async (req, res, next) => {
   const { id } = resetPassword.decodeLink(token);
 
   const { error } = validation.passwordChangeValidation({
-    password,
-    confirmPassword,
+    oldPassword: password,
+    newPassword: confirmPassword,
   });
   if (error) return next(error.details[0]);
 
@@ -277,11 +277,14 @@ const changePassword = async (req, res, next) => {
   const { oldPassword, newPassword, confirmPassword } = req.body;
 
   const { error } = validation.passwordChangeValidation({
-    password: newPassword,
-    confirmPassword,
+    oldPassword,
+    newPassword,
   });
 
   if (error) return next(error.details[0]);
+
+  if (newPassword !== confirmPassword)
+    return next(new Error("Password not match"));
 
   const user = await db.User.findOne({
     where: {
