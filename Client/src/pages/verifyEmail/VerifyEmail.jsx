@@ -21,8 +21,13 @@ const VerifyEmail = () => {
         token,
       })
       .then((res) => {
-        setIsLoading(false);
         setResponseMessage(res.data.message);
+      })
+      .catch((err) => {
+        setResponseMessage(err);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   }, []);
 

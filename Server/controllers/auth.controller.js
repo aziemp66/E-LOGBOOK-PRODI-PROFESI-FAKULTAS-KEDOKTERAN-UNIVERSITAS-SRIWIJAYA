@@ -239,6 +239,9 @@ const resetUserPassword = async (req, res, next) => {
   });
   if (error) return next(error.details[0]);
 
+  if (password !== confirmPassword)
+    return next(new Error("Password not match"));
+
   let user;
   try {
     user = await db.User.findOne({ id: id });

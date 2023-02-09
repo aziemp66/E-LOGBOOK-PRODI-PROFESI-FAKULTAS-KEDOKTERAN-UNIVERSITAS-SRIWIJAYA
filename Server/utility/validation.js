@@ -170,6 +170,15 @@ const patchPresentionValidation = (data) => {
   return schema.validate(data);
 };
 
+const passwordChangeValidation = (data) => {
+  const schema = Joi.object({
+    oldPassword: Joi.string().min(6).max(1024).required(),
+    newPassword: Joi.string().min(6).max(1024).required(),
+  });
+
+  return schema.validate(data);
+};
+
 module.exports = {
   registerValidation,
   loginValidation,
@@ -188,4 +197,5 @@ module.exports = {
   updateGuidanceValidation,
   updateHospitalValidation,
   patchPresentionValidation,
+  passwordChangeValidation,
 };
