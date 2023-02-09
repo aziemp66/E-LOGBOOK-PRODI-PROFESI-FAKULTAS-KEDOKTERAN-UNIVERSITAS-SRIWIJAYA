@@ -6,6 +6,7 @@ import styles from "./App.module.css";
 import Auth from "./pages/auth/Auth";
 import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
+import ForgotPassword from "./pages/forgotPassword/ForgotPassword";
 import Admin from "./pages/admin/Admin";
 import DashBoard from "./pages/dashboard/DashBoard";
 import Profile from "./pages/profile/Profile";
@@ -42,6 +43,7 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/verify" element={<VerifyEmail />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route element={<RequireAuth role="student" />}>
           <Route path="/dashboard" element={<DashBoard />} />
           <Route path="/profile" element={<Profile />} />
