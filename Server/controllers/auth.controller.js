@@ -208,8 +208,8 @@ const forgotPassword = async (req, res, next) => {
   if (!user) return next(new Error("User not found"));
 
   const resetPasswordToken = resetPassword.generateLink(
-    { email: user.email, password: user.password },
-    `${process.env.JWT_SECRET}${user.password}`
+    { id: user.id },
+    `${user.password}`
   );
   const resetPasswordLink = `${process.env.FRONTEND_URL}/reset-password?id=${user._id}&token=${resetPasswordToken}`;
 
@@ -229,7 +229,9 @@ const forgotPassword = async (req, res, next) => {
 
 const resetUserPassword = async (req, res, next) => {
   const { password, confirmPassword } = req.body;
-  const { id, token } = req.query;
+  const { token } = req.query;
+
+  const { id } = resetPassword.decodeLink(token);
 
   const { error } = validation.passwordChangeValidation({
     password,
