@@ -164,6 +164,12 @@ const Sidebar = () => {
                     </>
                   )}
                   <li>
+                    <Link to={"/change-password"}>
+                      <img src={kegiatanIlmiah} alt="chemist" />
+                      <span>Ubah Password</span>
+                    </Link>
+                  </li>
+                  <li>
                     <p onClick={onLogoutHandler}>
                       <img src={logout} alt="logout icon" />
                       <span>Logout</span>

@@ -10,6 +10,7 @@ import ForgotPassword from "./pages/forgotPassword/ForgotPassword";
 import Admin from "./pages/admin/Admin";
 import DashBoard from "./pages/dashboard/DashBoard";
 import Profile from "./pages/profile/Profile";
+import ChangePassword from "./pages/changePassword/ChangePassword";
 import Competences from "./pages/competences/Competences";
 import ScientificActivities from "./pages/scientificactivites/ScientificActivities";
 import ElogbookAdmin from "./pages/admin/elogbookadmin/ElogbookAdmin";
@@ -44,6 +45,11 @@ const App = () => {
         <Route path="/register" element={<Register />} />
         <Route path="/verify" element={<VerifyEmail />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route
+          element={<RequireAuth role={"student admin lecturer supervisor"} />}
+        >
+          <Route path="/change-password" element={<ChangePassword />} />
+        </Route>
         <Route element={<RequireAuth role="student" />}>
           <Route path="/dashboard" element={<DashBoard />} />
           <Route path="/profile" element={<Profile />} />
