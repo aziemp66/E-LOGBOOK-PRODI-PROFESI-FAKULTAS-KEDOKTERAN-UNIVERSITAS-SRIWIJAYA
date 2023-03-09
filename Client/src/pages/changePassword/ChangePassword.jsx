@@ -1,4 +1,7 @@
 import axios from "axios";
+import Button from "../../components/ui/button/Button";
+
+import styles from "./ChangePassword.module.css";
 import React, { useState } from "react";
 
 const ChangePassword = () => {
@@ -29,11 +32,21 @@ const ChangePassword = () => {
     setIsLoading(true);
 
     try {
-      const response = await axios.post(BASE_URL, {
-        oldPassword,
-        newPassword,
-        confirmPassword,
-      });
+      const response = await axios.post(
+        BASE_URL,
+        {
+          oldPassword,
+          newPassword,
+          confirmPassword,
+        },
+        {
+          headers: {
+            "auth-token": localStorage.getItem("token"),
+          },
+        }
+      );
+
+      console.log(response.data);
 
       setIsMessage(response.data.message);
     } catch (error) {
@@ -44,47 +57,40 @@ const ChangePassword = () => {
   };
   return (
     <div className={styles.background}>
-      <section className={styles.title}>
-        <h1>
-          E-LOGBOOK PRODI PROFESI FAKULTAS KEDOKTERAN UNIVERSITAS SIRIWIJAYA
-        </h1>
-      </section>
-      <Fade top>
-        <form className={styles.form} onSubmit={changePasswordHandler}>
+      <form className={styles.form} onSubmit={changePasswordHandler}>
+        <div>
+          <h3>Ubah Password</h3>
+        </div>
+        <div>
+          <label htmlFor="oldPassword">Password Lama</label>
+          <input type="password" id="oldPassword" />
+        </div>
+        <div>
+          <label htmlFor="newPassword">Password Baru</label>
+          <input type="password" id="newPassword" />
+        </div>
+        <div>
+          <label htmlFor="confirmPassword">Konfirmasi Password Baru</label>
+          <input type="password" id="confirmPassword" />
+        </div>
+        {!isLoading ? (
           <div>
-            <h3>Ubah sPassword</h3>
+            <Button type="submit">Reset Password</Button>
           </div>
-          <div>
-            <label htmlFor="oldPassword">Password Lama</label>
-            <input type="password" id="password" />
+        ) : (
+          <div>Loading...</div>
+        )}
+        {isError && (
+          <div className={styles.error}>
+            <p>{isError}</p>
           </div>
-          <div>
-            <label htmlFor="newPassword">Password Baru</label>
-            <input type="password" id="newPassword" />
+        )}
+        {isMessage && (
+          <div className={styles.message}>
+            <p>{isMessage}</p>
           </div>
-          <div>
-            <label htmlFor="confirmPassword">Konfirmasi Password Baru</label>
-            <input type="password" id="confirmPassword" />
-          </div>
-          {!isLoading ? (
-            <div>
-              <Button type="submit">Reset Password</Button>
-            </div>
-          ) : (
-            <div>Loading...</div>
-          )}
-          {isError && (
-            <div className={styles.error}>
-              <p>{isError}</p>
-            </div>
-          )}
-          {isMessage && (
-            <div className={styles.message}>
-              <p>{isMessage}</p>
-            </div>
-          )}
-        </form>
-      </Fade>
+        )}
+      </form>
     </div>
   );
 };
