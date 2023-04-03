@@ -75,7 +75,7 @@ const userRegister = async (req, res, next) => {
     id: user.id,
   });
 
-  emailSender({
+  await emailSender({
     to: email,
     subject: "Verifikasi Akun E-logbook anda",
     html: `<h1>Verifikasi akun anda</h1>
@@ -183,7 +183,7 @@ const userResendVerification = async (req, res, next) => {
     id: user.id,
   });
 
-  emailSender({
+  await emailSender({
     to: email,
     subject: "Verifikasi Akun E-logbook anda",
     html: `<h1>Verifikasi akun anda</h1>
@@ -214,7 +214,7 @@ const forgotPassword = async (req, res, next) => {
   const resetPasswordLink = `${process.env.FRONTEND_URL}/reset-password?id=${user._id}&token=${resetPasswordToken}`;
 
   try {
-    emailSender({
+    await emailSender({
       to: user.email,
       subject: "Reset Password",
       html: `<p>Click <a href="${resetPasswordLink}">here</a> to reset your password</p>`,
